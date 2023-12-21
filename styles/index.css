@@ -1,0 +1,41 @@
+.header-2 {
+    position: relative;
+    margin-top: 140px;
+    height: 200px
+}
+
+.title {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    font-size: 64px;
+    font-weight: 700;
+}
+
+.wallpaper {
+    position: absolute;
+    right: 0;
+}
+
+.categories {
+    margin-top: 68px;
+    height: 45px;
+    white-space: nowrap;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.blog-categories > p,
+.category-button {
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 30px;
+    padding: 8px 16px 8px 16px;
+    border: none;
+    background-color: red;
+}
+
+.category-button-toggled {
+    border: 1px solid black;
+}
