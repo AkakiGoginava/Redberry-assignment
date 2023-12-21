@@ -1,16 +1,16 @@
-@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:500,700');
+@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:400,500,700');
 
 body {
-    height: 1080px;
     width: 1920px;
     background-color: #F3F2FA;
     padding-left: 57px;
     padding-right: 57px;
+    padding-bottom: 26px;
     box-sizing: border-box;
     margin: 0;
 }
 
 * {
     font-family: 'FiraGo', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
 }
