@@ -1,0 +1,30 @@
+.header-1 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 80px;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E4E3EB;
+}
+
+.logo {
+    position: absolute;
+    left: 57px;
+    top: 28px
+    
+}
+
+.login-button{
+    position: absolute;
+    right: 57px;
+    top: 20px;
+    width: 93px;
+    height: 40px;
+    padding: 10px 20px 10px 20px;
+    font-size: 14px;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    background-color: #5D37F3;
+}
