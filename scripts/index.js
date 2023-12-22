@@ -11,43 +11,56 @@ function displayBlogData() {
         .then(response => response.json())
         .then(blogs => {
 
+            // Clear blog list from previous contents
+            document.querySelector('.js-blog-list').innerHTML = '';
+
             // Create HTML string for blogs
             blogs.data.forEach(blog => {
-            
-            let blogContainerHTML = `
-                <div id=${blog.id} class='blog-container'>
-                <img class='blog-image' src=${blog.image}>
-                <p class='blog-author'>${blog.author}</p>
-                <p class='blog-publish-date'>${blog.publish_date.split(" ")[0]}</p>
-                <p class='blog-title'>${blog.title}</p>
-                <div class='blog-categories js-blog-categories'>
-                </div>
-                <p class='blog-description'>${blog.description}</p>
-                <a class='blog-link' href=''>სრულად ნახვა</a>
-                </div>`;    
 
-            let blogCategoriesHTML = '' // Variable to contain HTML for blog categories
-
-            // Iterate over current blog's categories to create an HTML string
-            blog.categories.forEach(category => {
-                blogCategoriesHTML += `
-                    <p id=${category.id} style='
-                    color: ${category.text_color};
-                    background-color: ${category.background_color}'>
-                    ${category.name}
-                    </p>`;
+                // Store list of Ids of current blog in blogCategoryIdList
+                let blogCategoryIdList = [];
+    
+                blog.categories.forEach(category => {
+                    blogCategoryIdList.push(category.id.toString());
+                });
+    
+                // Filter blogs based on list of category ids in filter array
+                if (filter.length === 0 || filter.some(categoryId => blogCategoryIdList.includes(categoryId))) {
+                    let blogContainerHTML = `
+                        <div id=${blog.id} class='blog-container'>
+                        <img class='blog-image' src=${blog.image}>
+                        <p class='blog-author'>${blog.author}</p>
+                        <p class='blog-publish-date'>${blog.publish_date.split(" ")[0]}</p>
+                        <p class='blog-title'>${blog.title}</p>
+                        <div class='blog-categories js-blog-categories'>
+                        </div>
+                        <p class='blog-description'>${blog.description}</p>
+                        <a class='blog-link' href=''>სრულად ნახვა</a>
+                        </div>`;    
+    
+                    let blogCategoriesHTML = '' // Variable to contain HTML for blog categories
+    
+                    // Iterate over current blog's categories to create an HTML string
+                    blog.categories.forEach(category => {
+                        blogCategoriesHTML += `
+                            <p id=${category.id} style='
+                            color: ${category.text_color};
+                            background-color: ${category.background_color}'>
+                            ${category.name}
+                            </p>`;
+                    });
+    
+                    // Create temporary DOM element for blogContainerHTML to insert blogCategoriesHTML
+                    const tempElement = document.createElement('div');
+                    tempElement.innerHTML = blogContainerHTML;
+                    tempElement.querySelector('.js-blog-categories').insertAdjacentHTML('beforeend', blogCategoriesHTML);
+                    blogContainerHTML = tempElement.innerHTML;
+    
+                    // Insert blogContainer HTML into blog list
+                    document.querySelector('.js-blog-list').insertAdjacentHTML('beforeend', blogContainerHTML);
+                }
             });
-
-            // Create temporary DOM element for blogContainerHTML to insert blogCategoriesHTML
-            const tempElement = document.createElement('div');
-            tempElement.innerHTML = blogContainerHTML;
-            tempElement.querySelector('.js-blog-categories').insertAdjacentHTML('beforeend', blogCategoriesHTML);
-            blogContainerHTML = tempElement.innerHTML;
-
-            // Insert blogContainer HTML into blog list
-            document.querySelector('.js-blog-list').insertAdjacentHTML('beforeend', blogContainerHTML);
-            });
-        });
+        })
 }
 
 // Fetch category data
@@ -81,12 +94,16 @@ fetch('https://api.blog.redberryinternship.ge/api/categories')
                         // Remove from filter
                         const index = filter.indexOf(`${categoryButton.id}`);
                         filter.splice(index, 1);
+                        // Re-render blog list based on updated filter
+                        displayBlogData();
                         // Save the state of the category button to local storage
                         localStorage.setItem(event.target.id, 'false');
                     } else {
                         event.target.classList.add('category-button-toggled');
                         // Add to filter
                         filter.push(categoryButton.id);
+                        // Re-render blog list based on updated filter
+                        displayBlogData();
                         // Save the state of the category button to local storage
                         localStorage.setItem(event.target.id, 'true');
                     }});
