@@ -8,7 +8,7 @@ fetch('https://api.blog.redberryinternship.ge/api/categories')
     .then(categories => {
         categories.data.forEach((category) => {
             categoriesHTML += `
-            <button class='category-button js-category-button' style='
+            <button id=${category.id} class='category-button js-category-button' style='
             color:${category.text_color};
             background-color:${category.background_color};'>
             ${category.title}
@@ -17,15 +17,27 @@ fetch('https://api.blog.redberryinternship.ge/api/categories')
         // Insert HTML into category section to display categories
         document.querySelector('.js-categories').innerHTML = categoriesHTML;
     })
-    //Make category buttons interactive
+    // Make category buttons interactive
     .then(() => {
         document.querySelectorAll('.js-category-button')
-            .forEach((button) => {
-                button.addEventListener('click', (event) => {
+            .forEach((categoryButton) => {
+                // Check the local storage for button states         
+                const state = localStorage.getItem(categoryButton.id);
+                if (state === 'true') {
+                    categoryButton.classList.add('category-button-toggled');
+                } else if (state === 'false') {
+                    categoryButton.classList.remove('category-button-toggled');
+                }
+                // Add event listeners to category buttons
+                categoryButton.addEventListener('click', (event) => {
                     if (event.target.classList.contains('category-button-toggled')) {
-                        event.target.classList.remove('category-button-toggled')
+                        event.target.classList.remove('category-button-toggled');
+                        // Save the state of the button to local storage
+                        localStorage.setItem(event.target.id, 'false');
                     } else {
-                        event.target.classList.add('category-button-toggled')
+                        event.target.classList.add('category-button-toggled');
+                        // Save the state of the button to local storage
+                        localStorage.setItem(event.target.id, 'true');
                     }})
             })
     })
