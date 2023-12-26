@@ -1,4 +1,4 @@
-const emailPattern = /^[a-zA-Z0-9._-]+@redberry.ge/;
+const emailPattern = /^[a-zA-Z0-9._-]+@redberry.ge/; // Regex for email pattern
 const loginInputButton = document.querySelector('.login-input-button');
 
 // Storage for email input
@@ -6,6 +6,7 @@ let emailData = {
     email : null
 };
 
+// Function for login exit button event listener
 function closeOverlay() {
     document.querySelector('.login-overlay-background')
         .classList.remove('login-overlay-background-on');
@@ -13,30 +14,27 @@ function closeOverlay() {
         .classList.remove('login-overlay-on');
 }
 
-function retrieveInput() {
-    emailData.email = document.querySelector('.login-input').value
-}
-
-function checkResponse(response) {
+function handleResponse(response) {
     if(response.ok) {
         document.querySelector('.login-input-block')
-            .classList.add('login-input-block-off');
+        .classList.add('login-input-block-off');
         document.querySelector('.login-success-block')
-            .classList.add('login-success-block-on');
+        .classList.add('login-success-block-on');
         document.querySelector('.login-button')
-            .textContent = 'დაამატე ბლოგი';
+        .textContent = 'დაამატე ბლოგი';
         loginInputButton.textContent = 'კარგი';
         loginInputButton.removeEventListener('click', retrieveInput)
         loginInputButton.removeEventListener('click', verifyEmail)
         loginInputButton.addEventListener('click', closeOverlay)
     } else {
         document.querySelector('.login-input')
-            .classList.add('login-input-error');
+        .classList.add('login-input-error');
         document.querySelector('.login-error-message')
-            .classList.add('login-error-message-on');
+        .classList.add('login-error-message-on');
     }
 }
 
+// Function for login input button event listener
 function verifyEmail() {
     console.log(JSON.stringify(emailData));
     if (emailPattern.test(emailData.email)) {
@@ -48,7 +46,7 @@ function verifyEmail() {
             }, 
             body: JSON.stringify(emailData)})
             .then(response => {
-                checkResponse(response);
+                handleResponse(response);
                })
     } else {
         document.querySelector('.login-input')
@@ -56,6 +54,11 @@ function verifyEmail() {
         document.querySelector('.login-error-message')
             .classList.add('login-error-message-on');
     }
+}
+
+// Function for login input button event listener
+function retrieveInput() {
+    emailData.email = document.querySelector('.login-input').value
 }
 
 // Add event listener to login button
