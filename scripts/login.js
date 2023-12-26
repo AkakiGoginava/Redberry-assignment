@@ -16,19 +16,28 @@ function closeOverlay() {
 
 function handleResponse(response) {
     if(response.ok) {
+        
         document.querySelector('.login-input-block')
         .classList.add('login-input-block-off');
+        
         document.querySelector('.login-success-block')
         .classList.add('login-success-block-on');
+        
         document.querySelector('.login-button')
         .textContent = 'დაამატე ბლოგი';
+
         loginInputButton.textContent = 'კარგი';
         loginInputButton.removeEventListener('click', retrieveInput)
         loginInputButton.removeEventListener('click', verifyEmail)
         loginInputButton.addEventListener('click', closeOverlay)
+        
+        // Save login status to loccal storage
+        localStorage.setItem('loginStatus', 'true');
     } else {
+        
         document.querySelector('.login-input')
         .classList.add('login-input-error');
+        
         document.querySelector('.login-error-message')
         .classList.add('login-error-message-on');
     }
@@ -59,6 +68,12 @@ function verifyEmail() {
 // Function for login input button event listener
 function retrieveInput() {
     emailData.email = document.querySelector('.login-input').value
+}
+
+// Check local storage for login status
+if (localStorage.getItem('loginStatus') === 'true') {
+    document.querySelector('.login-button')
+        .textContent = 'დაამატე ბლოგი';
 }
 
 // Add event listener to login button
