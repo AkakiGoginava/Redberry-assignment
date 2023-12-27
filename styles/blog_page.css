@@ -47,8 +47,7 @@
 
 .blog-slider {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 32px;
     overflow: hidden;
-    transition: transform 0.5 ease;
 }
