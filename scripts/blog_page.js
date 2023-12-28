@@ -1,38 +1,12 @@
 import { insertBlog2, displayBlogData } from './shared/shared.js';
 import { fetchBlogById } from './shared/api.js';
 
-// const params = new URLSearchParams(window.location.search);
-// const openBlogId = params.get('id');
-
-// // Fetch blog data
-// fetch('../mock.json')
-//     .then(response => response.json())
-//     .then(blogs => {
-        
-//         // Fill blog list
-//         blogs.data.forEach(blog => {blogList.push(blog);})
-        
-//         // Find relevant blog data
-//         const openBlog = blogList.find(blogData => blogData.id === parseInt(openBlogId, 10));
-        
-//         // Remove opened blog from the list
-//         blogList.splice(blogList.findIndex(blog => blog === openBlog), 1);
-
-//         // Save open blog category ids for recommendations
-//         openBlog.categories.forEach(category => {
-//             filter.push(category.id.toString());
-//         });
-
-//         const insertLocation2 = '.blog-column';
-//         // Insert HTML for open blog
-//         insertBlog2(openBlog, insertLocation2);
-
-//         const insertLocation = '.js-blog-slider';
-//         blogList.forEach(blog => {insertBlog(blog, insertLocation, filter)});
-//         })
-
 // Initialize function
 (async () => {
+    
+    const blogPageElements = {
+        returnButton: document.querySelector('.return-button')
+    }
 
     const params = new URLSearchParams(window.location.search);
     const openBlogId = params.get('id');
@@ -46,10 +20,13 @@ import { fetchBlogById } from './shared/api.js';
     const openBlogCategories = openBlog.categories.map(category => category.id);
     await displayBlogData('.js-blog-slider', openBlogCategories);
     
-    // Remove open blog from blog recommendations
+    // Remove open blog from blog slider
     const blogSlider = document.getElementById('js-blog-slider');
     if (blogSlider.children.length) {
         blogSlider.removeChild(blogSlider.querySelector(`#_${openBlogId}`));
     }
+
+    // Add event listeners
+    blogPageElements.returnButton.addEventListener('click', () => window.history.back());
 })()
 
