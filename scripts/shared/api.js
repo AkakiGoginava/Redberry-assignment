@@ -32,7 +32,7 @@ export const fetchBlogById = async (blogId) => {
     });
 
     if (!blogResponse.ok) {
-        return [];
+        return null;
     }
 
     return blogResponse.json()
