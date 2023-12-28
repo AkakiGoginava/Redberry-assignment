@@ -5,6 +5,7 @@
 
         <link rel='stylesheet' href='styles/shared/header.css'>
         <link rel='stylesheet' href='styles/shared/general.css'>
+        <link rel='stylesheet' href='styles/create_blog.css'>
 
     </head>
     <body>
@@ -12,47 +13,49 @@
         <div class='header-1'>
             <img class='logo' src='images/logo.png'>
         </div>
-        <button class='login-button'>შესვლა</button>
+        <button class='return-button'>&lt;</button>
         <!-- Create blog form -->
         <div class='blog-form-block'>
             <p class='form-title'>ბლოგის დამატება</p>
             <div class='image-input-block'>
                 <p class='input-label'>ატვირთეთ ფოტო</p>
                 <input type='file' class='image-input'>
+                <div class='image-drop-area'>
+                    <p class='drop-image-icon'>📁</p>
+                    <p class='drop-image-text'>ჩააგდეთ ფაილი აქ ან <span class='choose-image-file-link'>აირჩიეთ ფაილი</span></p>
+                </div>
             </div>
             <div class='author-title-input-block'>
                 <div class='author-input-block'>
                     <p class='input-label'>ავტორი*</p>
-                    <input class='author-input' placeholder='შეიყვანეთ ავტორი'>
-                    <ul class='author-input-requirements'>
-                        <li id='author-input-min-symbols'>მინიმუმ 4 სიმბოლო</li>
-                        <li id='author-input-min-words'>მინიმუმ 2 სიტყვა</li>
-                        <li id='author-input-georgian-letters'>მხოლოდ ქართული სიმბოლოები</li>
-                    </ul>
+                    <input class='author-input standard-input' placeholder='შეიყვანეთ ავტორი'>
+                    <p class='author-input-min-symbols standard-requirement'>&#8226; მინიმუმ 4 სიმბოლო</p>
+                    <p class='author-input-min-words standard-requirement'>&#8226; მინიმუმ 2 სიტყვა</p>
+                    <p class='author-input-georgian-letters standard-requirement'>&#8226; მხოლოდ ქართული სიმბოლოები</p>
                 </div>
                 <div class='title-input-block'>
                     <p class='input-label'>სათაური</p>
-                    <input class='title-input' placeholder='შეიყვანეთ სათაური'>
-                    <p class='input-title-requirement'>მინიმუმ 2 სიმბოლო</p>
+                    <input class='title-input standard-input' placeholder='შეიყვანეთ სათაური'>
+                    <p class='input-title-requirement standard-requirement'>მინიმუმ 2 სიმბოლო</p>
                 </div>
             </div>
             <div class='descritpion-input-block'>
                 <p class='input-label'>აღწერა*</p>
-                <input class='description-input' placeholder='შეიყვანეთ აღწერა'>
-                <p class='description-input-requirement'>მინიმუმ 2 სიმბოლო</p>
+                <textarea class='description-input standard-input' placeholder='შეიყვანეთ აღწერა'></textarea>
+                <p class='description-input-requirement standard-requirement'>მინიმუმ 2 სიმბოლო</p>
             </div>
-            <div class='date-category-mail-input-block'>
+            <div class='date-category-email-input-block'>
                 <div class='date-input-block'>
                     <p class='input-label'>გამოქვეყნების თარიღი*</p>
-                    <input class='date-input'>
+                    <input type='date' class='date-input standard-input'>
                 </div>
                 <div class='category-input-block'>
                     <p class='input-label'>კატეგორია*</p>
-                    <input class='category-input'>
+                    <input class='category-input standard-input' placeholder='აირჩიეთ კატეგორია'>
                 </div>
                 <div class='email-input-block'>
                     <p class='input-label'>ელ-ფოსტა</p>
-                    <input class='email-input' placeholder='Example@redberry.ge'>
+                    <input class='email-input standard-input' placeholder='Example@redberry.ge'>
                 </div>
             </div>
             <button class='publish-button'>გამოქვეყნება</button>
