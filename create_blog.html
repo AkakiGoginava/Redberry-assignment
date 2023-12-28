@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Redberry blog</title>
+
+        <link rel='stylesheet' href='styles/shared/header.css'>
+        <link rel='stylesheet' href='styles/shared/general.css'>
+
+    </head>
+    <body>
+        <!-- Website header -->
+        <div class='header-1'>
+            <img class='logo' src='images/logo.png'>
+        </div>
+        <button class='login-button'>შესვლა</button>
+        <!-- Create blog form -->
+        <div class='blog-form-block'>
+            <p class='form-title'>ბლოგის დამატება</p>
+            <div class='image-input-block'>
+                <p class='input-label'>ატვირთეთ ფოტო</p>
+                <input type='file' class='image-input'>
+            </div>
+            <div class='author-title-input-block'>
+                <div class='author-input-block'>
+                    <p class='input-label'>ავტორი*</p>
+                    <input class='author-input' placeholder='შეიყვანეთ ავტორი'>
+                    <ul class='author-input-requirements'>
+                        <li id='author-input-min-symbols'>მინიმუმ 4 სიმბოლო</li>
+                        <li id='author-input-min-words'>მინიმუმ 2 სიტყვა</li>
+                        <li id='author-input-georgian-letters'>მხოლოდ ქართული სიმბოლოები</li>
+                    </ul>
+                </div>
+                <div class='title-input-block'>
+                    <p class='input-label'>სათაური</p>
+                    <input class='title-input' placeholder='შეიყვანეთ სათაური'>
+                    <p class='input-title-requirement'>მინიმუმ 2 სიმბოლო</p>
+                </div>
+            </div>
+            <div class='descritpion-input-block'>
+                <p class='input-label'>აღწერა*</p>
+                <input class='description-input' placeholder='შეიყვანეთ აღწერა'>
+                <p class='description-input-requirement'>მინიმუმ 2 სიმბოლო</p>
+            </div>
+            <div class='date-category-mail-input-block'>
+                <div class='date-input-block'>
+                    <p class='input-label'>გამოქვეყნების თარიღი*</p>
+                    <input class='date-input'>
+                </div>
+                <div class='category-input-block'>
+                    <p class='input-label'>კატეგორია*</p>
+                    <input class='category-input'>
+                </div>
+                <div class='email-input-block'>
+                    <p class='input-label'>ელ-ფოსტა</p>
+                    <input class='email-input' placeholder='Example@redberry.ge'>
+                </div>
+            </div>
+            <button class='publish-button'>გამოქვეყნება</button>
+        </div>
+    </body>
+</html>
