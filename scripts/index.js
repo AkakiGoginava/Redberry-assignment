@@ -1,15 +1,16 @@
-import { insertBlog } from './shared.js';
+import { insertBlog } from './shared/shared.js';
 
+export let blogList = []; // Array to store available blogs
 let categoryFilter = []; // Array to store chosen categories to filter
 
 // Function for fetching and displaying blog data 
 function displayBlogData() {
         
-    //Fetch blog data
-    return fetch('https://api.blog.redberryinternship.ge/api/blogs', {
-            headers: {
-                'Authorization': `Bearer 461124bfccffbea9073153b2d1ecf01ae9dfbb9f0b37839a65aaecb384f8f029`
-            }})
+    // Fetch blog data
+    fetch('https://api.blog.redberryinternship.ge/api/blogs', {
+         headers: {
+             'Authorization': `Bearer 461124bfccffbea9073153b2d1ecf01ae9dfbb9f0b37839a65aaecb384f8f029`
+         }})
         .then(response => response.json())
         .then(blogs => {
 

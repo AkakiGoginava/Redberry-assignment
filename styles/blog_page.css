@@ -2,7 +2,7 @@
     padding: 120px 423px 98px 423px;
 }
 
-.blog-image-big {   
+.blog-column .blog-container > .blog-image {   
     width: 960px;
     height: 440px;
     border-radius: 12px;
@@ -10,14 +10,22 @@
     margin-bottom: 40px;
 }
 
-.blog-publish-date {
+.blog-column .blog-container > .blog-publish-date {
     margin-bottom: 24px;
 }
 
-.blog-title-big {
+.blog-column .blog-container > .blog-title {
     font-weight: 700;
     font-size: 32px;
     margin-bottom: 24px;
+}
+
+.blog-column .blog-container > .blog-link {
+    display: none;
+}
+
+.blog-column .blog-container > .blog-description {
+    display: block;
 }
 
 .blog-slider-title {

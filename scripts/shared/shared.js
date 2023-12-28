@@ -1,4 +1,4 @@
-import { fetchBlogs } from "./api";
+import { fetchBlogs } from "./api.js";
 
 // Function for inserting blogs into document
 export function insertBlog(blog, insertLocation, filter = []) {
@@ -68,7 +68,7 @@ export const insertBlog2 = (blog, insertLocation) => {
     }
 
     const blogContainerHTML = `
-        <div class='blog-container'>
+        <div id='_${blog.id}' class='blog-container'>
             <img class='blog-image' src=${blog.image}>
     
             <p class='blog-author'>
