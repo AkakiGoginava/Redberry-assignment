@@ -5,7 +5,9 @@ import { fetchBlogById } from './shared/api.js';
 (async () => {
     
     const blogPageElements = {
-        returnButton: document.querySelector('.return-button')
+        returnButton: document.querySelector('.return-button'),
+        sliderNextButton: document.querySelector('.blog-slider.next'),
+        silderPrevButton: document.querySelector('.blog-slider-prev')
     }
 
     const params = new URLSearchParams(window.location.search);
@@ -28,5 +30,6 @@ import { fetchBlogById } from './shared/api.js';
 
     // Add event listeners
     blogPageElements.returnButton.addEventListener('click', () => window.history.back());
+
 })()
 

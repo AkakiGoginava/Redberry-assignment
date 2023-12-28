@@ -1,35 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Redberry Blog</title>
+  <head>
+    <title>Redberry Blog</title>
 
-        <link rel='stylesheet' href='styles/shared/header.css'>
-        <link rel='stylesheet' href='styles/shared/general.css'>
-        <link rel='stylesheet' href='styles/shared/blog_container.css'>
-        <link rel='stylesheet' href='styles/blog_page.css'>
+    <link rel="stylesheet" href="styles/shared/header.css" />
+    <link rel="stylesheet" href="styles/shared/general.css" />
+    <link rel="stylesheet" href="styles/shared/blog_container.css" />
+    <link rel="stylesheet" href="styles/blog_page.css" />
+    <link rel="stylesheet" href="libs/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="lib/assets/owl.theme.default.min.css" />
+  </head>
+  <body>
+    <!-- Website header -->
+    <div class="header-1">
+      <img class="logo" src="images/logo.png" />
+      <button class="login-button">შესვლა</button>
+    </div>
+    <button class="return-button">&lt;</button>
+    <!-- Blog -->
+    <div class="blog-column"></div>
+    <!-- Blog recommendations slider -->
+    <div class="blog-recommendation">
+      <p class="blog-slider-title">მსგავსი სტატიები</p>
+      <div class="blog-slider-buttons">
+        <button class="blog-slider-prev">&lt;</button>
+        <button class="blog-slider-next">&gt;</button>
+      </div>
+      <div id="js-blog-slider" class="blog-slider js-blog-slider"></div>
+    </div>
 
-    </head>
-    <body>
-        <!-- Website header -->
-        <div class='header-1'>
-            <img class='logo' src='images/logo.png'>
-            <button class='login-button'>შესვლა</button>
-        </div>
-        <button class='return-button'>&lt;</button>
-        <!-- Blog -->
-        <div class='blog-column'>
-        </div>
-        <!-- Blog recommendations slider -->
-        <div class='blog-recommendation'></div>
-            <p class='blog-slider-title'>მსგავსი სტატიები</p>
-            <div class='blog-slider-buttons'>
-                <button class='blog-slider-back'>&lt;</button>
-                <button class='blog-slider-next'>&gt;</button>
-            </div>
-            <div id='js-blog-slider' class='blog-slider js-blog-slider'>
-            </div>
+    <div class="owl-carousel">
+      <div>Your Content</div>
+      <div>Your Content</div>
+      <div>Your Content</div>
+      <div>Your Content</div>
+      <div>Your Content</div>
+      <div>Your Content</div>
+      <div>Your Content</div>
+    </div>
 
-        <script type='module' src='scripts/blog_page.js'></script>
-
-    </body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="libs/owl.carousel.min.js"></script>
+    <script type="module" src="scripts/blog_page.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".owl-carousel").owlCarousel({ nav: true });
+      });
+    </script>
+  </body>
 </html>
