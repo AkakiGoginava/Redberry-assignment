@@ -1,144 +1,152 @@
 .logo {
-    left: 885px;
+  left: 885px;
 }
 
 .return-button {
-    background-color: #E4E3EB;
+  background-color: #e4e3eb;
 }
 
 .blog-form-block {
-    width: 600px;
-    margin-left: 603px;
-    margin-top: 120px;
-    margin-bottom: 100px;
+  width: 600px;
+  margin-left: 603px;
+  margin-top: 120px;
+  margin-bottom: 100px;
 }
 
 .form-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 40px;
 }
 
 .input-label {
-    font-size: 14px;
-    color: #1A1A1F;
-    margin-bottom: 8px;
-    margin-top: 0px;
+  font-size: 14px;
+  color: #1a1a1f;
+  margin-bottom: 8px;
+  margin-top: 0px;
 }
 
 .image-input-block {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .image-input {
-    display: none;
+  display: none;
 }
 
 .image-drop-area {
-    text-align: center;
-    width: 100%;
-    height: 180px;
-    background-color: #F4F3FF;
-    border: 1px dashed #85858D;
-    box-sizing: border-box;
-    border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  height: 180px;
+  background-color: #f4f3ff;
+  border: 1px dashed #85858d;
+  box-sizing: border-box;
+  border-radius: 12px;
 }
 
 .drop-image-icon {
-    margin-top: 48px;
-    margin-bottom: 0px;
-    font-size: 32px;
+  margin-top: 48px;
+  margin-bottom: 0px;
+  font-size: 32px;
 }
 
 .drop-image-text {
-    margin-top: 24px;
-    font-size: 14px;
-    font-weight: 400;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .choose-image-file-link {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .standard-input {
-    width: 288px;
-    height: 44px;
-    outline: none;
-    border: 1px solid #E4E3EB;
-    border-radius: 12px;
-    box-sizing: border-box;
-    font-weight: 400;
-    font-size: 14px;
-    color: #1A1A1F;
-    text-indent: 12px;
+  width: 288px;
+  height: 44px;
+  outline: none;
+  border: 1px solid #e4e3eb;
+  border-radius: 12px;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 14px;
+  color: #1a1a1f;
+  text-indent: 12px;
 }
 
 .standard-input-error {
-    background-color: #FAF2F3;
-    border-color: #EA1919;
+  background-color: #faf2f3;
+  border-color: #ea1919;
 }
 
 .standard-input:focus {
-    background-color: #F7F7FF;
-    border-color: #5D37F3;
-    border-width: 1.5px;
+  background-color: #f7f7ff;
+  border-color: #5d37f3;
+  border-width: 1.5px;
 }
 
 .standard-requirement {
-    font-weight: 400;
-    font-size: 12px;
-    margin-top: 8px;
-    color: #85858D;
+  font-weight: 400;
+  font-size: 12px;
+  margin-top: 8px;
+  color: #85858d;
 }
 
 .author-title-input-block {
-    display: flex;
-    float: left;
-    margin-bottom: 24px;
+  display: flex;
+  float: left;
+  margin-bottom: 24px;
 }
 
 .author-input-block {
-    display: inline-block;
-    margin-right: 24px;
+  display: inline-block;
+  margin-right: 24px;
 }
 
 .title-input-block {
-    display: inline-block;
+  display: inline-block;
 }
 
 .description-input-block {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .description-input {
-    resize: none;
-    text-indent: 0px;
-    padding-left: 12px;
-    padding-top: 10px;
-    padding-right: 12px;
-    width: 100%;
-    height: 124px;
+  resize: none;
+  text-indent: 0px;
+  padding-left: 12px;
+  padding-top: 10px;
+  padding-right: 12px;
+  width: 100%;
+  height: 124px;
 }
 
 .date-category-email-input-block {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  margin-top: 24px;
 }
 
 .date-input-block {
-    margin-right: 24px;
-    margin-bottom: 24px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+.date-input-block .date-input {
+  padding-right: 15px;
 }
 
 .publish-button {
-    float: right;
-    width: 288px;
-    height: 40px;
-    border: none;
-    border-radius: 12px;
-    padding: 10px 20px 10px 20px;
-    background-color: #E4E3EB;
-    color: white;
+  float: right;
+  width: 288px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px 10px 20px;
+  background-color: #e4e3eb;
+  color: white;
+}
+
+.image-visualiser {
+  display: none;
 }
