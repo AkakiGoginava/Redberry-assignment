@@ -7,36 +7,31 @@
     <link rel="stylesheet" href="styles/shared/general.css" />
     <link rel="stylesheet" href="styles/shared/blog_container.css" />
     <link rel="stylesheet" href="styles/blog_page.css" />
-    <link rel="stylesheet" href="libs/assets/owl.carousel.min.css" />
-    <link rel="stylesheet" href="lib/assets/owl.theme.default.min.css" />
+
+    <link rel="stylesheet" href="libs/assets/owl.carousel.css" />
+    <link rel="stylesheet" href="libs/assets/owl.theme.default.css" />
   </head>
   <body>
     <!-- Website header -->
+
     <div class="header-1">
       <img class="logo" src="images/logo.png" />
       <button class="login-button">შესვლა</button>
     </div>
     <button class="return-button">&lt;</button>
+
     <!-- Blog -->
+
     <div class="blog-column"></div>
+
     <!-- Blog recommendations slider -->
+
     <div class="blog-recommendation">
       <p class="blog-slider-title">მსგავსი სტატიები</p>
-      <div class="blog-slider-buttons">
-        <button class="blog-slider-prev">&lt;</button>
-        <button class="blog-slider-next">&gt;</button>
-      </div>
-      <div id="js-blog-slider" class="blog-slider js-blog-slider"></div>
-    </div>
-
-    <div class="owl-carousel">
-      <div>Your Content</div>
-      <div>Your Content</div>
-      <div>Your Content</div>
-      <div>Your Content</div>
-      <div>Your Content</div>
-      <div>Your Content</div>
-      <div>Your Content</div>
+      <div
+        id="js-blog-slider"
+        class="blog-slider js-blog-slider owl-carousel"
+      ></div>
     </div>
 
     <script
@@ -45,12 +40,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="libs/owl.carousel.min.js"></script>
+    <script src="libs/owl.carousel.js"></script>
     <script type="module" src="scripts/blog_page.js"></script>
-    <script>
-      $(document).ready(function () {
-        $(".owl-carousel").owlCarousel({ nav: true });
-      });
-    </script>
   </body>
 </html>

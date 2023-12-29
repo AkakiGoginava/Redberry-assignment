@@ -31,4 +31,14 @@ import { fetchBlogById } from "./shared/api.js";
   blogPageElements.returnButton.addEventListener("click", () =>
     window.history.back()
   );
+
+  // Slider buttons
+  $(".js-blog-slider").owlCarousel({
+    nav: true,
+    margin: 32,
+    navText: [
+      '<button class="blog-slider-prev">&lt;</button>',
+      '<button class="blog-slider-next">&gt;</button>',
+    ],
+  });
 })();

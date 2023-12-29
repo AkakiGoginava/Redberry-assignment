@@ -1,72 +1,87 @@
 .blog-column {
-    padding: 120px 423px 98px 423px;
+  padding: 120px 423px 98px 423px;
 }
 
 .blog-column > .blog-container {
-    width: 100%;
+  width: 100%;
 }
 
-.blog-column .blog-container > .blog-image {   
-    width: 960px;
-    height: 440px;
-    border-radius: 12px;
-    object-fit: cover;
-    margin-bottom: 40px;
+.blog-column .blog-container > .blog-image {
+  width: 960px;
+  height: 440px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 40px;
 }
 
 .blog-column .blog-container > .blog-publish-date {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .blog-column .blog-container > .blog-title {
-    font-weight: 700;
-    font-size: 32px;
-    margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 24px;
 }
 
 .blog-column .blog-container > .blog-link {
-    display: none;
+  display: none;
 }
 
 .blog-column .blog-container > .blog-description {
-    display: block;
+  display: block;
 }
 
 .blog-recommendation {
-    overflow: hidden;
-    overflow-x: hidden;
-    position: relative;
-}   
+  overflow: hidden;
+  overflow-x: hidden;
+  position: relative;
+}
 
 .blog-slider {
-    display: grid;
-    grid-template-columns: auto;
-    grid-auto-flow: column;
-    column-gap: 33px;
-    transition: left 0.5s ease-in-out;
+  display: grid;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+  column-gap: 33px;
+  transition: left 0.5s ease-in-out;
 }
 
 .blog-slider-title {
-    display: inline-block;
-    margin-bottom: 40px;
-    font-weight: 700;
-    font-size: 32px;
-    color: #1A1A1F;
+  display: inline-block;
+  margin-bottom: 40px;
+  font-weight: 700;
+  font-size: 32px;
+  color: #1a1a1f;
 }
 
 .blog-slider-buttons {
-    display: inline;
-    float: right;
-    margin-bottom: 48px;
+  display: inline;
+  float: right;
+  margin-bottom: 48px;
 }
 
-.blog-slider-buttons > button { 
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    font-size: 24px;
-    margin-left: 24px;
-    background-color: #5D37F3;
-    color: white;
+.blog-slider-prev,
+.blog-slider-next {
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  margin-left: 24px;
+  background-color: #5d37f3;
+  color: white;
+  cursor: pointer;
+}
+
+.js-blog-slider {
+  position: relative;
+  display: flex !important;
+  flex-direction: column-reverse !important;
+}
+
+/* overriding default owl nav css */
+.owl-nav {
+  position: absolute;
+  top: -86px;
+  right: 0;
 }
