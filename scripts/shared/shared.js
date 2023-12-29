@@ -79,11 +79,21 @@ export const displayBlogData = async (
 ) => {
   const blogs = await fetchBlogs();
 
+  const removedFutureDateBlogs = blogs.data
+    .map((e) => {
+      if (new Date(e.publish_date) > new Date()) {
+        return null;
+      }
+
+      return e;
+    })
+    .filter(Boolean);
+
   // Clear blog list
   document.querySelector(blogInsertLocation).innerHTML = "";
 
   // Filter blogs
-  const filteredBlogs = filterBlogs(blogs.data, categoryFilterIds);
+  const filteredBlogs = filterBlogs(removedFutureDateBlogs, categoryFilterIds);
 
   filteredBlogs.forEach((blog) => insertBlog(blog, blogInsertLocation));
 };
