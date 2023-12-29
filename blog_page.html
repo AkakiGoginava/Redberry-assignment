@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/shared/general.css" />
     <link rel="stylesheet" href="styles/shared/blog_container.css" />
     <link rel="stylesheet" href="styles/blog_page.css" />
+    <link rel="stylesheet" href="styles/login.css" />
 
     <link rel="stylesheet" href="libs/assets/owl.carousel.css" />
     <link rel="stylesheet" href="libs/assets/owl.theme.default.css" />
@@ -18,7 +19,30 @@
       <img class="logo" src="images/logo.png" />
       <button class="login-button">შესვლა</button>
     </div>
+
     <button class="return-button">&lt;</button>
+
+    <div id="login-overlay-background"></div>
+    <div id="login-overlay">
+      <button class="login-exit-button" style="cursor: pointer">&#10006;</button>
+
+      <div class="login-input-block">
+        <p class="login-title">შესვლა</p>
+        <label for="login-input" class="login-input-label">ელ-ფოსტა</label>
+        <input id="login-input" class="login-input" placeholder="Example@redberry.ge" />
+
+        <div class="login-error-message">
+          <div class="login-info-circle">i</div>
+          <span>ელ-ფოსტა არ მოიძებნა</span>
+        </div>
+      </div>
+
+      <div class="login-success-block">
+        <div class="login-success-checkmark">&#10003;</div>
+        <p class="login-success-message">წარმატებული ავორიზაცია</p>
+      </div>
+      <button class="login-input-button">შესვლა</button>
+    </div>
 
     <!-- Blog -->
 
@@ -28,10 +52,7 @@
 
     <div class="blog-recommendation">
       <p class="blog-slider-title">მსგავსი სტატიები</p>
-      <div
-        id="js-blog-slider"
-        class="blog-slider js-blog-slider owl-carousel"
-      ></div>
+      <div id="js-blog-slider" class="blog-slider js-blog-slider owl-carousel"></div>
     </div>
 
     <script

@@ -18,6 +18,7 @@
     <form class="blog-form-block">
       <p class="form-title">ბლოგის დამატება</p>
 
+      <!-- FIle upload -->
       <div class="image-input-block">
         <p class="input-label">ატვირთეთ ფოტო</p>
 
@@ -100,29 +101,17 @@
       <div class="author-title-input-block">
         <div class="author-input-block">
           <p class="input-label">ავტორი *</p>
-          <input
-            class="author-input standard-input"
-            placeholder="შეიყვანეთ ავტორი"
-          />
-          <p class="author-input-min-symbols standard-requirement">
-            &#8226; მინიმუმ 4 სიმბოლო
-          </p>
-          <p class="author-input-min-words standard-requirement">
-            &#8226; მინიმუმ 2 სიტყვა
-          </p>
+          <input class="author-input standard-input" placeholder="შეიყვანეთ ავტორი" />
+          <p class="author-input-min-symbols standard-requirement">&#8226; მინიმუმ 4 სიმბოლო</p>
+          <p class="author-input-min-words standard-requirement">&#8226; მინიმუმ 2 სიტყვა</p>
           <p class="author-input-georgian-letters standard-requirement">
             &#8226; მხოლოდ ქართული სიმბოლოები
           </p>
         </div>
         <div class="title-input-block">
           <p class="input-label">სათაური</p>
-          <input
-            class="title-input standard-input"
-            placeholder="შეიყვანეთ სათაური"
-          />
-          <p class="input-title-requirement standard-requirement">
-            მინიმუმ 2 სიმბოლო
-          </p>
+          <input class="title-input standard-input" placeholder="შეიყვანეთ სათაური" />
+          <p class="input-title-requirement standard-requirement">მინიმუმ 2 სიმბოლო</p>
         </div>
       </div>
       <div class="descritpion-input-block">
@@ -131,32 +120,101 @@
           class="description-input standard-input"
           placeholder="შეიყვანეთ აღწერა"
         ></textarea>
-        <p class="description-input-requirement standard-requirement">
-          მინიმუმ 2 სიმბოლო
-        </p>
+        <p class="description-input-requirement standard-requirement">მინიმუმ 2 სიმბოლო</p>
       </div>
       <div class="date-category-email-input-block">
         <div class="date-input-block">
           <p class="input-label">გამოქვეყნების თარიღი *</p>
           <input type="date" class="date-input standard-input" />
         </div>
+
         <div class="category-input-block">
           <p class="input-label">კატეგორია *</p>
-          <input
-            class="category-input standard-input"
-            placeholder="აირჩიეთ კატეგორია"
-          />
-        </div>
-        <div class="email-input-block">
-          <p class="input-label">ელ-ფოსტა</p>
-          <input
-            class="email-input standard-input"
-            placeholder="Example@redberry.ge"
-          />
+
+          <div class="category-input-container">
+            <div class="category-input standard-input">
+              <!-- hidden first -->
+              <div class="category-input-value-container"></div>
+
+              <p class="category-input-placeholder">აირჩიეთ კატეგორია</p>
+
+              <svg
+                class="category-input-icon"
+                style="padding-right: 12px"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.6004 7.45825L11.1671 12.8916C10.5254 13.5333 9.47539 13.5333 8.83372 12.8916L3.40039 7.45825"
+                  stroke="#292D32"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div class="category-input-dropdown"></div>
+          </div>
         </div>
       </div>
-      <button class="publish-button">გამოქვეყნება</button>
+
+      <div class="email-input-block">
+        <p class="input-label">ელ-ფოსტა</p>
+        <input class="email-input standard-input" placeholder="Example@redberry.ge" />
+
+        <div class="form-input-error">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.99967 1.66665C5.41634 1.66665 1.66634 5.41665 1.66634 9.99998C1.66634 14.5833 5.41634 18.3333 9.99967 18.3333C14.583 18.3333 18.333 14.5833 18.333 9.99998C18.333 5.41665 14.583 1.66665 9.99967 1.66665Z"
+              fill="#EA1919"
+            />
+            <path
+              d="M10 13.3333L10 9.16665"
+              stroke="white"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10.0049 6.66669L9.9974 6.66669"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <p>მეილი უნდა მთავრდებოდეს @redberry.ge-ით</p>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: end">
+        <button type="button" class="publish-button">გამოქვეყნება</button>
+      </div>
     </form>
+
+    <div id="popup-overlay-background"></div>
+    <div id="popup-overlay">
+      <button class="popup-exit-button" style="cursor: pointer">&#10006;</button>
+
+      <div class="popup-success-block">
+        <div class="popup-success-checkmark">&#10003;</div>
+        <p class="popup-success-message">ჩანაწერი წარმატებით დაემატა</p>
+      </div>
+
+      <button class="popup-input-button">მთავარ გვერდზე დაბრუნება</button>
+    </div>
 
     <script type="module" src="/scripts/create_blog.js"></script>
   </body>

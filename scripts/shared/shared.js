@@ -1,5 +1,6 @@
 import { fetchBlogs } from "./api.js";
 export const categoryFilterKeyName = "categoryFilter";
+export const emailPattern = new RegExp(/^[a-zA-Z0-9._-]+@redberry.ge/); // Regex for email pattern
 
 export const getCategoryFiltersFromLocalSotrage = () => {
   const categoryIdStringArr = JSON.parse(

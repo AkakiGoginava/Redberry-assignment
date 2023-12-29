@@ -36,3 +36,17 @@ export const fetchBlogById = async (blogId) => {
 
   return blogResponse.json();
 };
+
+
+export const uploadBlog = async (body) => {
+  const response = await fetch(`${baseUrl}/blogs`, {
+    method: 'POST',
+    body,
+    headers: {
+      'Accept': 'application/json',
+      ...authHeaders,
+    },
+  });
+
+  return response;
+};

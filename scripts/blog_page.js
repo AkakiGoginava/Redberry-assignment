@@ -1,8 +1,11 @@
+import { checkAuthAndChangeButton } from './login.js'
 import { insertBlog, displayBlogData } from "./shared/shared.js";
 import { fetchBlogById } from "./shared/api.js";
 
 // Initialize function
 (async () => {
+  checkAuthAndChangeButton();
+
   const blogPageElements = {
     returnButton: document.querySelector(".return-button"),
     sliderNextButton: document.querySelector(".blog-slider.next"),

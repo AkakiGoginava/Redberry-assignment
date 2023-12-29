@@ -8,6 +8,7 @@
   border-radius: 12px;
   margin-bottom: 24px;
   object-fit: cover;
+  height: 456px;
 }
 
 .blog-author {
@@ -61,7 +62,7 @@
 
 .blog-link:after {
   display: inline-block;
-  content: "→";
+  content: '→';
   padding-left: 4px;
   transform: rotate(-45deg);
 }

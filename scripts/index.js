@@ -1,4 +1,4 @@
-import { loginStatusKeyName } from "./login.js";
+import { checkAuthAndChangeButton } from "./login.js";
 import {
   categoryFilterKeyName,
   getCategoryFiltersFromLocalSotrage,
@@ -40,13 +40,7 @@ const addCategoryButtonClickEvent = (categoryButton) => {
 
 // Initalize function
 (async () => {
-  const isAuthenticated =
-    JSON.parse(localStorage.getItem(loginStatusKeyName)) ?? false;
-
-  // Check local storage for user state
-  if (isAuthenticated) {
-    document.querySelector(".login-button").textContent = "დაამატე ბლოგი";
-  }
+  checkAuthAndChangeButton();
 
   // Check if {categoryFilterKeyName} exists in local storage (must always exist)
   if (!localStorage.getItem(categoryFilterKeyName)) {

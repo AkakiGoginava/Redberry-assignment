@@ -1,70 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Redberry Blog</title>
+  <head>
+    <title>Redberry Blog</title>
 
-        <link rel='stylesheet' href='styles/shared/header.css'>
-        <link rel='stylesheet' href='styles/shared/general.css'>
-        <link rel='stylesheet' href='styles/shared/blog_container.css'>
-        <link rel='stylesheet' href='styles/index.css'>
-        <link rel='stylesheet' href='styles/login.css'>
+    <link rel="stylesheet" href="styles/shared/header.css" />
+    <link rel="stylesheet" href="styles/shared/general.css" />
+    <link rel="stylesheet" href="styles/shared/blog_container.css" />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/login.css" />
+  </head>
+  <body>
+    <!-- website header -->
 
-    </head>
-    <body>
-        <!-- website header -->
+    <div class="header-1">
+      <img class="logo" src="images/logo.png" />
+      <button class="login-button">შესვლა</button>
+    </div>
 
-        <div class='header-1'>
-            <img class='logo' src='images/logo.png'>
-            <button class='login-button'>შესვლა</button>
+    <!-- website title -->
+
+    <div class="header-2">
+      <p class="title">ბლოგი</p>
+      <img class="wallpaper" src="images/wallpaper.png" />
+    </div>
+
+    <!-- category section -->
+
+    <div class="categories js-categories"></div>
+
+    <!-- blog list -->
+
+    <div class="blog-list js-blog-list"></div>
+
+    <!-- Login overlay -->
+    <div id="login-overlay-background"></div>
+    <div id="login-overlay">
+      <button class="login-exit-button" style="cursor: pointer">&#10006;</button>
+
+      <div class="login-input-block">
+        <p class="login-title">შესვლა</p>
+        <label for="login-input" class="login-input-label">ელ-ფოსტა</label>
+        <input id="login-input" class="login-input" placeholder="Example@redberry.ge" />
+
+        <!-- Error message -->
+
+        <div class="login-error-message">
+          <div class="login-info-circle">i</div>
+          <span>ელ-ფოსტა არ მოიძებნა</span>
         </div>
-        
-        <!-- website title -->
-        
-        <div class='header-2'>
-            <p class='title'>ბლოგი</p>
-            <img class='wallpaper' src='images/wallpaper.png'>
-        </div>
-        
-        <!-- category section -->
-        
-        <div class='categories js-categories'>
-        </div>
-        
-        <!-- blog list -->
-        
-        <div class='blog-list js-blog-list'>
-        </div>
+      </div>
 
-        <!-- Login overlay -->
-        
-        <div id='login-overlay-background'></div>
-        <div id='login-overlay'>
-            <button class='login-exit-button' style="cursor: pointer;">&#10006</button>
+      <!-- Login success -->
 
-            <div class='login-input-block'>
-                <p class='login-title'>შესვლა</p>
-                <label for='login-input' class='login-input-label'>ელ-ფოსტა</label>
-                <input id='login-input' class='login-input' placeholder='Example@redberry.ge'>
-                
-                <!-- Error message -->
-                
-                <div class='login-error-message'>
-                    <div class='login-info-circle'>i</div>
-                    <span>ელ-ფოსტა არ მოიძებნა</span>
-                </div>
-            </div>
+      <div class="login-success-block">
+        <div class="login-success-checkmark">&#10003;</div>
+        <p class="login-success-message">წარმატებული ავორიზაცია</p>
+      </div>
+      <button class="login-input-button">შესვლა</button>
+    </div>
 
-            <!-- Login success -->
-            
-            <div class='login-success-block'>
-                <div class='login-success-checkmark'>&#10003;</div>
-                <p class='login-success-message'>წარმატებული ავორიზაცია</p>
-            </div>
-            <button class='login-input-button'>შესვლა</button>
-
-        </div>
-
-        <script type='module' src='scripts/index.js'></script>
-    
-    </body>
+    <script type="module" src="scripts/index.js"></script>
+  </body>
 </html>
