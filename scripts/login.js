@@ -1,92 +1,89 @@
 const emailPattern = /^[a-zA-Z0-9._-]+@redberry.ge/; // Regex for email pattern
-const loginInputButton = document.querySelector('.login-input-button');
 
-// Storage for email input
-let emailData = {
-    email : null
+const loginElements = {
+  loginButton: document.querySelector(".login-button"),
+  loginModalOverlayBackground: document.getElementById(
+    "login-overlay-background"
+  ),
+  loginModalOverlay: document.getElementById("login-overlay"),
+  loginExitButton: document.querySelector(".login-exit-button"),
+  loginSubmitButton: document.querySelector(".login-input-button"),
+  loginInput: document.getElementById("login-input"),
+  loginErrorMessage: document.querySelector(".login-error-message"),
 };
 
-// Function for login exit button event listener
-function closeOverlay() {
-    document.querySelector('.login-overlay-background')
-        .classList.remove('login-overlay-background-on');
-    document.querySelector('.login-overlay')
-        .classList.remove('login-overlay-on');
-}
+// local storage key name
+export const loginStatusKeyName = "loginStatus";
 
-function handleResponse(response) {
-    if(response.ok) {
-        
-        document.querySelector('.login-input-block')
-        .classList.add('login-input-block-off');
-        
-        document.querySelector('.login-success-block')
-        .classList.add('login-success-block-on');
-        
-        document.querySelector('.login-button')
-        .textContent = 'დაამატე ბლოგი';
+const toggleLoginButtonModal = ({ show }) => {
+  const { loginModalOverlay, loginModalOverlayBackground } = loginElements;
 
-        loginInputButton.textContent = 'კარგი';
-        loginInputButton.removeEventListener('click', retrieveInput)
-        loginInputButton.removeEventListener('click', verifyEmail)
-        loginInputButton.addEventListener('click', closeOverlay)
-        
-        // Save login status to loccal storage
-        localStorage.setItem('loginStatus', 'true');
-    } else {
-        
-        document.querySelector('.login-input')
-        .classList.add('login-input-error');
-        
-        document.querySelector('.login-error-message')
-        .classList.add('login-error-message-on');
+  loginModalOverlayBackground.style.display = show ? "block" : "none";
+  loginModalOverlay.style.display = show ? "block" : "none";
+};
+
+const toggleLoginInputError = ({ show }) => {
+  const { loginInput, loginErrorMessage } = loginElements;
+
+  if (show) {
+    loginInput.classList.add("login-input-error");
+    loginErrorMessage.classList.add("login-error-message-on");
+    return;
+  }
+
+  loginInput.classList.remove("login-input-error");
+  loginErrorMessage.classList.remove("login-error-message-on");
+};
+
+async function login() {
+  const email = loginElements.loginInput.value?.trim() ?? null;
+
+  if (!email || !emailPattern.test(email)) {
+    return toggleLoginInputError({ show: true });
+  }
+
+  const response = await fetch(
+    "https://api.blog.redberryinternship.ge/api/login",
+    {
+      body: JSON.stringify({ email }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
+  );
+
+  if (!response.ok) {
+    return toggleLoginInputError({ show: true });
+  }
+
+  const { loginSubmitButton } = loginElements;
+
+  document
+    .querySelector(".login-input-block")
+    .classList.add("login-input-block-off");
+  document
+    .querySelector(".login-success-block")
+    .classList.add("login-success-block-on");
+  document.querySelector(".login-button").textContent = "დაამატე ბლოგი";
+
+  loginSubmitButton.textContent = "კარგი";
+  loginSubmitButton.addEventListener("click", () =>
+    toggleLoginButtonModal({ show: false })
+  );
+
+  // Save login status to loccal storage
+  localStorage.setItem(loginStatusKeyName, "true");
 }
 
-// Function for login input button event listener
-function verifyEmail() {
-    console.log(JSON.stringify(emailData));
-    if (emailPattern.test(emailData.email)) {
-        fetch('https://api.blog.redberryinternship.ge/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }, 
-            body: JSON.stringify(emailData)})
-            .then(response => {
-                handleResponse(response);
-               })
-    } else {
-        document.querySelector('.login-input')
-            .classList.add('login-input-error');
-        document.querySelector('.login-error-message')
-            .classList.add('login-error-message-on');
-    }
-}
-
-// Function for login input button event listener
-function retrieveInput() {
-    emailData.email = document.querySelector('.login-input').value
-}
-
-// Check local storage for login status
-if (localStorage.getItem('loginStatus') === 'true') {
-    document.querySelector('.login-button')
-        .textContent = 'დაამატე ბლოგი';
-}
-
-// Add event listener to login button
-document.querySelector('.login-button').addEventListener('click', () => {
-    document.querySelector('.login-overlay-background')
-        .classList.add('login-overlay-background-on');
-    document.querySelector('.login-overlay')
-        .classList.add('login-overlay-on');
+// Add event listeners
+loginElements.loginButton.addEventListener("click", () =>
+  toggleLoginButtonModal({ show: true })
+);
+loginElements.loginSubmitButton.addEventListener("click", () => login());
+loginElements.loginExitButton.addEventListener("click", () => {
+  toggleLoginButtonModal({ show: false });
+  toggleLoginInputError({ show: false });
+  loginElements.loginInput.value = null;
 });
-
-// Add event listener to login exit button
-document.querySelector('.login-exit-button').addEventListener('click', closeOverlay);
-
-// Add event listener to input button to retrieve input
-loginInputButton.addEventListener('click', retrieveInput);
-loginInputButton.addEventListener('click', verifyEmail);

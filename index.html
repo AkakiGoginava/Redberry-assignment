@@ -12,37 +12,50 @@
     </head>
     <body>
         <!-- website header -->
+
         <div class='header-1'>
             <img class='logo' src='images/logo.png'>
             <button class='login-button'>შესვლა</button>
         </div>
+        
         <!-- website title -->
+        
         <div class='header-2'>
             <p class='title'>ბლოგი</p>
             <img class='wallpaper' src='images/wallpaper.png'>
         </div>
+        
         <!-- category section -->
+        
         <div class='categories js-categories'>
         </div>
+        
         <!-- blog list -->
+        
         <div class='blog-list js-blog-list'>
         </div>
 
         <!-- Login overlay -->
-        <div class='login-overlay-background'></div>
-        <div class='login-overlay'>
-            <button class='login-exit-button'>&#10006</button>
+        
+        <div id='login-overlay-background'></div>
+        <div id='login-overlay'>
+            <button class='login-exit-button' style="cursor: pointer;">&#10006</button>
+
             <div class='login-input-block'>
                 <p class='login-title'>შესვლა</p>
                 <label for='login-input' class='login-input-label'>ელ-ფოსტა</label>
                 <input id='login-input' class='login-input' placeholder='Example@redberry.ge'>
+                
                 <!-- Error message -->
+                
                 <div class='login-error-message'>
                     <div class='login-info-circle'>i</div>
                     <span>ელ-ფოსტა არ მოიძებნა</span>
                 </div>
             </div>
+
             <!-- Login success -->
+            
             <div class='login-success-block'>
                 <div class='login-success-checkmark'>&#10003;</div>
                 <p class='login-success-message'>წარმატებული ავორიზაცია</p>
@@ -52,7 +65,6 @@
         </div>
 
         <script type='module' src='scripts/index.js'></script>
-        <script type='module' src='scripts/login.js'></script>
-        
+    
     </body>
 </html>
