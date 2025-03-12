@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+  <head> </head>
+  <body>
+    <header class="site-header">
+      <div class="logo">
+        <span>Momentum</span>
+        <img src="resources/SVG/Hourglass.svg" />
+      </div>
+
+      <button class="create-employee-btn">თანამშრომლის შექმნა</button>
+      <button class="create-task-btn">+ შექმენი ახალი დავალება</button>
+    </header>
+
+    <main>
+      <header class="main-header">
+        <h1 class="main-title">დავალებების გვერდი</h1>
+
+        <div class="filter-tab">
+          <button class="filter-department">
+            დეპარტამენტი <img src="resources/SVG/DownArrow.svg" />
+          </button>
+          <button class="filter-priority">
+            პრიპრიტეტი <img src="resources/SVG/DownArrow.svg" />
+          </button>
+          <button class="filter-employee">
+            თანამშრომელი <img src="resources/SVG/DownArrow.svg" />
+          </button>
+        </div>
+      </header>
+
+      <section class="list list-pending">
+        <h2>დასაწყები</h2>
+
+        <!--PLACEHOLDER-->
+        <div class="task-div">
+          <div class="task-header">
+            <span class="priority priority-medium"
+              ><img src="resources/SVG/Medium.svg" />საშუალო</span
+            >
+            <span class="department">დიზაინი</span>
+            <span class="task-date">22 იანვ, 2022</span>
+          </div>
+
+          <div class="task-body">
+            <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
+            <p class="task-desc">
+              შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ სექციებს,
+              ნავიგაციას
+            </p>
+          </div>
+
+          <div class="task-footer">
+            <img class="task-mini-avatar" src="resources/placeholder.webp" />
+            <img src="resources/SVG/Comment.svg" />
+            <span class="task-comment-count">8</span>
+          </div>
+        </div>
+        <!--PLACEHOLDER-->
+      </section>
+
+      <section class="list list-inprogress">
+        <h2>პროგრესში</h2>
+      </section>
+
+      <section class="list list-testing">
+        <h2>მზად ტესტირებისთვის</h2>
+      </section>
+
+      <section class="list list-finished">
+        <h2>დასრულებული</h2>
+      </section>
+    </main>
+  </body>
+</html>
