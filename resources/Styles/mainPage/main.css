@@ -1,0 +1,204 @@
+@import url("../global.css");
+
+h1 {
+  font-weight: 600;
+  font-size: 34px;
+  margin-top: 40px;
+}
+
+.filter-tab {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 20px;
+  margin-top: 50px;
+  width: 688px;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+}
+
+.filter-tab button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background-color: white;
+}
+
+.lists-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  display: inline-block;
+  width: 380px;
+  margin-top: 78px;
+}
+
+.list h2 {
+  text-align: center;
+  border-radius: 10px;
+  padding: 15px 0;
+  font-weight: 500;
+  font-size: 20px;
+  color: white;
+}
+
+.list-pending h2 {
+  background-color: #f7bc30;
+}
+
+.list-pending .task-card {
+  border-color: #f7bc30;
+}
+
+.list-inprogress h2 {
+  background-color: #fb5607;
+}
+
+.list-inprogress .task-card {
+  border-color: #fb5607;
+}
+
+.list-testing h2 {
+  background-color: #ff006e;
+}
+
+.list-testing .task-card {
+  border-color: #ff006e;
+}
+
+.list-finished h2 {
+  background-color: #3a86ff;
+}
+
+.list-finished .task-card {
+  border-color: #3a86ff;
+}
+
+.task-list {
+  max-height: 593px;
+  overflow-y: scroll;
+}
+
+.task-card {
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 15px;
+  border: 1px solid;
+}
+
+.task-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-card-tags {
+  display: flex;
+  margin-right: auto;
+  font-size: 0px;
+}
+
+.priority {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0.5px solid;
+  border-radius: 4px;
+  padding: 4px;
+  line-height: 1.5;
+  font-size: 12px;
+}
+
+.priority img {
+  margin-right: 4px;
+}
+
+.priority-low,
+.priority-medium,
+.priority-hight {
+  font-weight: 500;
+}
+
+.priority-low {
+  color: #08a508;
+  border-color: #08a508;
+}
+
+.priority-medium {
+  color: #ffbe0b;
+  border-color: #ffbe0b;
+}
+
+.priority-hight {
+  color: #fa4d4d;
+  border-color: #fa4d4d;
+}
+
+.department {
+  display: inline-block;
+  font-size: 12px;
+  color: white;
+  border-radius: 15px;
+  padding: 7px 19px 0px 19px;
+  margin-left: 10px;
+}
+
+.department-design {
+  background-color: #ff66a8;
+}
+
+.department-marketing {
+  background-color: #fd9a6a;
+}
+
+.departmment-logistics {
+  background-color: #89b6ff;
+}
+
+.department-info {
+  background-color: #ffd86d;
+}
+
+.task-date {
+  font-size: 12px;
+}
+
+.task-body {
+  margin-top: 28px;
+}
+
+.task-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.task-desc {
+  font-size: 14px;
+  margin-top: 12px;
+  color: #343a40;
+}
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.task-mini-avatar {
+  margin-right: auto;
+  height: 31px;
+  width: 31px;
+  border-radius: 15.5px;
+}
+
+.task-comment-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.task-comment-count span {
+  margin-left: 4px;
+  font-size: 14px;
+}

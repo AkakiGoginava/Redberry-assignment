@@ -15,8 +15,14 @@
 }
 
 body {
-  padding: 0 120px 200px 120px;
-  width: 100%;
+  padding: 0 120px 120px 120px;
+}
+
+html,
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
 }
 
 .site-header {
@@ -51,8 +57,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 38px;
   background-color: #8338ec;
   color: white;
+}
+
+.create-task-btn img {
+  margin-right: 4px;
 }
 
 .create-task-btn:hover {
