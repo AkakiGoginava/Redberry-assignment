@@ -1,0 +1,61 @@
+@import url("https://free.bboxtype.com/embedfonts/?family=FiraGO:400,500,600");
+
+:root {
+  --primary-purple: #8338ec;
+  --secondary-purple: #b588f4;
+  --background-purple: #ddd2ff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "FiraGo", sans-serif;
+  font-weight: 400;
+}
+
+body {
+  padding: 0 120px 200px 120px;
+  width: 100%;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+}
+
+.logo {
+  margin-right: auto;
+}
+
+.create-employee-btn,
+.create-task-btn {
+  border: 1px solid var(--primary-purple);
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.create-employee-btn {
+  margin-right: 40px;
+  background-color: white;
+}
+
+.create-employee-btn:hover {
+  border-color: var(--secondary-purple);
+}
+
+.create-task-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #8338ec;
+  color: white;
+}
+
+.create-task-btn:hover {
+  background-color: var(--secondary-purple);
+  border-color: var(--secondary-purple);
+}
