@@ -40,21 +40,21 @@ button:hover {
   margin-right: auto;
 }
 
-.create-employee-btn,
-.create-task-btn {
+.header-btn {
+  background-color: white;
   border: 1px solid var(--primary-purple);
   border-radius: 5px;
   padding: 10px 20px;
   transition: background-color 0.2s, border-color 0.2s;
 }
 
+.header-btn:hover {
+  border-color: var(--secondary-purple);
+}
+
 .create-employee-btn {
   margin-right: 40px;
   background-color: white;
-}
-
-.create-employee-btn:hover {
-  border-color: var(--secondary-purple);
 }
 
 .create-task-btn {
@@ -73,4 +73,10 @@ button:hover {
 .create-task-btn:hover {
   background-color: var(--secondary-purple);
   border-color: var(--secondary-purple);
+}
+
+.form-requirement {
+  font-weight: 350 !important;
+  font-size: 10px !important;
+  color: #6c757d !important;
 }

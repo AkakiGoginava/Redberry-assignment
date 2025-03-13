@@ -10,11 +10,74 @@
         <img src="resources/SVG/Logo.svg" />
       </div>
 
-      <button class="create-employee-btn">თანამშრომლის შექმნა</button>
-      <button class="create-task-btn">
+      <button class="create-employee-btn header-btn">
+        თანამშრომლის შექმნა
+      </button>
+      <button class="create-task-btn header-btn">
         <img src="resources/SVG/Add.svg" />შექმენი ახალი დავალება
       </button>
     </header>
+
+    <div class="background-blur"></div>
+    <div class="create-employee-modal">
+      <button class="exit-cross-btn">
+        <img src="./resources/SVG/ExitCross.svg" />
+      </button>
+
+      <form type="/submit" class="create-employee-form">
+        <h1>თანამშრომლის დამატება</h1>
+
+        <div class="form-name-surname">
+          <div class="form-name">
+            <label for="name">სახელი*</label>
+            <input type="text" id="name" />
+            <label class="form-requirement" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
+              სიმბოლო</label
+            >
+            <label class="form-requirement" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 2
+              სიმბოლო</label
+            >
+          </div>
+
+          <div class="form-surname">
+            <label for="surname">გვარი*</label>
+            <input type="text" id="surname" />
+            <label class="form-requirement" for="surname"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
+              სიმბოლო</label
+            >
+            <label class="form-requirement" for="surname"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 2
+              სიმბოლო</label
+            >
+          </div>
+        </div>
+
+        <div class="form-avatar">
+          <label for="avatar">ავატარი*</label>
+          <input
+            type="file"
+            class="avatar-input"
+            id="avatar"
+            accept="image/*"
+          />
+        </div>
+
+        <div class="form-department">
+          <label for="department">დეპარტამენტი*</label>
+          <input type="text" id="department" readonly />
+        </div>
+
+        <div class="form-btns">
+          <button class="exit-btn header-btn">გაუქმება</button>
+          <button type="submit" class="submit-btn header-btn">
+            დაამატე თანამშრომელი
+          </button>
+        </div>
+      </form>
+    </div>
 
     <main>
       <header class="main-header">

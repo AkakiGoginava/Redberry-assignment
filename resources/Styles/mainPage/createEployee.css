@@ -1,0 +1,132 @@
+.create-employee-modal {
+  position: absolute;
+  top: 118px;
+  left: 503px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 50px 60px 50px;
+  gap: 37px;
+  border-radius: 10px;
+  background-color: white;
+  z-index: 10;
+}
+
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(13, 15, 16, 0.15);
+  backdrop-filter: blur(10px);
+  z-index: 9;
+}
+
+.exit-cross-btn {
+  border: none;
+  background: none;
+  margin-left: auto;
+}
+
+.create-employee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.create-employee-form label {
+  color: rgba(52, 58, 64, 1);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.create-employee-form input {
+  width: 384px;
+  height: 42px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.create-employee-form input:focus {
+  outline: 1px solid #8338ec;
+}
+
+.create-employee-form h1 {
+  margin-top: 0;
+  font-size: 32px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.form-name-surname {
+  display: flex;
+  gap: 45px;
+}
+
+.form-name,
+.form-surname {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form-avatar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+#avatar {
+  width: 100%;
+  height: 120px;
+  border: none;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23CED4DAFF' stroke-width='1' stroke-dasharray='5' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 8px;
+  text-align: center;
+  line-height: 100px;
+  padding-bottom: 20px;
+}
+
+.form-department {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+#department {
+  background: url("/Redberry-assignment/resources/SVG/DownArrowSmall.svg")
+    no-repeat right 10px center;
+  caret-color: transparent;
+}
+
+#department:focus {
+  position: absolute;
+  background: url("/Redberry-assignment/resources/SVG/UpArrow.svg") no-repeat
+    right 10px center;
+}
+
+#department:hover {
+  cursor: pointer;
+}
+
+.form-btns {
+  display: flex;
+  gap: 22px;
+}
+
+.exit-btn {
+  margin-left: auto;
+}
+
+.submit-btn {
+  background-color: #8338ec;
+  font-size: 18px;
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #b588f4;
+}
