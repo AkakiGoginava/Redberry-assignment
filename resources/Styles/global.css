@@ -25,6 +25,10 @@ body {
   overflow: hidden;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 .site-header {
   display: flex;
   align-items: center;

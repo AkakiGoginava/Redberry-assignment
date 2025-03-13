@@ -1,4 +1,5 @@
 @import url("../global.css");
+@import url("./filterDropDown.css");
 
 h1 {
   font-weight: 600;
@@ -7,6 +8,7 @@ h1 {
 }
 
 .filter-tab {
+  position: relative;
   display: flex;
   justify-content: space-between;
   padding: 9px 20px;
