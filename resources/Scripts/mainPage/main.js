@@ -47,7 +47,11 @@ const generateMarkup = function (task) {
     </div>`;
 };
 
-const renderLists = function () {
+export const renderLists = function () {
+  document.querySelectorAll(".task-list").forEach((list) => {
+    list.innerHTML = "";
+  });
+
   state.taskArray.forEach((task) => {
     let locationClassName;
     switch (task.status.id) {
@@ -66,11 +70,20 @@ const renderLists = function () {
     }
 
     const taskCardHTML = generateMarkup(task);
+    const { filter } = state;
 
-    document
-      .querySelector(locationClassName)
-      .querySelector(".task-list")
-      .insertAdjacentHTML("beforeend", taskCardHTML);
+    if (
+      (filter.departments.includes(task.department.id) ||
+        filter.departments.length === 0) &&
+      (filter.employees.includes(task.employee.id) ||
+        filter.employees.length === 0) &&
+      (filter.priorities.includes(-(task.priority.id - 4)) ||
+        filter.priorities.length === 0)
+    )
+      document
+        .querySelector(locationClassName)
+        .querySelector(".task-list")
+        .insertAdjacentHTML("beforeend", taskCardHTML);
   });
 };
 

@@ -5,7 +5,11 @@ export const state = {
   departmentArray: [],
   employeeArray: [],
   priorityArray: [],
-  filter: [],
+  filter: {
+    departments: [],
+    employees: [],
+    priorities: [],
+  },
 };
 
 await fetch("https://momentum.redberryinternship.ge/api/tasks", {

@@ -43,7 +43,7 @@
   left: 0;
   height: 22px;
   width: 22px;
-  border: 1.5px solid #212529;
+  border: 1.5px solid #8338ec;
   border-radius: 6px;
 }
 
@@ -52,9 +52,8 @@
 }
 
 .filter input:checked + span::after {
-  content: url("../../SVG/Checkmark.svg");
+  content: url("../../SVG/CheckmarkPurple.svg");
   font-size: 16px;
-  color: #212529;
   position: absolute;
   left: 50%;
   top: 50%;

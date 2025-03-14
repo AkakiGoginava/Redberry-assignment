@@ -1,7 +1,9 @@
-import { state, months } from "../global.js";
+import { state } from "../global.js";
+import { renderLists } from "./main.js";
 
 const filterTab = document.querySelector(".filter-tab");
 const dropDownMenu = document.querySelector(".filter-drop-down");
+const confirmFilterBtn = document.querySelector(".confirm-filter-btn");
 
 const resetFilterBtns = function (targetBtn = null) {
   if (!dropDownMenu.classList.contains("hidden"))
@@ -37,7 +39,7 @@ const generateFilterMarkup = function (type) {
 
   dataArray.forEach((item) => {
     markup += `<label class="filter">
-                <input type="checkbox" id="${item.id}" />
+                <input class="filter-checkbox" type="checkbox" data-type="${type}" data-id="${item.id}" />
                 <span></span>
                 <label for="${item.id}">${item.name}</label>
               </label>`;
@@ -66,6 +68,23 @@ filterTab.addEventListener("click", function (e) {
     .querySelector(".filter-input")
     .insertAdjacentHTML("beforeend", markup);
 
+  document.querySelectorAll(".filter-checkbox").forEach((el) => {
+    switch (el.dataset.type) {
+      case "department":
+        if (state.filter.departments.includes(parseInt(el.dataset.id)))
+          el.checked = true;
+        break;
+      case "priority":
+        if (state.filter.priorities.includes(parseInt(el.dataset.id)))
+          el.checked = true;
+        break;
+      case "employee":
+        if (state.filter.employees.includes(parseInt(el.dataset.id)))
+          el.checked = true;
+        break;
+    }
+  });
+
   if (filterBtn.classList.contains("active"))
     dropDownMenu.classList.remove("hidden");
   else dropDownMenu.classList.add("hidden");
@@ -75,6 +94,42 @@ window.addEventListener("click", function (e) {
   if (
     !e.target.closest(".filter-btn") &&
     !e.target.closest(".filter-drop-down")
-  )
+  ) {
     resetFilterBtns();
+  }
+});
+
+confirmFilterBtn.addEventListener("click", function () {
+  const dataType = dropDownMenu.querySelector(".filter-checkbox").dataset.type;
+
+  switch (dataType) {
+    case "department":
+      state.filter.departments = [];
+      break;
+    case "employee":
+      state.filter.employees = [];
+      break;
+    case "priority":
+      state.filter.priorities = [];
+      break;
+  }
+
+  dropDownMenu.querySelectorAll(".filter-checkbox").forEach((el) => {
+    if (el.checked) {
+      switch (el.dataset.type) {
+        case "department":
+          state.filter.departments.push(parseInt(el.dataset.id));
+          break;
+        case "employee":
+          state.filter.employees.push(parseInt(el.dataset.id));
+          break;
+        case "priority":
+          state.filter.priorities.push(parseInt(el.dataset.id));
+          break;
+      }
+    }
+  });
+
+  resetFilterBtns();
+  renderLists();
 });
