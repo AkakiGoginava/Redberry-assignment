@@ -2,7 +2,7 @@
   position: absolute;
   top: 118px;
   left: 503px;
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 40px 50px 60px 50px;
   gap: 37px;
@@ -12,6 +12,7 @@
 }
 
 .background-blur {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;

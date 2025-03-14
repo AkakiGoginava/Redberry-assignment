@@ -134,7 +134,7 @@ h1 {
   border-color: #ffbe0b;
 }
 
-.priority-hight {
+.priority-high {
   color: #fa4d4d;
   border-color: #fa4d4d;
 }
@@ -148,19 +148,19 @@ h1 {
   margin-left: 10px;
 }
 
-.department-design {
+.department-1 {
   background-color: #ff66a8;
 }
 
-.department-marketing {
+.department-2 {
   background-color: #fd9a6a;
 }
 
-.departmment-logistics {
+.departmment-3 {
   background-color: #89b6ff;
 }
 
-.department-info {
+.department-4 {
   background-color: #ffd86d;
 }
 

@@ -1,0 +1,77 @@
+import { state, months, priorities } from "../global.js";
+
+const generateMarkup = function (task) {
+  let { description } = task;
+  if (description.length > 100) {
+    description = description.slice(0, 100) + "...";
+  }
+
+  const due_date = task.due_date.split("-");
+
+  return `
+    <div class="task-card">
+      <div class="task-card-header">
+          <div class="task-card-tags">
+            <div class="priority priority-${task.priority.name.toLowerCase()}">
+              <img src="${task.priority.icon}" />
+              <p class="priority-${task.priority.name.toLowerCase()}">${
+    priorities[task.priority.id - 1]
+  }</p>
+            </div>
+            <p class="department department-${task.department.id}">${
+    task.department.name
+  }</p>
+          </div>
+          <p class="task-date">${due_date[2]} ${months[due_date[1] - 1]}, ${
+    due_date[0]
+  }</p>
+        </div>
+
+        <div class="task-body">
+          <h6 class="task-name">${task.name}</h6>
+          <p class="task-desc">
+            ${description}
+          </p>
+        </div>
+
+        <div class="task-footer">
+          <img
+            class="task-mini-avatar"
+            src="${task.employee.avatar}"
+          />
+          <div class="task-comment-count">
+            <img src="resources/SVG/Comment.svg" />
+            <span>8</span>
+          </div>
+        </div>
+    </div>`;
+};
+
+const renderLists = function () {
+  state.taskArray.forEach((task) => {
+    let locationClassName;
+    switch (task.status.id) {
+      case 1:
+        locationClassName = ".list-pending";
+        break;
+      case 2:
+        locationClassName = ".list-inprogress";
+        break;
+      case 3:
+        locationClassName = ".list-testing";
+        break;
+      case 4:
+        locationClassName = ".list-finished";
+        break;
+    }
+
+    const taskCardHTML = generateMarkup(task);
+
+    document
+      .querySelector(locationClassName)
+      .querySelector(".task-list")
+      .insertAdjacentHTML("beforeend", taskCardHTML);
+  });
+};
+
+renderLists();

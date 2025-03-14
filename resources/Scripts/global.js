@@ -1,13 +1,83 @@
-const TOKEN = "9e6c758a-eaa2-40d8-b50c-11644912ac6d";
+export const TOKEN = "9e6c758a-eaa2-40d8-b50c-11644912ac6d";
 
-let taskArray = [
+export const state = {
+  taskArray: [],
+  departmentArray: [],
+  employeeArray: [],
+  priorityArray: [],
+  filter: [],
+};
+
+await fetch("https://momentum.redberryinternship.ge/api/tasks", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    state.taskArray = data;
+  });
+
+await fetch("https://momentum.redberryinternship.ge/api/employees", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    state.employeeArray = data;
+  });
+
+await fetch("https://momentum.redberryinternship.ge/api/departments", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    state.departmentArray = data;
+  });
+
+await fetch("https://momentum.redberryinternship.ge/api/priorities", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    state.priorityArray = data;
+  });
+
+export const months = [
+  "იანვ",
+  "თებ",
+  "მარ",
+  "აპრ",
+  "მაი",
+  "ივნ",
+  "ივლ",
+  "აგვ",
+  "სექ",
+  "ოქტ",
+  "ნოე",
+  "დეკ",
+];
+
+export const priorities = ["მაღალი", "საშუალო", "დაბალი"];
+
+state.taskArray = [
   {
     id: 1,
     name: "შესარჩევი დავალება",
-    description: "შექმენით ვებ გვერდი დიზაინის მიხედვით",
+    description:
+      "შექმენით ვებ გვერდი დიზაინის მიხედვით aaasddasdasd asdasdasdasdska gjhsdlkgjhadf lkgjhadfl kjgh asd asd asd asfas sd fsd fsd f",
     due_date: "2025-12-31",
     status: {
-      id: 2,
+      id: 1,
       name: "Todo",
     },
     priority: {
@@ -116,8 +186,8 @@ let taskArray = [
     },
     priority: {
       id: 1,
-      name: "Low",
-      icon: "https://momentum.redberryinternship.ge/storage/priority-icons/Low.svg",
+      name: "High",
+      icon: "https://momentum.redberryinternship.ge/storage/priority-icons/High.svg",
     },
     department: {
       id: 1,
@@ -167,9 +237,9 @@ let taskArray = [
       name: "Todo",
     },
     priority: {
-      id: 1,
-      name: "High",
-      icon: "https://momentum.redberryinternship.ge/storage/priority-icons/High.svg",
+      id: 2,
+      name: "Medium",
+      icon: "https://momentum.redberryinternship.ge/storage/priority-icons/Medium.svg",
     },
     department: {
       id: 1,
@@ -184,91 +254,3 @@ let taskArray = [
     },
   },
 ];
-
-taskArray.forEach((task) => {
-  let locationClassName;
-  switch (task.status.id) {
-    case 1:
-      locationClassName = ".list-pending";
-      break;
-    case 2:
-      locationClassName = ".list-inprogress";
-      break;
-    case 3:
-      locationClassName = ".list-testing";
-      break;
-    case 4:
-      locationClassName = ".list-finished";
-      break;
-  }
-
-  let priorityName;
-  switch (task.priority.id) {
-    case 1:
-      priorityName = "მაღალი";
-      break;
-    case 2:
-      priorityName = "საშუალო";
-      break;
-    case 3:
-      priorityName = "დაბალი";
-      break;
-  }
-
-  const due_date = task.due_date.split("-");
-  const months = [
-    "იანვ",
-    "თებ",
-    "მარ",
-    "აპრ",
-    "მაი",
-    "ივნ",
-    "ივლ",
-    "აგვ",
-    "სექ",
-    "ოქტ",
-    "ნოე",
-    "დეკ",
-  ];
-
-  const taskCardHTML = `
-    <div class="task-card">
-      <div class="task-card-header">
-          <div class="task-card-tags">
-            <div class="priority priority-${task.priority.name.toLowerCase()}">
-              <img src="${task.priority.icon}" />
-              <p class="priority-${task.priority.name.toLowerCase()}">${priorityName}</p>
-            </div>
-            <p class="department department-${task.department.id}">${
-    task.department.name
-  }</p>
-          </div>
-          <p class="task-date">${due_date[2]} ${months[due_date[1] - 1]}, ${
-    due_date[0]
-  }</p>
-        </div>
-
-        <div class="task-body">
-          <h6 class="task-name">${task.name}</h6>
-          <p class="task-desc">
-            ${task.description}
-          </p>
-        </div>
-
-        <div class="task-footer">
-          <img
-            class="task-mini-avatar"
-            src="${task.employee.avatar}"
-          />
-          <div class="task-comment-count">
-            <img src="resources/SVG/Comment.svg" />
-            <span>8</span>
-          </div>
-        </div>
-    </div>`;
-
-  document
-    .querySelector(locationClassName)
-    ?.querySelector(".task-list")
-    ?.insertAdjacentHTML("beforeend", taskCardHTML);
-});

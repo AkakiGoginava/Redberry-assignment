@@ -1,5 +1,5 @@
 .filter-drop-down {
-  display: none;
+  display: fixed;
   flex-direction: column;
   position: absolute;
   top: 51px;
@@ -10,6 +10,10 @@
   background-color: white;
   border: 0.5px solid #8338ec;
   border-radius: 10px;
+}
+
+.hidden {
+  display: none;
 }
 
 .filter-input {
@@ -62,7 +66,7 @@
   left: 35px;
 }
 
-#filter-btn {
+#confirm-filter-btn {
   padding: 8px 20px;
   color: white;
   background-color: #8338ec;
@@ -74,6 +78,10 @@
   transition: background-color 0.2s, border-color 0.2s;
 }
 
-#filter-btn:hover {
+#confirm-filter-btn:hover {
   background-color: #b588f4;
+}
+
+.active {
+  color: #8338ec;
 }

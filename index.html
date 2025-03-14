@@ -2,6 +2,7 @@
 
 <html>
   <head>
+    <title>Redberry Assignment</title>
     <link href="resources/Styles/mainPage/main.css" rel="stylesheet" />
   </head>
   <body>
@@ -84,44 +85,21 @@
         <h1>დავალებების გვერდი</h1>
 
         <div class="filter-tab">
-          <button class="filter-department">
+          <button class="filter-btn" data-type="department">
             დეპარტამენტი <img src="resources/SVG/DownArrow.svg" />
           </button>
-          <button class="filter-priority">
-            პრიპრიტეტი <img src="resources/SVG/DownArrow.svg" />
+          <button class="filter-btn" data-type="priority">
+            პრიორიტეტი <img src="resources/SVG/DownArrow.svg" />
           </button>
-          <button class="filter-employee">
+          <button class="filter-btn" data-type="employee">
             თანამშრომელი <img src="resources/SVG/DownArrow.svg" />
           </button>
 
-          <div class="filter-drop-down">
+          <div class="filter-drop-down hidden">
             <div class="filter-input">
-              <label class="filter">
-                <input type="checkbox" id="filter1" />
-                <span></span>
-                <label for="filter1">placeholder1</label>
-              </label>
-
-              <label class="filter">
-                <input type="checkbox" id="filter1" />
-                <span></span>
-                <label for="filter1">placeholder1</label>
-              </label>
-
-              <label class="filter">
-                <input type="checkbox" id="filter1" />
-                <span></span>
-                <label for="filter1">placeholder1</label>
-              </label>
-
-              <label class="filter">
-                <input type="checkbox" id="filter1" />
-                <span></span>
-                <label for="filter1">placeholder1</label>
-              </label>
             </div>
 
-            <button class="filter-btn" id="filter-btn">არჩევა</button>
+            <button class="confirm-filter-btn" id="confirm-filter-btn">არჩევა</button>
           </div>
         </div>
       </header>
@@ -131,195 +109,7 @@
           <h2>დასაწყები</h2>
 
           <div class="task-list">
-            <!--PLACEHOLDER-->
-            <div class="task-card">
-              <div class="task-card-header">
-                <div class="task-card-tags">
-                  <div class="priority priority-medium">
-                    <img src="resources/SVG/Medium.svg" />
-                    <p class="priority-medium">საშუალო</p>
-                  </div>
-                  <p class="department department-design">დიზაინი</p>
-                </div>
-                <p class="task-date">22 იანვ, 2022</p>
-              </div>
-
-              <div class="task-body">
-                <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
-                <p class="task-desc">
-                  შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                  სექციებს, ნავიგაციას.
-                </p>
-              </div>
-
-              <div class="task-footer">
-                <img
-                  class="task-mini-avatar"
-                  src="resources/placeholder.webp"
-                />
-                <div class="task-comment-count">
-                  <img src="resources/SVG/Comment.svg" />
-                  <span>8</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-card">
-              <div class="task-card-header">
-                <div class="task-card-tags">
-                  <div class="priority priority-medium">
-                    <img src="resources/SVG/Medium.svg" />
-                    <p class="priority-medium">საშუალო</p>
-                  </div>
-                  <p class="department department-design">დიზაინი</p>
-                </div>
-                <p class="task-date">22 იანვ, 2022</p>
-              </div>
-
-              <div class="task-body">
-                <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
-                <p class="task-desc">
-                  შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                  სექციებს, ნავიგაციას.
-                </p>
-              </div>
-
-              <div class="task-footer">
-                <img
-                  class="task-mini-avatar"
-                  src="resources/placeholder.webp"
-                />
-                <div class="task-comment-count">
-                  <img src="resources/SVG/Comment.svg" />
-                  <span>8</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-card">
-              <div class="task-card-header">
-                <div class="task-card-tags">
-                  <div class="priority priority-medium">
-                    <img src="resources/SVG/Medium.svg" />
-                    <p class="priority-medium">საშუალო</p>
-                  </div>
-                  <p class="department department-design">დიზაინი</p>
-                </div>
-                <p class="task-date">22 იანვ, 2022</p>
-              </div>
-
-              <div class="task-body">
-                <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
-                <p class="task-desc">
-                  შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                  სექციებს, ნავიგაციას.
-                </p>
-              </div>
-
-              <div class="task-footer">
-                <img
-                  class="task-mini-avatar"
-                  src="resources/placeholder.webp"
-                />
-                <div class="task-comment-count">
-                  <img src="resources/SVG/Comment.svg" />
-                  <span>8</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-card">
-              <div class="task-card-header">
-                <div class="task-card-tags">
-                  <div class="priority priority-medium">
-                    <img src="resources/SVG/Medium.svg" />
-                    <p class="priority-medium">საშუალო</p>
-                  </div>
-                  <p class="department department-design">დიზაინი</p>
-                </div>
-                <p class="task-date">22 იანვ, 2022</p>
-              </div>
-
-              <div class="task-body">
-                <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
-                <p class="task-desc">
-                  შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                  სექციებს, ნავიგაციას.
-                </p>
-              </div>
-
-              <div class="task-footer">
-                <img
-                  class="task-mini-avatar"
-                  src="resources/placeholder.webp"
-                />
-                <div class="task-comment-count">
-                  <img src="resources/SVG/Comment.svg" />
-                  <span>8</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-card">
-              <div class="task-card-header">
-                <div class="task-card-tags">
-                  <div class="priority priority-medium">
-                    <img src="resources/SVG/Medium.svg" />
-                    <p class="priority-medium">საშუალო</p>
-                  </div>
-                  <p class="department department-design">დიზაინი</p>
-                </div>
-                <p class="task-date">22 იანვ, 2022</p>
-              </div>
-
-              <div class="task-body">
-                <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
-                <p class="task-desc">
-                  შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                  სექციებს, ნავიგაციას.
-                </p>
-              </div>
-
-              <div class="task-footer">
-                <img
-                  class="task-mini-avatar"
-                  src="resources/placeholder.webp"
-                />
-                <div class="task-comment-count">
-                  <img src="resources/SVG/Comment.svg" />
-                  <span>8</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-card">
-              <div class="task-card-header">
-                <div class="task-card-tags">
-                  <div class="priority priority-medium">
-                    <img src="resources/SVG/Medium.svg" />
-                    <p class="priority-medium">საშუალო</p>
-                  </div>
-                  <p class="department department-design">დიზაინი</p>
-                </div>
-                <p class="task-date">22 იანვ, 2022</p>
-              </div>
-
-              <div class="task-body">
-                <h6 class="task-name">RedBerry-ს საიტის ლენდინგის დიზაინი</h6>
-                <p class="task-desc">
-                  შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                  სექციებს, ნავიგაციას.
-                </p>
-              </div>
-
-              <div class="task-footer">
-                <img
-                  class="task-mini-avatar"
-                  src="resources/placeholder.webp"
-                />
-                <div class="task-comment-count">
-                  <img src="resources/SVG/Comment.svg" />
-                  <span>8</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--PLACEHOLDER-->
+            
         </section>
 
         <section class="list list-inprogress">
@@ -338,5 +128,8 @@
         </section>
       </div>
     </main>
+
+    <script type="module" src="./resources/Scripts/mainPage/main.js"></script>
+    <script type="module" src="./resources/Scripts/mainPage/filterDropDown.js"></script>
   </body>
 </html>
