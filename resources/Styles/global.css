@@ -12,6 +12,7 @@
   padding: 0;
   font-family: "FiraGo", sans-serif;
   font-weight: 400;
+  font-size: 16px;
 }
 
 body {
@@ -27,6 +28,10 @@ body {
 
 button:hover {
   cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .site-header {

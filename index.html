@@ -19,9 +19,9 @@
       </button>
     </header>
 
-    <div class="background-blur"></div>
-    <div class="create-employee-modal">
-      <button class="exit-cross-btn">
+    <div class="background-blur hidden"></div>
+    <div class="create-employee-modal hidden">
+      <button class="employee-modal-exit exit-cross-btn">
         <img src="./resources/SVG/ExitCross.svg" />
       </button>
 
@@ -32,12 +32,12 @@
           <div class="form-name">
             <label for="name">სახელი*</label>
             <input type="text" id="name" />
-            <label class="form-requirement" for="name"
+            <label class="form-requirement min-symbol-name" for="name"
               ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
               სიმბოლო</label
             >
-            <label class="form-requirement" for="name"
-              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 2
+            <label class="form-requirement max-symbol-name" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
               სიმბოლო</label
             >
           </div>
@@ -45,12 +45,12 @@
           <div class="form-surname">
             <label for="surname">გვარი*</label>
             <input type="text" id="surname" />
-            <label class="form-requirement" for="surname"
+            <label class="form-requirement min-symbol-surname" for="surname"
               ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
               სიმბოლო</label
             >
-            <label class="form-requirement" for="surname"
-              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 2
+            <label class="form-requirement max-symbol-surname" for="surname"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
               სიმბოლო</label
             >
           </div>
@@ -58,12 +58,18 @@
 
         <div class="form-avatar">
           <label for="avatar">ავატარი*</label>
-          <input
-            type="file"
-            class="avatar-input"
-            id="avatar"
-            accept="image/*"
-          />
+          <div class="avatar-upload">
+            <label for="img-input">
+              <div class="preview-img-group">
+                <img id="preview-image" src="./resources/SVG/PreviewImg.svg" />
+                <button class="clear-img-btn hidden" type="button">
+                  <img src="./resources/SVG/Trash.svg" />
+                </button>
+              </div>
+              <span id="img-input-label">ატვირთე ფოტო</span>
+            </label>
+            <input type="file" id="img-input" accept="image/*" class="hidden" />
+          </div>
         </div>
 
         <div class="form-department">
@@ -72,7 +78,9 @@
         </div>
 
         <div class="form-btns">
-          <button class="exit-btn header-btn">გაუქმება</button>
+          <button type="button" class="employee-modal-exit exit-btn header-btn">
+            გაუქმება
+          </button>
           <button type="submit" class="submit-btn header-btn">
             დაამატე თანამშრომელი
           </button>
@@ -86,13 +94,13 @@
 
         <div class="filter-tab">
           <button class="filter-btn" data-type="department">
-            დეპარტამენტი <img src="resources/SVG/DownArrow.svg" />
+            <span>დეპარტამენტი</span> <img src="resources/SVG/DownArrow.svg" />
           </button>
           <button class="filter-btn" data-type="priority">
-            პრიორიტეტი <img src="resources/SVG/DownArrow.svg" />
+            <span>პრიორიტეტი</span> <img src="resources/SVG/DownArrow.svg" />
           </button>
           <button class="filter-btn" data-type="employee">
-            თანამშრომელი <img src="resources/SVG/DownArrow.svg" />
+            <span>თანამშრომელი</span> <img src="resources/SVG/DownArrow.svg" />
           </button>
 
           <div class="filter-drop-down hidden">
@@ -132,6 +140,10 @@
     <script
       type="module"
       src="./resources/Scripts/mainPage/filterDropDown.js"
+    ></script>
+    <script
+      type="module"
+      src="./resources/Scripts/mainPage/createEmployee.js"
     ></script>
   </body>
 </html>
