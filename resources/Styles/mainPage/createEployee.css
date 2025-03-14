@@ -1,3 +1,5 @@
+@import url(../dropDownMenu.css);
+
 .create-employee-modal {
   position: absolute;
   display: flex;
@@ -40,6 +42,10 @@
   font-weight: 500;
 }
 
+.form-requirement img {
+  margin-right: 2px;
+}
+
 .invalid-label {
   color: #fa4d4d !important;
 }
@@ -48,12 +54,20 @@
   color: #08a508 !important;
 }
 
-.create-employee-form input {
+.create-employee-form input,
+#department-input {
   width: 384px;
   height: 42px;
   border: 1px solid #ced4da;
   border-radius: 6px;
-  padding: 10px;
+  font-weight: 350;
+  font-size: 14px;
+}
+
+.dropdown-header span,
+.dropdown-option {
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .create-employee-form input:focus {
@@ -83,6 +97,7 @@
 #surname {
   background: url("/Redberry-assignment/resources/SVG/Information.svg")
     no-repeat right 10px center;
+  padding: 10px;
 }
 
 .form-avatar {
@@ -149,23 +164,6 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-}
-
-#department {
-  background: url("/Redberry-assignment/resources/SVG/DownArrowSmall.svg")
-    no-repeat right 10px center;
-  caret-color: transparent;
-}
-
-#department:focus {
-  position: absolute;
-  background: url("/Redberry-assignment/resources/SVG/UpArrow.svg") no-repeat
-    right 10px center;
-  outline: 1px solid #8338ec;
-}
-
-#department:hover {
-  cursor: pointer;
 }
 
 .form-btns {

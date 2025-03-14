@@ -1,3 +1,5 @@
+import * as dropdown from "../dropDownMenu.js";
+
 const openModalBtn = document.querySelector(".create-employee-btn");
 const blur = document.querySelector(".background-blur");
 const createEmployeeModal = document.querySelector(".create-employee-modal");

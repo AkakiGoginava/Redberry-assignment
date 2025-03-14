@@ -74,7 +74,20 @@
 
         <div class="form-department">
           <label for="department">დეპარტამენტი*</label>
-          <input type="text" id="department" readonly />
+          <div class="dropdown-menu" id="department-input">
+            <div class="dropdown-header">
+              <span></span>
+              <img src="resources/SVG/DownArrowSmall.svg" />
+            </div>
+            <div class="dropdown-options" id="dropdown-options">
+              <div class="dropdown-option" data-value="option1">Option 1</div>
+              <div class="dropdown-option" data-value="option2">Option 2</div>
+              <div class="dropdown-option" data-value="option3">Option 3</div>
+              <div class="dropdown-option" data-value="option4">Option 4</div>
+              <div class="dropdown-option" data-value="option4">Option 5</div>
+            </div>
+          </div>
+          <input type="hidden" id="selected-value" name="selected-value" />
         </div>
 
         <div class="form-btns">
