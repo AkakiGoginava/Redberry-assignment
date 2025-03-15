@@ -32,7 +32,8 @@ await fetch("https://momentum.redberryinternship.ge/api/employees", {
   .then((response) => response.json())
   .then((data) => {
     state.employeeArray = data;
-  });
+  })
+  .then(console.log(state.employeeArray));
 
 await fetch("https://momentum.redberryinternship.ge/api/departments", {
   method: "GET",
@@ -100,6 +101,7 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 0,
   },
   {
     id: 2,
@@ -126,6 +128,7 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 4,
   },
   {
     id: 3,
@@ -152,6 +155,7 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 2,
   },
   {
     id: 4,
@@ -178,6 +182,7 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 10,
   },
   {
     id: 5,
@@ -204,6 +209,7 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 20,
   },
   {
     id: 1,
@@ -230,6 +236,7 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 13,
   },
   {
     id: 1,
@@ -256,5 +263,6 @@ state.taskArray = [
       avatar: "resources/placeholder.webp",
       department_id: 1,
     },
+    total_comments: 8,
   },
 ];

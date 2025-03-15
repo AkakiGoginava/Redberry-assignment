@@ -41,7 +41,7 @@ const generateMarkup = function (task) {
           />
           <div class="task-comment-count">
             <img src="resources/SVG/Comment.svg" />
-            <span>8</span>
+            <span>${task.total_comments}</span>
           </div>
         </div>
     </div>`;

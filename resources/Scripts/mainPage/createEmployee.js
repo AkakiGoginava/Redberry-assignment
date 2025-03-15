@@ -1,12 +1,15 @@
+import { state, TOKEN } from "../global.js";
 import * as dropdown from "../dropDownMenu.js";
 
 const openModalBtn = document.querySelector(".create-employee-btn");
 const blur = document.querySelector(".background-blur");
 const createEmployeeModal = document.querySelector(".create-employee-modal");
 const exitBtns = document.querySelectorAll(".employee-modal-exit");
+const submitBtn = document.querySelector(".submit-btn");
+const departmentInput = document.querySelector(".department-input");
 const nameInput = [
-  document.querySelector("#name"),
-  document.querySelector("#surname"),
+  document.getElementById("name"),
+  document.getElementById("surname"),
 ];
 const formCheck = {
   name: false,
@@ -14,6 +17,7 @@ const formCheck = {
   avatar: false,
   department: false,
 };
+let avatarFile;
 
 const clearImgInput = function () {
   document.getElementById("preview-image").src =
@@ -23,9 +27,10 @@ const clearImgInput = function () {
   document.getElementById("img-input-label").classList.remove("hidden");
 
   formCheck.avatar = false;
+  avatarFile = null;
 };
 
-const toggelModal = function () {
+const closeModal = function () {
   createEmployeeModal.classList.toggle("hidden");
   blur.classList.toggle("hidden");
 
@@ -40,6 +45,9 @@ const toggelModal = function () {
     el.classList.remove("valid-label");
     el.querySelector("img").src = "./resources/SVG/CheckmarkGray.svg";
   });
+
+  dropdown.clearInput();
+  formCheck.department = false;
 };
 
 const checkNameInput = function (val, id) {
@@ -83,8 +91,52 @@ const checkNameInput = function (val, id) {
   formCheck[id] = languageCheck && lengthCheck;
 };
 
+const generateDepartmentsMarkup = function () {
+  let markup = ``;
+
+  state.departmentArray.forEach((department) => {
+    markup += `<div class="dropdown-option" data-value="${department.id}">${department.name}</div>`;
+  });
+
+  return markup;
+};
+
+const submitForm = async function () {
+  let validInput = true;
+
+  if (departmentInput.value !== "") formCheck.department = true;
+
+  Object.values(formCheck).forEach((val) => {
+    if (!val) validInput = false;
+  });
+
+  if (!validInput) false;
+
+  const formData = new FormData();
+
+  formData.append("name", nameInput[0].value);
+  formData.append("surname", nameInput[1].value);
+  formData.append("avatar", avatarFile);
+  formData.append("department_id", departmentInput.value);
+
+  for (let [key, value] of formData.entries()) {
+    console.log(key, value);
+  }
+
+  return fetch("https://momentum.redberryinternship.ge/api/employees", {
+    method: "POST",
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  })
+    .then((response) => response)
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
+};
+
 openModalBtn.addEventListener("click", function () {
-  toggelModal();
+  closeModal();
 });
 
 window.addEventListener("click", function (e) {
@@ -93,13 +145,13 @@ window.addEventListener("click", function (e) {
     !openModalBtn.contains(e.target) &&
     !createEmployeeModal.classList.contains("hidden")
   ) {
-    toggelModal();
+    closeModal();
   }
 });
 
 exitBtns.forEach((el) => {
   el.addEventListener("click", function () {
-    toggelModal();
+    closeModal();
   });
 });
 
@@ -113,13 +165,13 @@ document
   .getElementById("img-input")
   .addEventListener("change", function (event) {
     const previewImg = document.getElementById("preview-image");
-    const file = event.target.files[0];
-    if (file) {
+    avatarFile = event.target.files[0];
+    if (avatarFile) {
       const reader = new FileReader();
       reader.onload = function (e) {
         previewImg.src = e.target.result;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(avatarFile);
     }
 
     previewImg.classList.add("preview-img");
@@ -129,9 +181,19 @@ document
       .querySelector("span")
       .classList.add("hidden");
 
-    formCheck.avatar = file && file.size / 1024 <= 600;
+    formCheck.avatar = avatarFile && avatarFile.size / 1024 <= 600;
   });
 
 document.querySelector(".clear-img-btn").addEventListener("click", function () {
   clearImgInput();
+});
+
+document
+  .querySelector(".dropdown-options")
+  .insertAdjacentHTML("beforeend", generateDepartmentsMarkup());
+
+submitBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  submitForm();
 });

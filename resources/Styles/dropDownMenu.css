@@ -28,6 +28,8 @@
   border-bottom-left-radius: 6px;
   border-top: none;
   background-color: #fff;
+  max-height: 148px;
+  overflow-y: scroll;
 }
 
 .dropdown-option {
