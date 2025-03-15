@@ -7,49 +7,62 @@ const createEmployeeModal = document.querySelector(".create-employee-modal");
 const exitBtns = document.querySelectorAll(".employee-modal-exit");
 const submitBtn = document.querySelector(".submit-btn");
 const departmentInput = document.querySelector(".department-input");
+const previewImg = document.getElementById("preview-image");
+const clearImgBtn = document.querySelector(".clear-img-btn");
+const AvatarPlaceholderText = document.getElementById("img-input-label");
 const nameInput = [
   document.getElementById("name"),
   document.getElementById("surname"),
 ];
+
+// Form Input State Object
 const formCheck = {
   name: false,
   surname: false,
   avatar: false,
   department: false,
 };
-let avatarFile;
 
+// Clear Uploaded Image
 const clearImgInput = function () {
-  document.getElementById("preview-image").src =
-    "./resources/SVG/PreviewImg.svg";
-  document.getElementById("preview-image").classList.remove("preview-img");
-  document.querySelector(".clear-img-btn").classList.add("hidden");
-  document.getElementById("img-input-label").classList.remove("hidden");
+  // Reset to Placeholder Image and Text
+  previewImg.src = "./resources/SVG/PreviewImg.svg";
+  previewImg.classList.remove("preview-img");
+  clearImgBtn.classList.add("hidden");
+  AvatarPlaceholderText.classList.remove("hidden");
 
+  // Update Input State
   formCheck.avatar = false;
-  avatarFile = null;
 };
 
+// Function For Closing and Resetting Form
 const closeModal = function () {
+  // Hide Modal
   createEmployeeModal.classList.toggle("hidden");
   blur.classList.toggle("hidden");
 
+  // Empty Text Input Fields
   createEmployeeModal.querySelectorAll("input").forEach((el) => {
     el.value = "";
   });
 
+  // Clear Uploaded Image
   clearImgInput();
 
+  // Reset Requirement Labels
   createEmployeeModal.querySelectorAll(".form-requirement").forEach((el) => {
     el.classList.remove("invalid-label");
     el.classList.remove("valid-label");
     el.querySelector("img").src = "./resources/SVG/CheckmarkGray.svg";
   });
 
+  // Clear Department Input and Reset Department Form State
   dropdown.clearInput();
   formCheck.department = false;
 };
 
+// Function For Validating Name and Surname Input
+// Using 'id' Argument to Identify Input Type
 const checkNameInput = function (val, id) {
   const minLabel = document.querySelector(`.min-symbol-${id}`);
   const minLabelCheck = minLabel.querySelector("img");
@@ -57,15 +70,18 @@ const checkNameInput = function (val, id) {
   const maxLabel = document.querySelector(`.max-symbol-${id}`);
   const maxLabelCheck = maxLabel.querySelector("img");
 
+  // Regex For English and Georgian Alphabet
   const english = /^[A-Za-z\s]+$/;
   const georgian = /^[\u10A0-\u10FF\s]+$/;
 
   let lengthCheck = false;
   let languageCheck = false;
 
+  // Check for Valid Length
   if (val.length < 2) {
     lengthCheck = false;
 
+    // Update Label
     minLabel.classList.add("invalid-label");
     minLabel.classList.remove("valid-label");
     minLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
@@ -87,10 +103,13 @@ const checkNameInput = function (val, id) {
     minLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
   }
 
+  // Check for Valid Alphabet
   languageCheck = english.test(val) ^ georgian.test(val);
+  // Update Input State Respectively Based on id
   formCheck[id] = languageCheck && lengthCheck;
 };
 
+// Generate Markup For Department Options
 const generateDepartmentsMarkup = function () {
   let markup = ``;
 
@@ -101,29 +120,30 @@ const generateDepartmentsMarkup = function () {
   return markup;
 };
 
+// Event Handler For Submit Button
 const submitForm = async function () {
   let validInput = true;
 
   if (departmentInput.value !== "") formCheck.department = true;
 
+  // Check Form State
   Object.values(formCheck).forEach((val) => {
     if (!val) validInput = false;
   });
 
-  if (!validInput) false;
+  // Return if Any Input is Invalid
+  if (!validInput) return;
 
   const formData = new FormData();
+  const avatarFile = document.querySelector('input[type="file"]').files[0];
 
   formData.append("name", nameInput[0].value);
   formData.append("surname", nameInput[1].value);
   formData.append("avatar", avatarFile);
   formData.append("department_id", departmentInput.value);
 
-  for (let [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
-
-  return fetch("https://momentum.redberryinternship.ge/api/employees", {
+  // Send Employee Data
+  fetch("https://momentum.redberryinternship.ge/api/employees", {
     method: "POST",
     body: formData,
     headers: {
@@ -155,17 +175,18 @@ exitBtns.forEach((el) => {
   });
 });
 
+// Add Event Listeners to Name and Surname Inputs For Real-Time Validation
 nameInput.forEach((el) => {
   el.addEventListener("input", function () {
     checkNameInput(el.value, el.id);
   });
 });
 
+// Event Listener For Image Input
 document
   .getElementById("img-input")
   .addEventListener("change", function (event) {
-    const previewImg = document.getElementById("preview-image");
-    avatarFile = event.target.files[0];
+    const avatarFile = event.target.files[0];
     if (avatarFile) {
       const reader = new FileReader();
       reader.onload = function (e) {
@@ -174,24 +195,25 @@ document
       reader.readAsDataURL(avatarFile);
     }
 
+    // Remove Placeholders and Render Preview Image and Clear Button
     previewImg.classList.add("preview-img");
-    document.querySelector(".clear-img-btn").classList.remove("hidden");
-    document
-      .querySelector(".avatar-upload")
-      .querySelector("span")
-      .classList.add("hidden");
+    clearImgBtn.classList.remove("hidden");
+    AvatarPlaceholderText.classList.add("hidden");
 
+    // Update Input State Based on Uploaded Image size
     formCheck.avatar = avatarFile && avatarFile.size / 1024 <= 600;
   });
 
-document.querySelector(".clear-img-btn").addEventListener("click", function () {
+clearImgBtn.addEventListener("click", function () {
   clearImgInput();
 });
 
+// Render Department Options For Department Menu
 document
   .querySelector(".dropdown-options")
   .insertAdjacentHTML("beforeend", generateDepartmentsMarkup());
 
+// Event Listener For Submit Button
 submitBtn.addEventListener("click", function (e) {
   e.preventDefault();
 

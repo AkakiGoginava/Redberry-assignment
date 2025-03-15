@@ -32,8 +32,8 @@ await fetch("https://momentum.redberryinternship.ge/api/employees", {
   .then((response) => response.json())
   .then((data) => {
     state.employeeArray = data;
-  })
-  .then(console.log(state.employeeArray));
+    console.log(data);
+  });
 
 await fetch("https://momentum.redberryinternship.ge/api/departments", {
   method: "GET",

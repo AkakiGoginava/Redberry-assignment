@@ -20,45 +20,63 @@
   overflow-y: scroll;
 }
 
+.filter-checkbox {
+  display: none;
+}
+
 .filter {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  display: inline-block;
   position: relative;
-  min-height: 22px;
-}
-
-.filter input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.filter span {
-  position: absolute;
   top: 0;
   left: 0;
   height: 22px;
   width: 22px;
   border: 1.5px solid #8338ec;
   border-radius: 6px;
+  margin-right: 0 !important;
+  cursor: pointer;
 }
 
 .filter span:hover {
   cursor: pointer;
 }
 
-.filter input:checked + span::after {
+.filter span::after {
   content: url("../../SVG/CheckmarkPurple.svg");
   font-size: 16px;
   position: absolute;
+  display: none;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
+.filter-checkbox:checked + span::after {
+  display: block;
+}
+
 .filter label {
-  position: relative;
-  left: 35px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.option-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 15px;
+}
+
+.filter img {
+  height: 28px;
+  width: 28px;
+  border-radius: 14px;
 }
 
 #confirm-filter-btn {

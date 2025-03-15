@@ -6,6 +6,7 @@
     <link href="resources/Styles/mainPage/main.css" rel="stylesheet" />
   </head>
   <body>
+    <!-- Site Header -->
     <header class="site-header">
       <div class="logo">
         <img src="resources/SVG/Logo.svg" />
@@ -18,20 +19,26 @@
         <img src="resources/SVG/Add.svg" />შექმენი ახალი დავალება
       </button>
     </header>
+    <!------------------->
 
+    <!-- Create Employee Modal -->
     <div class="background-blur hidden"></div>
     <div class="create-employee-modal hidden">
       <button class="employee-modal-exit exit-cross-btn">
         <img src="./resources/SVG/ExitCross.svg" />
       </button>
 
+      <!-- Employee Form -->
       <form type="/submit" class="create-employee-form">
         <h1>თანამშრომლის დამატება</h1>
 
+        <!-- Name and Surname Input Fields -->
         <div class="form-name-surname">
           <div class="form-name">
             <label for="name">სახელი*</label>
             <input type="text" id="name" />
+
+            <!-- Requirement Labels -->
             <label class="form-requirement min-symbol-name" for="name"
               ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
               სიმბოლო</label
@@ -45,6 +52,8 @@
           <div class="form-surname">
             <label for="surname">გვარი*</label>
             <input type="text" id="surname" />
+
+            <!-- Requirement Labels -->
             <label class="form-requirement min-symbol-surname" for="surname"
               ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
               სიმბოლო</label
@@ -55,32 +64,49 @@
             >
           </div>
         </div>
+        <!------------------->
 
+        <!-- Avatar Image Input Field -->
         <div class="form-avatar">
           <label for="avatar">ავატარი*</label>
+
           <div class="avatar-upload">
             <label for="img-input">
               <div class="preview-img-group">
+                <!-- Preview/Placeholder Image -->
                 <img id="preview-image" src="./resources/SVG/PreviewImg.svg" />
+
+                <!-- Clear Uploaded Image Button -->
                 <button class="clear-img-btn hidden" type="button">
                   <img src="./resources/SVG/Trash.svg" />
                 </button>
               </div>
+
+              <!-- Placeholder Text -->
               <span id="img-input-label">ატვირთე ფოტო</span>
             </label>
+
             <input type="file" id="img-input" accept="image/*" class="hidden" />
           </div>
         </div>
+        <!------------------->
 
+        <!-- Department Input Field -->
         <div class="form-department">
           <label for="department">დეპარტამენტი*</label>
+
+          <!-- Dropdown Menu For Department Input -->
           <div class="dropdown-menu" id="department-input">
+            <!-- Input Field -->
             <div class="dropdown-header">
               <span></span>
               <img src="resources/SVG/DownArrowSmall.svg" />
             </div>
+
+            <!-- Options Container -->
             <div class="dropdown-options" id="dropdown-options"></div>
           </div>
+
           <input
             class="department-input"
             type="hidden"
@@ -90,62 +116,90 @@
         </div>
 
         <div class="form-btns">
+          <!-- Exit Button -->
           <button type="button" class="employee-modal-exit exit-btn header-btn">
             გაუქმება
           </button>
+
+          <!-- Employee Form Submit Button -->
           <button type="submit" class="submit-btn header-btn">
             დაამატე თანამშრომელი
           </button>
         </div>
       </form>
     </div>
-
+    <!------------------>
     <main>
+      <!-- Header For Main Part of The Page -->
       <header class="main-header">
         <h1>დავალებების გვერდი</h1>
 
+        <!-- Filter Tab -->
         <div class="filter-tab">
+          <!-- Department Filter -->
           <button class="filter-btn" data-type="department">
             <span>დეპარტამენტი</span> <img src="resources/SVG/DownArrow.svg" />
           </button>
+
+          <!-- Priority Filter -->
           <button class="filter-btn" data-type="priority">
             <span>პრიორიტეტი</span> <img src="resources/SVG/DownArrow.svg" />
           </button>
+
+          <!-- Employee filter -->
           <button class="filter-btn" data-type="employee">
             <span>თანამშრომელი</span> <img src="resources/SVG/DownArrow.svg" />
           </button>
 
+          <!-- Filter Option Dropdown Menu -->
           <div class="filter-drop-down hidden">
+            <!-- Container For Filter Options -->
             <div class="filter-input"></div>
 
+            <!-- Confirm Button -->
             <button class="confirm-filter-btn" id="confirm-filter-btn">
               არჩევა
             </button>
           </div>
         </div>
       </header>
+      <!------------------>
 
+      <!-- Task Lists -->
       <div class="lists-container">
+        <!-- TODO List -->
         <section class="list list-pending">
           <h2>დასაწყები</h2>
+
+          <!-- Container for Tasks -->
           <div class="task-list"></div>
         </section>
 
+        <!-- In Progress List -->
         <section class="list list-inprogress">
           <h2>პროგრესში</h2>
+
+          <!-- Container for Tasks -->
           <div class="task-list"></div>
         </section>
 
+        <!-- Ready for Testing List -->
         <section class="list list-testing">
           <h2>მზად ტესტირებისთვის</h2>
+
+          <!-- Container for Tasks -->
           <div class="task-list"></div>
         </section>
 
+        <!-- Finished List -->
         <section class="list list-finished">
           <h2>დასრულებული</h2>
+
+          <!-- Container for Tasks -->
           <div class="task-list"></div>
         </section>
       </div>
+      <!------------------>
     </main>
 
     <script type="module" src="./resources/Scripts/mainPage/main.js"></script>

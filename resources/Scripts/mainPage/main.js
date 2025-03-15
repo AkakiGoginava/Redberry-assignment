@@ -1,11 +1,15 @@
 import { state, months, priorities } from "../global.js";
 
+// Generate Markup For Specific Task
 const generateMarkup = function (task) {
   let { description } = task;
+
+  // Format Text if Longer Than 100 Chars
   if (description.length > 100) {
     description = description.slice(0, 100) + "...";
   }
 
+  // Split For Formatting
   const due_date = task.due_date.split("-");
 
   return `
@@ -47,7 +51,9 @@ const generateMarkup = function (task) {
     </div>`;
 };
 
+// Render Every List
 export const renderLists = function () {
+  // Empty Lists Before Filling
   document.querySelectorAll(".task-list").forEach((list) => {
     list.innerHTML = "";
   });
@@ -87,4 +93,5 @@ export const renderLists = function () {
   });
 };
 
+// Render Lists After Loading Main Page
 renderLists();
