@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>title</title>
+  </head>
+  <body>
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="logo">
+        <img src="resources/SVG/Logo.svg" />
+      </div>
+
+      <button class="create-employee-btn header-btn">
+        თანამშრომლის შექმნა
+      </button>
+      <button class="create-task-btn header-btn">
+        <img src="resources/SVG/Add.svg" />შექმენი ახალი დავალება
+      </button>
+    </header>
+    <!------------------->
+    <main>
+      <!-- Main Task Body -->
+      <section class="task-body">
+        <div class="task-body-header">
+          <div class="task-body-tags"></div>
+
+          <h1 class="task-body-title"></h1>
+        </div>
+
+        <p class="task-body-desc"></p>
+
+        <div class="task-body-details">
+          <h3 class="details-title">დავალების დეტალები</h3>
+
+          <div class="details-status-block">
+            <span class="detail-status-label"
+              ><img src="./resources/SVG/PieChart.svg" />სტატუსი</span
+            >
+
+            <div class="dropdown-menu details-status" id="status-input">
+              <!-- Input Field -->
+              <div class="dropdown-header">
+                <span></span>
+                <img src="resources/SVG/DownArrowSmall.svg" />
+              </div>
+
+              <!-- Options Container -->
+              <div class="dropdown-options" id="dropdown-options"></div>
+            </div>
+          </div>
+
+          <div class="details-employee-block">
+            <span class="details-label"
+              ><img src="./resources/SVG/Frame.svg" />თანამშრომელი</span
+            >
+
+            <div class="details-employee">
+              <img src="./resources/placeholder.webp" />
+              <span class="details-employee-name">სახელი გვარი</span>
+              <span class="details-employee-department">დეპარტამენტი</span>
+            </div>
+          </div>
+
+          <div class="details-date-block">
+            <span class="details-label"
+              ><img src="./resources/SVG/Calendar.svg" />დავალების ვადა</span
+            >
+
+            <span class="details-date">ორშ-02/2/2025</span>
+          </div>
+        </div>
+      </section>
+      <!-------------------->
+
+      <!-- Task Comments -->
+      <secton class="comment-section">
+        <div class="comment-input-block">
+          <div class="comment-field">დაწერე კომენტარი</div>
+
+          <button type="button">დააკომენტარე</button>
+        </div>
+
+        <div class="comment-display-block">
+          <div class="comment-display-header">
+            <span>კომენტარები</span>
+            <span class="comment-num">5</span>
+          </div>
+
+          <div class="comment-container">
+            <!-- PLACEHOLDER -->
+            <div class="comment">
+              <img src="./resources/placeholder.webp" class="comment-avatar" />
+
+              <div class="comment-body">
+                <p class="comment-author">ემილია მორგანი</p>
+                <p class="comment-desc">
+                  ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                </p>
+                <button class="comment-reply-button">
+                  <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
+                </button>
+
+                <div class="comment-reply">
+                  <div class="comment">
+                    <img
+                      src="./resources/placeholder.webp"
+                      class="comment-avatar"
+                    />
+
+                    <div class="comment-body">
+                      <p class="comment-author">ემილია მორგანი</p>
+                      <p class="comment-desc">
+                        ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                      </p>
+                      <button class="comment-reply-button">
+                        <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </secton>
+      <!------------------->
+    </main>
+  </body>
+</html>
