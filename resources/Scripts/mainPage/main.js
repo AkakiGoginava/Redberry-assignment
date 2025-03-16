@@ -1,4 +1,5 @@
-import { state, months, priorities } from "../global.js";
+import { state, months, priorities } from "../global/global.js";
+import * as createEmployee from "../global/createEmployee.js";
 
 // Generate Markup For Specific Task
 const generateMarkup = function (task) {

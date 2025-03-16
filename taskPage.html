@@ -20,6 +20,115 @@
       </button>
     </header>
     <!------------------->
+    <!-- Create Employee Modal -->
+    <div class="background-blur hidden"></div>
+    <div class="create-employee-modal hidden">
+      <button class="employee-modal-exit exit-cross-btn">
+        <img src="./resources/SVG/ExitCross.svg" />
+      </button>
+
+      <!-- Employee Form -->
+      <form type="/submit" class="create-employee-form">
+        <h1>თანამშრომლის დამატება</h1>
+
+        <!-- Name and Surname Input Fields -->
+        <div class="form-name-surname">
+          <div class="form-name">
+            <label for="name">სახელი*</label>
+            <input type="text" id="name" />
+
+            <!-- Requirement Labels -->
+            <label class="form-requirement min-symbol-name" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
+              სიმბოლო</label
+            >
+            <label class="form-requirement max-symbol-name" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
+              სიმბოლო</label
+            >
+          </div>
+
+          <div class="form-surname">
+            <label for="surname">გვარი*</label>
+            <input type="text" id="surname" />
+
+            <!-- Requirement Labels -->
+            <label class="form-requirement min-symbol-surname" for="surname"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მინიმუმ 2
+              სიმბოლო</label
+            >
+            <label class="form-requirement max-symbol-surname" for="surname"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
+              სიმბოლო</label
+            >
+          </div>
+        </div>
+        <!------------------->
+
+        <!-- Avatar Image Input Field -->
+        <div class="form-avatar">
+          <label for="avatar">ავატარი*</label>
+
+          <div class="avatar-upload">
+            <label for="img-input">
+              <div class="preview-img-group">
+                <!-- Preview/Placeholder Image -->
+                <img id="preview-image" src="./resources/SVG/PreviewImg.svg" />
+
+                <!-- Clear Uploaded Image Button -->
+                <button class="clear-img-btn hidden" type="button">
+                  <img src="./resources/SVG/Trash.svg" />
+                </button>
+              </div>
+
+              <!-- Placeholder Text -->
+              <span id="img-input-label">ატვირთე ფოტო</span>
+            </label>
+
+            <input type="file" id="img-input" accept="image/*" class="hidden" />
+          </div>
+        </div>
+        <!------------------->
+
+        <!-- Department Input Field -->
+        <div class="form-department">
+          <label>დეპარტამენტი*</label>
+
+          <!-- Dropdown Menu For Department Input -->
+          <div id="department-input">
+            <div class="dropdown-menu">
+              <!-- Input Field -->
+              <div class="dropdown-header">
+                <span></span>
+                <img src="resources/SVG/DownArrowSmall.svg" />
+              </div>
+
+              <!-- Options Container -->
+              <div class="dropdown-options"></div>
+            </div>
+
+            <input
+              class="department-input selected-value"
+              type="hidden"
+              name="selected-value"
+            />
+          </div>
+        </div>
+
+        <div class="form-btns">
+          <!-- Exit Button -->
+          <button type="button" class="employee-modal-exit exit-btn header-btn">
+            გაუქმება
+          </button>
+
+          <!-- Employee Form Submit Button -->
+          <button type="submit" class="submit-btn header-btn">
+            დაამატე თანამშრომელი
+          </button>
+        </div>
+      </form>
+    </div>
+    <!------------------>
     <main>
       <!-- Main Task Body -->
       <section class="task-body">
@@ -49,15 +158,23 @@
               ><img src="./resources/SVG/PieChart.svg" />სტატუსი</span
             >
 
-            <div class="dropdown-menu details-status" id="status-input">
-              <!-- Input Field -->
-              <div class="dropdown-header">
-                <span></span>
-                <img src="resources/SVG/DownArrowSmall.svg" />
+            <div id="status-input" class="details-status">
+              <div class="dropdown-menu">
+                <!-- Input Field -->
+                <div class="dropdown-header">
+                  <span></span>
+                  <img src="resources/SVG/DownArrowSmall.svg" />
+                </div>
+
+                <!-- Options Container -->
+                <div class="dropdown-options"></div>
               </div>
 
-              <!-- Options Container -->
-              <div class="dropdown-options" id="dropdown-options"></div>
+              <input
+                class="status-input selected-value"
+                type="hidden"
+                name="selected-value"
+              />
             </div>
           </div>
 
@@ -216,5 +333,7 @@
       </secton>
       <!------------------->
     </main>
+
+    <script type="module" src="resources/Scripts/taskPage/taskPage.js"></script>
   </body>
 </html>

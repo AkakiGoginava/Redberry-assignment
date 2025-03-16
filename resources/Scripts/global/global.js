@@ -5,6 +5,7 @@ export const state = {
   departmentArray: [],
   employeeArray: [],
   priorityArray: [],
+  statusArray: [],
   filter: {
     departments: [],
     employees: [],
@@ -32,7 +33,6 @@ await fetch("https://momentum.redberryinternship.ge/api/employees", {
   .then((response) => response.json())
   .then((data) => {
     state.employeeArray = data;
-    console.log(data);
   });
 
 await fetch("https://momentum.redberryinternship.ge/api/departments", {
@@ -55,6 +55,17 @@ await fetch("https://momentum.redberryinternship.ge/api/priorities", {
   .then((response) => response.json())
   .then((data) => {
     state.priorityArray = data;
+  });
+
+await fetch("https://momentum.redberryinternship.ge/api/statuses", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    state.statusArray = data;
   });
 
 export const months = [

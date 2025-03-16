@@ -1,4 +1,5 @@
 @import url("../global.css");
+@import url("../createEployee.css");
 
 main {
   display: flex;
@@ -116,9 +117,9 @@ main {
 
 .details-status {
   width: 259px;
+  height: 45px;
   border: 1px solid #ced4da;
   border-radius: 5px;
-  padding: 14px;
   font-weight: 300;
   font-size: 14px;
   color: #0d0f10;

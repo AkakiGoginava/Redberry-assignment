@@ -20,7 +20,6 @@
       </button>
     </header>
     <!------------------->
-
     <!-- Create Employee Modal -->
     <div class="background-blur hidden"></div>
     <div class="create-employee-modal hidden">
@@ -93,26 +92,27 @@
 
         <!-- Department Input Field -->
         <div class="form-department">
-          <label for="department">დეპარტამენტი*</label>
+          <label>დეპარტამენტი*</label>
 
           <!-- Dropdown Menu For Department Input -->
-          <div class="dropdown-menu" id="department-input">
-            <!-- Input Field -->
-            <div class="dropdown-header">
-              <span></span>
-              <img src="resources/SVG/DownArrowSmall.svg" />
+          <div id="department-input">
+            <div class="dropdown-menu">
+              <!-- Input Field -->
+              <div class="dropdown-header">
+                <span></span>
+                <img src="resources/SVG/DownArrowSmall.svg" />
+              </div>
+
+              <!-- Options Container -->
+              <div class="dropdown-options"></div>
             </div>
 
-            <!-- Options Container -->
-            <div class="dropdown-options" id="dropdown-options"></div>
+            <input
+              class="department-input selected-value"
+              type="hidden"
+              name="selected-value"
+            />
           </div>
-
-          <input
-            class="department-input"
-            type="hidden"
-            id="selected-value"
-            name="selected-value"
-          />
         </div>
 
         <div class="form-btns">
@@ -203,13 +203,5 @@
     </main>
 
     <script type="module" src="./resources/Scripts/mainPage/main.js"></script>
-    <script
-      type="module"
-      src="./resources/Scripts/mainPage/filterDropDown.js"
-    ></script>
-    <script
-      type="module"
-      src="./resources/Scripts/mainPage/createEmployee.js"
-    ></script>
   </body>
 </html>

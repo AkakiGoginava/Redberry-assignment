@@ -1,4 +1,6 @@
 .dropdown-menu {
+  height: 100%;
+  width: 100%;
   position: relative;
   cursor: pointer;
 }
@@ -21,7 +23,7 @@
 .dropdown-options {
   display: none;
   position: absolute;
-  left: -1px; /* Align with the left border of the parent */
+  left: -1px;
   width: calc(100% + 2px);
   border: 1px solid #8338ec;
   border-bottom-right-radius: 6px;
@@ -30,6 +32,7 @@
   background-color: #fff;
   max-height: 148px;
   overflow-y: scroll;
+  z-index: 10;
 }
 
 .dropdown-option {

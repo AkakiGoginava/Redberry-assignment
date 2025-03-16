@@ -1,5 +1,5 @@
-import { state, TOKEN } from "../global.js";
-import * as dropdown from "../dropDownMenu.js";
+import { state, TOKEN } from "./global.js";
+import { initializeDropdownMenu } from "./dropDownMenu.js";
 
 const openModalBtn = document.querySelector(".create-employee-btn");
 const blur = document.querySelector(".background-blur");
@@ -14,6 +14,9 @@ const nameInput = [
   document.getElementById("name"),
   document.getElementById("surname"),
 ];
+
+// Create Dropdown Menu For Department Input
+const departmentInputMenu = initializeDropdownMenu("department-input");
 
 // Form Input State Object
 const formCheck = {
@@ -57,7 +60,7 @@ const closeModal = function () {
   });
 
   // Clear Department Input and Reset Department Form State
-  dropdown.clearInput();
+  departmentInputMenu.clearInput();
   formCheck.department = false;
 };
 
@@ -107,17 +110,6 @@ const checkNameInput = function (val, id) {
   languageCheck = english.test(val) ^ georgian.test(val);
   // Update Input State Respectively Based on id
   formCheck[id] = languageCheck && lengthCheck;
-};
-
-// Generate Markup For Department Options
-const generateDepartmentsMarkup = function () {
-  let markup = ``;
-
-  state.departmentArray.forEach((department) => {
-    markup += `<div class="dropdown-option" data-value="${department.id}">${department.name}</div>`;
-  });
-
-  return markup;
 };
 
 // Event Handler For Submit Button
@@ -209,9 +201,7 @@ clearImgBtn.addEventListener("click", function () {
 });
 
 // Render Department Options For Department Menu
-document
-  .querySelector(".dropdown-options")
-  .insertAdjacentHTML("beforeend", generateDepartmentsMarkup());
+departmentInputMenu.renderOptions(state.departmentArray);
 
 // Event Listener For Submit Button
 submitBtn.addEventListener("click", function (e) {
