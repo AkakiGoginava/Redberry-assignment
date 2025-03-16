@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>title</title>
+    <link href="resources/Styles/taskPage/taskPage.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Site Header -->
@@ -23,18 +24,28 @@
       <!-- Main Task Body -->
       <section class="task-body">
         <div class="task-body-header">
-          <div class="task-body-tags"></div>
+          <div class="task-body-tags">
+            <div class="task-tags-priority tags-priority-medium">
+              <img src="./resources/SVG/Medium.svg" /><span>საშუალო</span>
+            </div>
+            <span class="task-tags-department">დიზაინი</span>
+          </div>
 
-          <h1 class="task-body-title"></h1>
+          <h1 class="task-body-title">asfkjhdskjfhaskdfjh</h1>
         </div>
 
-        <p class="task-body-desc"></p>
+        <p class="task-body-desc">
+          მიზანია რომ შეიქმნას თანამედროვე, სუფთა და ფუნქციონალური დიზაინი,
+          რომელიც უზრუნველყოფს მარტივ ნავიგაციას და მკაფიო ინფორმაციის
+          გადაცემას. დიზაინი უნდა იყოს ადაპტირებადი (responsive), გამორჩეული
+          ვიზუალით, მინიმალისტური სტილით და ნათელი ტიპოგრაფიით.
+        </p>
 
         <div class="task-body-details">
           <h3 class="details-title">დავალების დეტალები</h3>
 
           <div class="details-status-block">
-            <span class="detail-status-label"
+            <span class="details-label detail-status-label"
               ><img src="./resources/SVG/PieChart.svg" />სტატუსი</span
             >
 
@@ -76,51 +87,130 @@
       <!-- Task Comments -->
       <secton class="comment-section">
         <div class="comment-input-block">
-          <div class="comment-field">დაწერე კომენტარი</div>
+          <textarea
+            class="comment-field"
+            placeholder="დაწერე კომენტარი"
+          ></textarea>
 
-          <button type="button">დააკომენტარე</button>
+          <button type="button" class="comment-button">დააკომენტარე</button>
         </div>
 
         <div class="comment-display-block">
           <div class="comment-display-header">
-            <span>კომენტარები</span>
-            <span class="comment-num">5</span>
+            <span class="comment-display-title">კომენტარები</span>
+            <div class="comment-num">5</div>
           </div>
 
           <div class="comment-container">
             <!-- PLACEHOLDER -->
             <div class="comment">
-              <img src="./resources/placeholder.webp" class="comment-avatar" />
-
               <div class="comment-body">
-                <p class="comment-author">ემილია მორგანი</p>
-                <p class="comment-desc">
-                  ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
-                </p>
-                <button class="comment-reply-button">
-                  <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
-                </button>
+                <img
+                  src="./resources/placeholder.webp"
+                  class="comment-avatar"
+                />
 
+                <div class="comment-text">
+                  <p class="comment-author">ემილია მორგანი</p>
+                  <p class="comment-desc">
+                    ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                  </p>
+                  <button class="comment-reply-button">
+                    <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
+                  </button>
+                </div>
+              </div>
+              <div class="comment-replies">
                 <div class="comment-reply">
-                  <div class="comment">
+                  <div class="comment-body">
                     <img
                       src="./resources/placeholder.webp"
                       class="comment-avatar"
                     />
 
-                    <div class="comment-body">
+                    <div class="comment-text">
                       <p class="comment-author">ემილია მორგანი</p>
                       <p class="comment-desc">
                         ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
                       </p>
-                      <button class="comment-reply-button">
-                        <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
-                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="comment">
+              <div class="comment-body">
+                <img
+                  src="./resources/placeholder.webp"
+                  class="comment-avatar"
+                />
+
+                <div class="comment-text">
+                  <p class="comment-author">ემილია მორგანი</p>
+                  <p class="comment-desc">
+                    ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                  </p>
+                  <button class="comment-reply-button">
+                    <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
+                  </button>
+                </div>
+              </div>
+              <div class="comment-replies">
+                <div class="comment-reply">
+                  <div class="comment-body">
+                    <img
+                      src="./resources/placeholder.webp"
+                      class="comment-avatar"
+                    />
+
+                    <div class="comment-text">
+                      <p class="comment-author">ემილია მორგანი</p>
+                      <p class="comment-desc">
+                        ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="comment">
+              <div class="comment-body">
+                <img
+                  src="./resources/placeholder.webp"
+                  class="comment-avatar"
+                />
+
+                <div class="comment-text">
+                  <p class="comment-author">ემილია მორგანი</p>
+                  <p class="comment-desc">
+                    ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                  </p>
+                  <button class="comment-reply-button">
+                    <img src="./resources/SVG/ReplyIcon.svg" />უპასუხე
+                  </button>
+                </div>
+              </div>
+              <div class="comment-replies">
+                <div class="comment-reply">
+                  <div class="comment-body">
+                    <img
+                      src="./resources/placeholder.webp"
+                      class="comment-avatar"
+                    />
+
+                    <div class="comment-text">
+                      <p class="comment-author">ემილია მორგანი</p>
+                      <p class="comment-desc">
+                        ბლა ბლაბ ლაბლა ბლაბლაბლა ბლაბ ლაბ ლაბლ
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- PLACEHOLDER -->
           </div>
         </div>
       </secton>

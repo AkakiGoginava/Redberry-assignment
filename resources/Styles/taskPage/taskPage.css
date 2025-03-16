@@ -1,0 +1,290 @@
+@import url("../global.css");
+
+main {
+  display: flex;
+}
+
+.task-body {
+  display: flex;
+  flex-direction: column;
+  max-width: 715px;
+  gap: 0;
+  margin-top: 40px;
+}
+
+.task-body-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-body-tags {
+  display: flex;
+}
+
+.task-tags-priority {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18px;
+  border: 0.5px solid;
+  border-radius: 3px;
+  padding: 4px 5px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.tags-priority-low {
+  color: #08a508;
+  border-color: #08a508;
+}
+
+.tags-priority-medium {
+  color: #ffbe0b;
+  border-color: #ffbe0b;
+}
+
+.tags-priority-high {
+  color: #fa4d4d;
+  border-color: #fa4d4d;
+}
+
+.task-tags-department {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff66a8;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 15px;
+}
+
+.task-body-title {
+  font-weight: 600;
+  font-size: 34px;
+}
+
+.task-body-desc {
+  width: 100%;
+  margin-top: 26px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.task-body-details {
+  display: flex;
+  flex-direction: column;
+  width: 493px;
+  gap: 18px;
+  margin-top: 63px;
+}
+
+.details-title {
+  font-weight: 500;
+  font-size: 24px;
+  color: #2a2a2a;
+}
+
+.details-label {
+  display: flex;
+  align-content: center;
+  width: 164px;
+  line-height: 1.5;
+  color: #474747;
+}
+
+.details-label img {
+  margin-right: 6px;
+}
+
+.details-status-block,
+.details-employee-block,
+.details-date-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 70px;
+  padding: 10px 0;
+}
+
+.details-status,
+.details-employee,
+.details-date {
+  margin-right: auto;
+}
+
+.details-status {
+  width: 259px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 14px;
+  font-weight: 300;
+  font-size: 14px;
+  color: #0d0f10;
+}
+
+.details-employee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+
+.details-employee img {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.details-employee-name {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #0d0f10;
+}
+
+.details-employee-department {
+  position: absolute;
+  top: -8px;
+  left: 44px;
+  font-weight: 300;
+  font-size: 11px;
+  color: #474747;
+}
+
+.comment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 66px;
+  margin-top: 100px;
+  width: 741px;
+  max-height: 975px;
+  margin-left: auto;
+  border: 0.3px solid #ddd2ff;
+  border-radius: 10px;
+  background-color: #f8f3fea6;
+  padding: 40px 45px;
+}
+
+.comment-input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background-color: white;
+  height: 135px;
+  width: 100%;
+  padding: 18px 20px 15px 20px;
+  border-radius: 10px;
+}
+
+.comment-field {
+  height: 100%;
+  overflow-y: scroll;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.comment-button {
+  margin-left: auto;
+  padding: 8px 20px;
+  background-color: #8338ec;
+  border: none;
+  color: white;
+  border-radius: 20px;
+}
+
+.comment-display-block {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.comment-display-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.comment-display-title {
+  font-weight: 500;
+  font-size: 20px;
+  color: #000000;
+}
+
+.comment-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 14px;
+  color: white;
+  background-color: #8338ec;
+  border-radius: 30px;
+  height: 22px;
+  min-width: 30px;
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 380px;
+  overflow-y: scroll;
+  gap: 38px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.comment-body {
+  display: flex;
+  gap: 12px;
+}
+
+.comment-avatar {
+  margin-bottom: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+}
+
+.comment-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-author {
+  font-size: 18px;
+  font-weight: 500;
+  color: #212529;
+}
+
+.comment-desc {
+  font-weight: 350;
+  color: #343a40;
+}
+
+.comment-reply-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  color: #8338ec;
+  font-size: 12px;
+  padding: 6px;
+  margin-right: auto;
+}
+
+.comment-reply-button img {
+  margin-right: 6px;
+}
+
+.comment-replies {
+  margin-left: 50px;
+}
