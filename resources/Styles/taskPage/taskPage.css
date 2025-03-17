@@ -125,6 +125,10 @@ main {
   color: #0d0f10;
 }
 
+.status-text {
+  font-weight: 300 !important;
+}
+
 .details-employee {
   display: flex;
   align-items: center;
@@ -194,6 +198,11 @@ main {
   border: none;
   color: white;
   border-radius: 20px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.comment-button:hover {
+  background-color: #b588f4;
 }
 
 .comment-display-block {
@@ -257,7 +266,7 @@ main {
 .comment-text {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .comment-author {
@@ -287,5 +296,8 @@ main {
 }
 
 .comment-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin-left: 50px;
 }
