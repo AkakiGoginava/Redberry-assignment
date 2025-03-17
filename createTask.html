@@ -133,25 +133,30 @@
         <div class="create-task-block">
           <div class="create-task-body">
             <div class="create-task-body-1">
-              <div class="task-name-input-block">
+              <div class="task-name-input-block task-input-block">
                 <label class="task-input-label">სათაური*</label>
-                <input type="text" class="task-name-input">
-                <label>მინიმუმ 3 სიმბოლო</label>
-                <label>მაქსიმუმ 255 სიმბოლო<label>
+                <input type="text" class="task-name-input task-input-field">
+                <div class="task-requirements">
+                  <label class="form-requirement">მინიმუმ 3 სიმბოლო</label>
+                  <label class="form-requirement">მაქსიმუმ 255 სიმბოლო<label>
+                </div>
               </div>
 
-              <div class="task-desc-input-block">
+              <div class="task-desc-input-block task-input-block">
                 <label class="task-input-label">აღწერა</label>
-                <textarea class="task-desc-input"></textarea>
-                <label>მინიმუმ 4 სიტყვა</label>
-                <label>მაქსიმყმ 255 სიმბოლო</label>
+                <textarea class="task-desc-input task-input-field"></textarea>
+                
+                <div class="task-requirements">
+                  <label class="form-requirement">მინიმუმ 4 სიტყვა</label>
+                  <label class="form-requirement">მაქსიმყმ 255 სიმბოლო</label>
+                </div>
               </div>
 
               <div class="task-priority-status-input">
-                <div class="task-priority-input-block">
+                <div class="task-priority-input-block task-input-block">
                   <label class="task-input-label">პრიორიტეტი*</label>
                   
-                  <div class="task-priority-input" id="task-priority-input">
+                  <div class="task-priority-input task-input-field" id="task-priority-input">
                     <div class="dropdown-menu">
                       <!-- Input Field -->
                       <div class="dropdown-header">
@@ -172,10 +177,10 @@
                   </div>
                 </div>
 
-                <div class="task-status-input-block">
+                <div class="task-status-input-block task-input-block">
                   <label class="task-input-label">სტატუსი*</label>
                   
-                  <div class="task-status-input" id="task-status-input">
+                  <div class="task-status-input task-input-field" id="task-status-input">
                     <div class="dropdown-menu">
                       <!-- Input Field -->
                       <div class="dropdown-header">
@@ -198,9 +203,9 @@
             </div>
 
             <div class="create-task-body-2">
-              <div class="task-department-input-block">
+              <div class="task-department-input-block task-input-block">
                 <label class="task-input-label">დეპარტამენტი*</label>
-                <div class="task-department-input" id="task-department-input">
+                <div class="task-department-input task-input-field" id="task-department-input">
                   <div class="dropdown-menu">
                     <!-- Input Field -->
                     <div class="dropdown-header">
@@ -221,9 +226,9 @@
                 </div>
               </div>
 
-              <div class="task-employee-input-block">
+              <div class="task-employee-input-block task-input-block">
                 <label class="task-input-label">პასუხისმგებელი თანამშრომელი*</label>
-                <div class="task-employee-input" id="task-employee-input">
+                <div class="task-employee-input task-input-field" id="task-employee-input">
                   <div class="dropdown-menu">
                     <!-- Input Field -->
                     <div class="dropdown-header">
@@ -244,14 +249,14 @@
                 </div>
               </div>
 
-              <div class="task-date-input-block">
+              <div class="task-date-input-block task-input-block">
                 <label class="task-input-label">დედლაინი</label>
-                <input type="date">
+                <input class='task-input-field' type="date">
               </div>
             </div>
           </div>
 
-          <button class="create-task-btn">დავალების შექმნა</button>
+          <button class="submit-task-btn">დავალების შექმნა</button>
         </div>
   </body>
 </html>
