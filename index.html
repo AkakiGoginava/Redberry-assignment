@@ -15,7 +15,10 @@
       <button class="create-employee-btn header-btn">
         თანამშრომლის შექმნა
       </button>
-      <button class="create-task-btn header-btn">
+      <button
+        onclick="window.location.href='createTask.html'"
+        class="create-task-btn header-btn"
+      >
         <img src="resources/SVG/Add.svg" />შექმენი ახალი დავალება
       </button>
     </header>
@@ -99,7 +102,7 @@
             <div class="dropdown-menu">
               <!-- Input Field -->
               <div class="dropdown-header">
-                <span></span>
+                <div class="selected-option"></div>
                 <img src="resources/SVG/DownArrowSmall.svg" />
               </div>
 

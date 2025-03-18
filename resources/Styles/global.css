@@ -85,3 +85,11 @@ button:hover {
   font-size: 10px !important;
   color: #6c757d !important;
 }
+
+.invalid-input {
+  border-color: #fa4d4d !important;
+}
+
+.valid-input {
+  border-color: #08a508 !important;
+}

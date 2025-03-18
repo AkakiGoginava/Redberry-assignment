@@ -10,7 +10,7 @@
           <div class="logo">
             <img src="resources/SVG/Logo.svg" />
           </div>
-    
+     
           <button class="create-employee-btn header-btn">
             თანამშრომლის შექმნა
           </button>
@@ -98,7 +98,7 @@
                 <div class="dropdown-menu">
                   <!-- Input Field -->
                   <div class="dropdown-header">
-                    <span></span>
+                    <div class="selected-option"></div>
                     <img src="resources/SVG/DownArrowSmall.svg" />
                   </div>
     
@@ -137,8 +137,8 @@
                 <label class="task-input-label">სათაური*</label>
                 <input type="text" class="task-name-input task-input-field">
                 <div class="task-requirements">
-                  <label class="form-requirement">მინიმუმ 3 სიმბოლო</label>
-                  <label class="form-requirement">მაქსიმუმ 255 სიმბოლო<label>
+                  <label class="task-form-requirement form-requirement task-name-min">მინიმუმ 3 სიმბოლო</label>
+                  <label class="task-form-requirement form-requirement task-name-max">მაქსიმუმ 255 სიმბოლო<label>
                 </div>
               </div>
 
@@ -147,8 +147,8 @@
                 <textarea class="task-desc-input task-input-field"></textarea>
                 
                 <div class="task-requirements">
-                  <label class="form-requirement">მინიმუმ 4 სიტყვა</label>
-                  <label class="form-requirement">მაქსიმყმ 255 სიმბოლო</label>
+                  <label class="task-form-requirement form-requirement task-desc-min">მინიმუმ 4 სიტყვა</label>
+                  <label class="task-form-requirement form-requirement task-desc-max">მაქსიმყმ 255 სიმბოლო</label>
                 </div>
               </div>
 
@@ -160,7 +160,7 @@
                     <div class="dropdown-menu">
                       <!-- Input Field -->
                       <div class="dropdown-header">
-                        <span></span>
+                        <div class="selected-option"></div>
                         <img src="resources/SVG/DownArrowSmall.svg" />
                       </div>
         
@@ -184,7 +184,7 @@
                     <div class="dropdown-menu">
                       <!-- Input Field -->
                       <div class="dropdown-header">
-                        <span></span>
+                        <div class="selected-option"></div>
                         <img src="resources/SVG/DownArrowSmall.svg" />
                       </div>
         
@@ -209,7 +209,7 @@
                   <div class="dropdown-menu">
                     <!-- Input Field -->
                     <div class="dropdown-header">
-                      <span></span>
+                      <div class="selected-option"></div>
                       <img src="resources/SVG/DownArrowSmall.svg" />
                     </div>
       
@@ -226,18 +226,20 @@
                 </div>
               </div>
 
-              <div class="task-employee-input-block task-input-block">
+              <div class="task-employee-input-block task-input-block hidden">
                 <label class="task-input-label">პასუხისმგებელი თანამშრომელი*</label>
                 <div class="task-employee-input task-input-field" id="task-employee-input">
                   <div class="dropdown-menu">
                     <!-- Input Field -->
                     <div class="dropdown-header">
-                      <span></span>
+                      <div class="selected-option"></div>
                       <img src="resources/SVG/DownArrowSmall.svg" />
                     </div>
       
                     <!-- Options Container -->
-                    <div class="dropdown-options"></div>
+                    <div class="dropdown-options">
+                      <div class="dropdown-option custom-option"><img src="resources/SVG/PlusCircle.svg">დაამატე თანამშრომელი</div>
+                    </div>
                   </div>
       
                   <input
@@ -251,12 +253,19 @@
 
               <div class="task-date-input-block task-input-block">
                 <label class="task-input-label">დედლაინი</label>
-                <input class='task-input-field' type="date">
+                <div id="dateIcon"><img class="date-icon" src="resources/SVG/CalendarGray.svg"></div> 
+                <div class="date-picker-wrapper">
+                  <input type="text" id="customDateInput" placeholder="DD/MM/YYYY" >
+                  <input type="date" id="realDateInput"> 
+                </div>
+                 
               </div>
             </div>
           </div>
 
           <button class="submit-task-btn">დავალების შექმნა</button>
         </div>
+
+        <script type="module" src="resources/Scripts/createTask/createTask.js"></script>
   </body>
 </html>

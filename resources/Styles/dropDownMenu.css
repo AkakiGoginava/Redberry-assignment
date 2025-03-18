@@ -36,9 +36,27 @@
 }
 
 .dropdown-option {
+  display: flex;
+  align-items: center;
   padding: 10px;
+}
+
+.dropdown-menu img {
+  margin-right: 5px;
+}
+
+.avatar-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  margin-right: 10px !important;
 }
 
 .dropdown-option:hover {
   background-color: lightgray;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
 }

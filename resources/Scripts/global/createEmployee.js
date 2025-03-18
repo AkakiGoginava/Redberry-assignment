@@ -39,7 +39,7 @@ const clearImgInput = function () {
 };
 
 // Function For Closing and Resetting Form
-const closeModal = function () {
+export const closeModal = function () {
   // Hide Modal
   createEmployeeModal.classList.toggle("hidden");
   blur.classList.toggle("hidden");
@@ -135,14 +135,16 @@ const submitForm = async function () {
   formData.append("department_id", departmentInput.value);
 
   // Send Employee Data
-  fetch("https://momentum.redberryinternship.ge/api/employees", {
+  await fetch("https://momentum.redberryinternship.ge/api/employees", {
     method: "POST",
     body: formData,
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
   })
-    .then((response) => response)
+    .then((response) => {
+      if (response.status === 201) closeModal();
+    })
     .then((data) => console.log(data))
     .catch((error) => console.error("Error:", error));
 };
@@ -155,7 +157,8 @@ window.addEventListener("click", function (e) {
   if (
     !createEmployeeModal.contains(e.target) &&
     !openModalBtn.contains(e.target) &&
-    !createEmployeeModal.classList.contains("hidden")
+    !createEmployeeModal.classList.contains("hidden") &&
+    !e.target.classList.contains("custom-option")
   ) {
     closeModal();
   }
@@ -204,8 +207,57 @@ clearImgBtn.addEventListener("click", function () {
 departmentInputMenu.renderOptions(state.departmentArray);
 
 // Event Listener For Submit Button
-submitBtn.addEventListener("click", function (e) {
+submitBtn.addEventListener("click", async function (e) {
   e.preventDefault();
 
-  submitForm();
+  await submitForm();
+
+  // Check if Submission Comes From Create Task Page Employee Options
+  if (document.querySelector(".custom-option")) {
+    await fetch("https://momentum.redberryinternship.ge/api/employees", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        state.employeeArray = data;
+      });
+
+    // Find Latest Added Employee
+    const newEmployee = state.employeeArray.reduce((max, current) => {
+      return current.id > max.id ? current : max;
+    });
+
+    // Render Department of The New Employee
+    const departmentContainer = document.getElementById(
+      "task-department-input"
+    );
+    departmentContainer.querySelector(".selected-option").textContent =
+      newEmployee.department.name;
+
+    departmentContainer.querySelector(".selected-value").value =
+      newEmployee.department.id;
+
+    departmentContainer
+      .querySelector(".selected-value")
+      .dispatchEvent(new CustomEvent("valueChange", {}));
+
+    // Render New Employee as a Seleceted Option
+    const container = document.getElementById("task-employee-input");
+    const selectedOption = container.querySelector(".selected-option");
+
+    const imgMarkup = `<img class='option-icon avatar-icon' src=${newEmployee.avatar}>`;
+
+    const fullName = newEmployee.name + " " + newEmployee.surname;
+
+    selectedOption.textContent = `${fullName}`;
+    selectedOption.insertAdjacentHTML("afterbegin", imgMarkup);
+    container.querySelector(".selected-value").value = newEmployee.id;
+
+    container
+      .querySelector(".selected-value")
+      .dispatchEvent(new CustomEvent("valueChange", {}));
+  }
 });
