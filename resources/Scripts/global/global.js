@@ -8,8 +8,8 @@ export const state = {
   statusArray: [],
   filter: {
     departments: [],
-    employees: [],
     priorities: [],
+    employees: [],
   },
 };
 

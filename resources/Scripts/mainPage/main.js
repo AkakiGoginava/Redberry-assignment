@@ -1,6 +1,9 @@
 import { state, months, priorities } from "../global/global.js";
 import * as createEmployee from "../global/createEmployee.js";
 
+const clearFilterBtn = document.querySelector(".clear-filter-btn");
+const activeFilterContainer = document.querySelector(".filter-div-container");
+
 // Generate Markup For Specific Task
 const generateMarkup = function (task) {
   let { description } = task;
@@ -94,5 +97,67 @@ export const renderLists = function () {
   });
 };
 
+export const renderActiveFilters = function () {
+  let markup = ``;
+  Object.values(state.filter).forEach((dataSet, i) => {
+    if (!dataSet) return;
+    dataSet.forEach((dataId) => {
+      let dataContainerName;
+      let dataType;
+      switch (i) {
+        case 0:
+          dataContainerName = "departmentArray";
+          dataType = "departments";
+          break;
+        case 1:
+          dataContainerName = "priorityArray";
+          dataType = "priorities";
+          break;
+        case 2:
+          dataContainerName = "employeeArray";
+          dataType = "employees";
+          break;
+      }
+
+      const data = state[dataContainerName].find((data) => data.id === dataId);
+      let name = data.name;
+      if (data.surname) name = data.name + " " + data.surname;
+      markup += `<div class="active-filter" data-type="${dataType}" data-id="${dataId}">
+                  ${name}<img class="filter-x-btn" src="resources/SVG/x.svg" />
+                </div>`;
+    });
+  });
+
+  if (markup) clearFilterBtn.classList.remove("hidden");
+  else clearFilterBtn.classList.add("hidden");
+
+  activeFilterContainer.innerHTML = "";
+  activeFilterContainer.insertAdjacentHTML("afterbegin", markup);
+};
+
+document.querySelector(".active-filter-tab").addEventListener("click", (e) => {
+  const targetBtn = e.target.closest(".filter-x-btn");
+
+  if (!targetBtn) return;
+
+  const dataType = targetBtn.closest(".active-filter").dataset.type;
+  const dataId = targetBtn.closest(".active-filter").dataset.id;
+
+  const index = state.filter[dataType].findIndex((data) => data.id === dataId);
+  state.filter[dataType].splice(index, 1);
+
+  renderLists();
+  renderActiveFilters();
+});
+
+clearFilterBtn.addEventListener("click", () => {
+  Object.keys(state.filter).forEach((item) => {
+    state.filter[item] = "";
+  });
+  renderActiveFilters();
+  renderLists();
+});
+
 // Render Lists After Loading Main Page
 renderLists();
+renderActiveFilters();

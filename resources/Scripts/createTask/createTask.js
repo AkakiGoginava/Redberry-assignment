@@ -169,11 +169,29 @@ const isValidFormat = function (dateString) {
 
   const date = new Date(year, month - 1, day);
 
-  return (
+  if (
     date.getDate() === day &&
     date.getMonth() === month - 1 &&
     date.getFullYear() === year
-  );
+  ) {
+    document
+      .querySelector(".date-format-requirement")
+      .classList.remove("invalid-label");
+    document
+      .querySelector(".date-format-requirement")
+      .classList.add("valid-label");
+
+    return true;
+  } else {
+    document
+      .querySelector(".date-format-requirement")
+      .classList.remove("valid-label");
+    document
+      .querySelector(".date-format-requirement")
+      .classList.add("invalid-label");
+
+    return false;
+  }
 };
 
 // Validate Correct Date
@@ -195,7 +213,23 @@ const isValidDate = function (dateString) {
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
-  return inputDate >= currentDate;
+  if (inputDate >= currentDate) {
+    document
+      .querySelector(".date-time-requirement")
+      .classList.remove("invalid-label");
+    document
+      .querySelector(".date-time-requirement")
+      .classList.add("valid-label");
+    return true;
+  } else {
+    document
+      .querySelector(".date-time-requirement")
+      .classList.remove("valid-label");
+    document
+      .querySelector(".date-time-requirement")
+      .classList.add("invalid-label");
+    return false;
+  }
 };
 
 // Validate Date Input
@@ -226,11 +260,30 @@ validateDescInput();
 
 // Load Date Value if Stored
 if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
-  taskDateInput.value = taskFormData.dueDate;
   const date = taskFormData.dueDate.split("-");
-  console.log(date);
-  taskDateDisplay.value = `${date[2]}/${date[1].padStart(2, "0")}/${date[0]}`;
-  validateDateInput(taskDateDisplay.value);
+
+  if (isValidFormat(`${date[2]}-${date[1].padStart(2, "0")}-${date[0]}`)) {
+    taskDateInput.value = taskFormData.dueDate;
+
+    taskDateDisplay.value = `${date[2]}/${date[1].padStart(2, "0")}/${date[0]}`;
+    validateDateInput(taskDateDisplay.value);
+  } else {
+    taskDateInput.value = `${year}-${month}-${day}`;
+    taskDateInput.value = `${year}-${month}-${day}`;
+    document
+      .querySelector(".date-time-requirement")
+      .classList.remove("valid-label");
+    document
+      .querySelector(".date-time-requirement")
+      .classList.remove("invalid-label");
+
+    document
+      .querySelector(".date-format-requirement")
+      .classList.remove("invalid-label");
+    document
+      .querySelector(".date-format-requirement")
+      .classList.remove("valid-label");
+  }
 }
 
 // Initialize and Render Priority Dropdown Menu

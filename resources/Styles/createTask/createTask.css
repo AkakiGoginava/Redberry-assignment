@@ -160,6 +160,14 @@ textarea {
   border-color: #8338ec;
 }
 
+.date-requirement-labels {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 73px;
+  left: 1px;
+}
+
 .custom-option {
   color: #8338ec;
   display: flex;

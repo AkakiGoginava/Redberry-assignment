@@ -1,5 +1,5 @@
-import { state } from "../global.js";
-import { renderLists } from "./main.js";
+import { state } from "../global/global.js";
+import { renderActiveFilters, renderLists } from "./main.js";
 
 const filterTab = document.querySelector(".filter-tab");
 const dropDownMenu = document.querySelector(".filter-drop-down");
@@ -98,6 +98,20 @@ filterTab.addEventListener("click", function (e) {
     .querySelector(".filter-input")
     .insertAdjacentHTML("beforeend", markup);
 
+  if (filterBtn.dataset.type === "employee") {
+    const checkBoxes = filterTab.querySelectorAll(".filter-checkbox");
+
+    checkBoxes.forEach((checkBox) => {
+      checkBox.addEventListener("change", () => {
+        checkBoxes.forEach((check) => {
+          if (checkBox !== check) {
+            check.checked = false;
+          }
+        });
+      });
+    });
+  }
+
   // Check Checkbox if Respective Option is Present in Filter Array
   document.querySelectorAll(".filter-checkbox").forEach((el) => {
     switch (el.dataset.type) {
@@ -172,4 +186,5 @@ confirmFilterBtn.addEventListener("click", function () {
   // Close Filter Menu and Re-render Lists
   resetFilterBtns();
   renderLists();
+  renderActiveFilters();
 });

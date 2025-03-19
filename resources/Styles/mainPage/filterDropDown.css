@@ -10,6 +10,7 @@
   background-color: white;
   border: 0.5px solid #8338ec;
   border-radius: 10px;
+  z-index: 5;
 }
 
 .filter-input {
