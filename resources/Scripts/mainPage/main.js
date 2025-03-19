@@ -1,8 +1,21 @@
-import { state, months, priorities } from "../global/global.js";
+import {
+  state,
+  months,
+  priorities,
+  departmentColors,
+} from "../global/global.js";
 import * as createEmployee from "../global/createEmployee.js";
 
 const clearFilterBtn = document.querySelector(".clear-filter-btn");
 const activeFilterContainer = document.querySelector(".filter-div-container");
+
+state.filter = sessionStorage.getItem("filterData")
+  ? JSON.parse(sessionStorage.getItem("filterData"))
+  : {
+      departments: [],
+      priorities: [],
+      employees: [],
+    };
 
 // Generate Markup For Specific Task
 const generateMarkup = function (task) {
@@ -20,19 +33,21 @@ const generateMarkup = function (task) {
     <div class="task-card">
       <div class="task-card-header">
           <div class="task-card-tags">
-            <div class="priority priority-${task.priority.name.toLowerCase()}">
+            <div class="priority priority-${priorities[task.priority.id - 1]}">
               <img src="${task.priority.icon}" />
-              <p class="priority-${task.priority.name.toLowerCase()}">${
-    priorities[task.priority.id - 1]
+              <p class="priority-${priorities[task.priority.id - 1]}">${
+    task.priority.name
   }</p>
             </div>
-            <p class="department department-${task.department.id}">${
-    task.department.name
-  }</p>
+            <p class="department department-${
+              task.department.id
+            }" style="background-color: ${
+    departmentColors[task.department.id % 4]
+  }">${task.department.name}</p>
           </div>
-          <p class="task-date">${due_date[2]} ${months[due_date[1] - 1]}, ${
-    due_date[0]
-  }</p>
+          <p class="task-date">${due_date[2].slice(0, 2)} ${
+    months[due_date[1] - 1]
+  }, ${due_date[0]}</p>
         </div>
 
         <div class="task-body">
@@ -87,7 +102,7 @@ export const renderLists = function () {
         filter.departments.length === 0) &&
       (filter.employees.includes(task.employee.id) ||
         filter.employees.length === 0) &&
-      (filter.priorities.includes(-(task.priority.id - 4)) ||
+      (filter.priorities.includes(task.priority.id) ||
         filter.priorities.length === 0)
     )
       document
@@ -146,6 +161,7 @@ document.querySelector(".active-filter-tab").addEventListener("click", (e) => {
   const index = state.filter[dataType].findIndex((data) => data.id === dataId);
   state.filter[dataType].splice(index, 1);
 
+  sessionStorage.setItem("filterData", JSON.stringify(state.filter));
   renderLists();
   renderActiveFilters();
 });
@@ -154,8 +170,14 @@ clearFilterBtn.addEventListener("click", () => {
   Object.keys(state.filter).forEach((item) => {
     state.filter[item] = "";
   });
+
+  sessionStorage.setItem("filterData", JSON.stringify(state.filter));
   renderActiveFilters();
   renderLists();
+});
+
+window.addEventListener("beforeunload", function () {
+  sessionStorage.clear();
 });
 
 // Render Lists After Loading Main Page

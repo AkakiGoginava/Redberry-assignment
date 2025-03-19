@@ -20,8 +20,9 @@ const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
 const day = String(tomorrow.getDate()).padStart(2, "0");
 
 // Insert Default Date Value
+const formattedDate = `${year}-${month}-${day}`;
 taskDateDisplay.value = `${day}/${month}/${year}`;
-taskDateInput.value = `${year}-${month}-${day}`;
+taskDateInput.value = formattedDate;
 
 let taskFormData = sessionStorage.getItem("taskFormData")
   ? JSON.parse(sessionStorage.getItem("taskFormData"))
@@ -30,7 +31,7 @@ let taskFormData = sessionStorage.getItem("taskFormData")
       priority: 2,
       department: "",
       employee: "",
-      dueDate: `${year}-${month}-${day}`,
+      dueDate: formattedDate,
       taskFormState: {
         name: false,
         desc: true,
@@ -41,7 +42,7 @@ let taskFormData = sessionStorage.getItem("taskFormData")
         dueDate: true,
       },
     };
-
+console.log(taskFormData);
 // Task Form Input State Object
 const { taskFormState } = taskFormData;
 
@@ -238,6 +239,8 @@ const validateDateInput = function (dateString) {
   const validFormat = isValidFormat(dateString);
   const validDate = isValidDate(dateString);
 
+  console.log(validDate);
+  console.log(validFormat);
   if (validDate && validFormat) {
     taskFormState.dueDate = true;
 
@@ -261,7 +264,7 @@ validateDescInput();
 // Load Date Value if Stored
 if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
   const date = taskFormData.dueDate.split("-");
-
+  console.log(taskFormData);
   if (isValidFormat(`${date[2]}-${date[1].padStart(2, "0")}-${date[0]}`)) {
     taskDateInput.value = taskFormData.dueDate;
 
@@ -423,9 +426,25 @@ taskDateInput.addEventListener("change", function () {
   taskDateDisplay.value = `${dateInput[2]}/${dateInput[1]}/${dateInput[0]}`;
   taskDateDisplay.dispatchEvent(new CustomEvent("dateChange", {}));
 
-  console.log(taskFormData.dueDate);
   // Store Date Input
   taskFormData.dueDate = this.value;
+  sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
+});
+
+taskDateDisplay.addEventListener("change", function () {
+  let day, month, year;
+
+  if (this.value.includes("/")) {
+    [day, month, year] = this.value.split("/").map(Number);
+  } else if (this.value.includes("-")) {
+    [day, month, year] = this.value.split("-").map(Number);
+  } else if (this.value.includes(".")) {
+    [day, month, year] = this.value.split(".").map(Number);
+  }
+
+  taskDateInput.value = `${year}/${month}/${day}`;
+  // Store Date Input
+  taskFormData.dueDate = `${year}/${month}/${day}`;
   sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 });
 
@@ -484,6 +503,8 @@ const validateFormInputs = function () {
 
 // Event Listener For Form Submission
 taskSubmitBtn.addEventListener("click", async function () {
+  console.log(taskFormState);
+  console.log(taskFormData);
   if (validateFormInputs()) {
     const taskData = new FormData();
 
@@ -503,6 +524,8 @@ taskSubmitBtn.addEventListener("click", async function () {
       taskPriorityInput.querySelector(".selected-value").value
     );
 
+    console.log(taskData);
+
     await fetch("https://momentum.redberryinternship.ge/api/tasks", {
       method: "POST",
       body: taskData,
@@ -512,7 +535,8 @@ taskSubmitBtn.addEventListener("click", async function () {
     })
       .then((response) => {
         console.log(response);
-        if (response === 201) {
+        if (response.status === 201) {
+          console.log("a");
           fetch("https://momentum.redberryinternship.ge/api/tasks", {
             method: "GET",
             headers: {
@@ -524,6 +548,7 @@ taskSubmitBtn.addEventListener("click", async function () {
               state.taskArray = data;
             })
             .then(() => {
+              console.log("a");
               sessionStorage.removeItem("taskFormData");
               window.location.href = "index.html";
             });

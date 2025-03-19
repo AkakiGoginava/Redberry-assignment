@@ -184,6 +184,7 @@ confirmFilterBtn.addEventListener("click", function () {
   });
 
   // Close Filter Menu and Re-render Lists
+  sessionStorage.setItem("filterData", JSON.stringify(state.filter));
   resetFilterBtns();
   renderLists();
   renderActiveFilters();
