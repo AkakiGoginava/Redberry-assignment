@@ -5,6 +5,10 @@ main {
   display: flex;
 }
 
+.logo {
+  cursor: pointer;
+}
+
 .task-body {
   display: flex;
   flex-direction: column;
@@ -27,6 +31,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   margin-right: 18px;
   border: 0.5px solid;
   border-radius: 3px;
@@ -156,6 +161,10 @@ main {
   font-weight: 300;
   font-size: 11px;
   color: #474747;
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .comment-section {

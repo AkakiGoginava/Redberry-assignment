@@ -1,123 +1,72 @@
-import { state, months, priorities } from "../global/global.js";
+import { state, TOKEN, priorities, days } from "../global/global.js";
 import * as createEmployee from "../global/createEmployee.js";
 import { initializeDropdownMenu } from "../global/dropDownMenu.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const taskId = urlParams.get("id");
+const taskInput = document.querySelector(".status-input");
 
-const task = {
-  id: 1,
-  name: "შესარჩევი დავალება",
-  description: "შექმენით ვებ გვერდი დიზაინის მიხედვით",
-  due_date: "2025-12-31",
-  status: {
-    id: 1,
-    name: "Todo",
-  },
-  priority: {
-    id: 1,
-    name: "High",
-    icon: "…",
-  },
-  department: {
-    id: 1,
-    name: "IT",
-  },
-  employee: {
-    id: 1,
-    name: "ლადო",
-    surname: "გაგა",
-    avatar: "…",
-    department_id: 1,
-  },
+const countComments = function (comments) {
+  let size = comments.length;
+  comments.forEach((comment) => {
+    size += comment.sub_comments.length;
+  });
+
+  return size;
 };
 
-// const comments = [
-//   {
-//     id: 1,
-//     text: "ეს დავალება საერთიდ არ არის რთული",
-//     task_id: 1,
-//     parent_id: null,
-//     author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.1",
-//     author_nickname: "Gela",
-//     sub_comments: [
-//       {
-//         id: 2,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 1,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//       {
-//         id: 3,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 1,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//       {
-//         id: 4,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 1,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//       {
-//         id: 5,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 1,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//     ],
-//   },
-//   {
-//     id: 6,
-//     text: "ეს დავალება საერთიდ არ არის რთული",
-//     task_id: 1,
-//     parent_id: null,
-//     author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.1",
-//     author_nickname: "Gela",
-//     sub_comments: [
-//       {
-//         id: 7,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 6,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//       {
-//         id: 7,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 6,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//       {
-//         id: 7,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 6,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//       {
-//         id: 7,
-//         text: "ვისთვის როგორ",
-//         task_id: 1,
-//         parent_id: 6,
-//         author_avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=127.0.0.2",
-//         author_nickname: "Lela",
-//       },
-//     ],
-//   },
-// ];
+async function fetchTask(taskId) {
+  try {
+    const response = await fetch(
+      `https://momentum.redberryinternship.ge/api/tasks/${taskId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Task Data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching task:", error);
+  }
+}
+
+async function fetchComments(taskId) {
+  try {
+    const response = await fetch(
+      `https://momentum.redberryinternship.ge/api/tasks/${taskId}/comments`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Task Data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching task:", error);
+  }
+}
+
+const task = await fetchTask(taskId);
+let comments = await fetchComments(taskId);
 
 // Create Dropdown Menu For Status Input
 const statusDropdownMenu = initializeDropdownMenu("status-input");
@@ -182,7 +131,8 @@ const genrateCommentsMarkup = function (data) {
   return markup;
 };
 
-const renderComments = function () {
+const renderComments = function (comments) {
+  document.querySelector(".comment-container").innerHTML = "";
   const markup = genrateCommentsMarkup(comments);
   document
     .querySelector(".comment-container")
@@ -204,11 +154,9 @@ const renderPage = function (task) {
   const priorityTag = document.querySelector(".task-tags-priority");
   const departmentTag = document.querySelector(".task-tags-department");
 
-  priorityTag.querySelector(
-    "img"
-  ).src = `./resources/SVG/${task.priority.name}.svg`;
+  priorityTag.querySelector("img").src = `${task.priority.icon}`;
   priorityTag.classList.add(
-    `tags-priority-${task.priority.name.toLowerCase()}`
+    `tags-priority-${priorities[task.priority.id - 1]}`
   );
 
   departmentTag.classList.add(`department-${task.department.id}`);
@@ -228,7 +176,85 @@ const renderPage = function (task) {
     task.department.name;
   document.querySelector(".details-employee-avatar").src = task.employee.avatar;
 
-  document.querySelector(".details-date").textContent = task.due_date;
+  const day = days[new Date(task.due_date).getDay()];
+  const date = task.due_date.split("-");
+  const formattedDate = `${day} - ${date[2].slice(0, 2)}/${date[1]}/${date[0]}`;
+  document.querySelector(".details-date").textContent = formattedDate;
+
+  document.querySelector(".comment-num").textContent = countComments(comments);
 };
 
 renderPage(task);
+renderComments(comments);
+
+taskInput.addEventListener("valueChange", async function () {
+  if (this.value != task.status.id) {
+    const newId = this.value;
+
+    const data = { status_id: parseInt(newId) };
+
+    await fetch(`https://momentum.redberryinternship.ge/api/tasks/${taskId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+        Accept: "application/json",
+      },
+    }).then(async function (response) {
+      if (response.status === 200) {
+        await fetch("https://momentum.redberryinternship.ge/api/tasks", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            state.taskArray = data;
+          });
+      }
+    });
+  }
+});
+
+const validateCommentText = function (text) {
+  return text.trim();
+};
+
+document.querySelectorAll(".comment-button").forEach((btn) => {
+  btn.addEventListener("click", async function (e) {
+    const commentText = e.target
+      .closest(".comment-input-block")
+      .querySelector(".comment-field").value;
+
+    if (!validateCommentText(commentText)) return;
+
+    let parentId = null;
+    const parentComment = e.target.closest(".comment");
+    if (parentComment) {
+      parentId = parentComment.id.split("-")[1];
+    }
+
+    const commentData = {
+      text: commentText,
+      parent_id: parentId,
+    };
+
+    await fetch(
+      `https://momentum.redberryinternship.ge/api/tasks/${taskId}/comments`,
+      {
+        method: "POST",
+        body: JSON.stringify(commentData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+          Accept: "application/json",
+        },
+      }
+    ).then(async function () {
+      comments = await fetchComments(taskId);
+      renderComments(comments);
+    });
+  });
+});

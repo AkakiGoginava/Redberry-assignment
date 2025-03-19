@@ -83,6 +83,8 @@ export const months = [
   "დეკ",
 ];
 
+export const days = ["ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ", "კვი"];
+
 export const priorities = ["low", "medium", "high"];
 export const departmentColors = ["#FF66A8", "#FD9A6A", "#89B6FF", "#FFD86D"];
 

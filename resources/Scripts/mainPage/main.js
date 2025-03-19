@@ -30,7 +30,9 @@ const generateMarkup = function (task) {
   const due_date = task.due_date.split("-");
 
   return `
-    <div class="task-card">
+    <div class="task-card" onclick="window.location.href='taskPage.html?id=${
+      task.id
+    }'">
       <div class="task-card-header">
           <div class="task-card-tags">
             <div class="priority priority-${priorities[task.priority.id - 1]}">
