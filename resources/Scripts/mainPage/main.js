@@ -9,6 +9,10 @@ import * as createEmployee from "../global/createEmployee.js";
 const clearFilterBtn = document.querySelector(".clear-filter-btn");
 const activeFilterContainer = document.querySelector(".filter-div-container");
 
+if (document.referrer && !window.history.state) {
+  sessionStorage.removeItem("filterData");
+}
+
 state.filter = sessionStorage.getItem("filterData")
   ? JSON.parse(sessionStorage.getItem("filterData"))
   : {
@@ -176,10 +180,6 @@ clearFilterBtn.addEventListener("click", () => {
   sessionStorage.setItem("filterData", JSON.stringify(state.filter));
   renderActiveFilters();
   renderLists();
-});
-
-window.addEventListener("beforeunload", function () {
-  sessionStorage.clear();
 });
 
 // Render Lists After Loading Main Page
