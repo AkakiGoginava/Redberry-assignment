@@ -1,4 +1,10 @@
-import { state, TOKEN, priorities, days } from "../global/global.js";
+import {
+  state,
+  TOKEN,
+  priorities,
+  days,
+  departmentColors,
+} from "../global/global.js";
 import * as createEmployee from "../global/createEmployee.js";
 import { initializeDropdownMenu } from "../global/dropDownMenu.js";
 
@@ -33,7 +39,6 @@ async function fetchTask(taskId) {
     }
 
     const data = await response.json();
-    console.log("Task Data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching task:", error);
@@ -58,7 +63,6 @@ async function fetchComments(taskId) {
     }
 
     const data = await response.json();
-    console.log("Task Data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching task:", error);
@@ -138,14 +142,79 @@ const renderComments = function (comments) {
     .querySelector(".comment-container")
     .insertAdjacentHTML("beforeend", markup);
 
-  const replybtn = document.querySelectorAll(".comment-reply-button");
-  replybtn.forEach((btn) => {
+  const replyBtn = document.querySelectorAll(".comment-reply-button");
+
+  replyBtn.forEach((btn) => {
     btn.addEventListener("click", function () {
       const id = btn.closest(".comment").id.split("-")[1];
-
       const replyInputField = document.getElementById(`reply-input-${id}`);
 
       replyInputField.classList.toggle("hidden");
+      replyInputField.classList.remove("invalid-input");
+    });
+
+    btn.addEventListener("mouseenter", function () {
+      this.style.setProperty("color", "#B588F4");
+      this.querySelector("img").src = "./resources/SVG/ReplyIconFaded.svg";
+    });
+
+    btn.addEventListener("mouseleave", function () {
+      this.style.setProperty("color", "#8338ec");
+      this.querySelector("img").src = "./resources/SVG/ReplyIcon.svg";
+    });
+  });
+
+  document.querySelectorAll(".comment-button").forEach((btn) => {
+    btn.addEventListener("click", async function (e) {
+      const commentInput = e.target
+        .closest(".comment-input-block")
+        .querySelector(".comment-field");
+      const commentText = commentInput.value;
+
+      if (!validateCommentText(commentText, e.target)) return;
+      commentInput.value = "";
+
+      let parentId = null;
+      const parentComment = e.target.closest(".comment");
+      if (parentComment) {
+        parentId = parentComment.id.split("-")[1];
+      }
+
+      const commentData = {
+        text: commentText,
+        parent_id: parentId,
+      };
+
+      await fetch(
+        `https://momentum.redberryinternship.ge/api/tasks/${taskId}/comments`,
+        {
+          method: "POST",
+          body: JSON.stringify(commentData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${TOKEN}`,
+            Accept: "application/json",
+          },
+        }
+      )
+        .then(async function () {
+          comments = await fetchComments(taskId);
+          renderComments(comments);
+          document.querySelector(".comment-num").textContent =
+            countComments(comments);
+        })
+        .then(async function () {
+          await fetch("https://momentum.redberryinternship.ge/api/tasks", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              state.taskArray = data;
+            });
+        });
     });
   });
 };
@@ -155,12 +224,17 @@ const renderPage = function (task) {
   const departmentTag = document.querySelector(".task-tags-department");
 
   priorityTag.querySelector("img").src = `${task.priority.icon}`;
+  priorityTag.querySelector("span").textContent = `${task.priority.name}`;
   priorityTag.classList.add(
     `tags-priority-${priorities[task.priority.id - 1]}`
   );
 
   departmentTag.classList.add(`department-${task.department.id}`);
   departmentTag.textContent = task.department.name;
+  departmentTag.style.setProperty(
+    "background-color",
+    departmentColors[task.department.id % 4]
+  );
 
   document.querySelector(".task-body-title").textContent = task.name;
 
@@ -178,7 +252,10 @@ const renderPage = function (task) {
 
   const day = days[new Date(task.due_date).getDay()];
   const date = task.due_date.split("-");
-  const formattedDate = `${day} - ${date[2].slice(0, 2)}/${date[1]}/${date[0]}`;
+  const formattedDate = `${day} - ${date[2].slice(0, 2)}/${parseInt(
+    date[1],
+    10
+  )}/${date[0]}`;
   document.querySelector(".details-date").textContent = formattedDate;
 
   document.querySelector(".comment-num").textContent = countComments(comments);
@@ -218,43 +295,13 @@ taskInput.addEventListener("valueChange", async function () {
   }
 });
 
-const validateCommentText = function (text) {
-  return text.trim();
+const validateCommentText = function (text, target) {
+  const commentField = target.closest(".comment-input-block");
+
+  if (text.trim()) {
+    commentField.classList.remove("invalid-input");
+    return true;
+  } else {
+    commentField.classList.add("invalid-input");
+  }
 };
-
-document.querySelectorAll(".comment-button").forEach((btn) => {
-  btn.addEventListener("click", async function (e) {
-    const commentText = e.target
-      .closest(".comment-input-block")
-      .querySelector(".comment-field").value;
-
-    if (!validateCommentText(commentText)) return;
-
-    let parentId = null;
-    const parentComment = e.target.closest(".comment");
-    if (parentComment) {
-      parentId = parentComment.id.split("-")[1];
-    }
-
-    const commentData = {
-      text: commentText,
-      parent_id: parentId,
-    };
-
-    await fetch(
-      `https://momentum.redberryinternship.ge/api/tasks/${taskId}/comments`,
-      {
-        method: "POST",
-        body: JSON.stringify(commentData),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
-          Accept: "application/json",
-        },
-      }
-    ).then(async function () {
-      comments = await fetchComments(taskId);
-      renderComments(comments);
-    });
-  });
-});

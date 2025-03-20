@@ -32,13 +32,13 @@ export const initializeDropdownMenu = function (id) {
       const name = data.surname ? data.name + " " + data.surname : data.name;
 
       if (data.icon || data.avatar)
-        markup += `<div class="dropdown-option" data-value="${
+        markup += `<div class="dropdown-option dropdown-optional-style" data-value="${
           data.id
         }"><img class="option-icon ${data.avatar && avatarIconClassName}" src=${
           data.icon || data.avatar
         }>${name}</div>`;
       else
-        markup += `<div class="dropdown-option" data-value="${data.id}">${name}</div>`;
+        markup += `<div class="dropdown-option dropdown-optional-style" data-value="${data.id}">${name}</div>`;
     });
 
     return markup;
@@ -53,13 +53,13 @@ export const initializeDropdownMenu = function (id) {
     const name = data.surname ? data.name + " " + data.surname : data.name;
 
     if (data.icon || data.avatar)
-      markup += `<div class="dropdown-option" data-value="${
+      markup += `<div class="dropdown-option dropdown-optional-style" data-value="${
         data.id
       }"><img class="option-icon ${data.avatar && avatarIconClassName}" src=${
         data.icon || data.avatar
       }>${name}</div>`;
     else
-      markup += `<div class="dropdown-option" data-value="${data.id}">${name}</div>`;
+      markup += `<div class="dropdown-option dropdown-optional-style" data-value="${data.id}">${name}</div>`;
 
     const tempEl = document
       .createRange()

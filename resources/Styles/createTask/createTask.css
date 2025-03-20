@@ -66,6 +66,7 @@ textarea {
   border-radius: 5px;
   font-weight: 300 !important;
   color: #0d0f10 !important;
+  font-size: 14px !important;
   outline: none;
 }
 
@@ -147,6 +148,8 @@ textarea {
   width: 100%;
   height: 45px;
   border: 1px solid #dee2e6;
+  font-weight: 200;
+  font-size: 14px;
 }
 
 #customDateInput::placeholder {
@@ -173,4 +176,9 @@ textarea {
   display: flex;
   align-items: center;
   gap: 3px;
+}
+
+.dropdown-optional-style {
+  font-weight: 200 !important;
+  font-size: 14px !important;
 }

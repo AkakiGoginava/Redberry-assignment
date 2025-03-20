@@ -49,8 +49,12 @@ const generateFilterMarkup = function (type) {
     if (type !== "employee")
       markup += `<div class="filter">
                   <label>
-                  <input class="filter-checkbox" type="checkbox" data-type="${type}" data-id="${item.id}" />
-                  <span class="checkbox"></span>
+                  <input class="filter-checkbox" type="checkbox" data-type="${type}" data-id="${
+        item.id
+      }" />
+                  <span class="checkbox" style='${
+                    type === "department" ? "border-color:#212529 " : ""
+                  }'></span>
                   </label>
                   <div class="option-name">
                   <label for="${item.id}">${item.name}</label>

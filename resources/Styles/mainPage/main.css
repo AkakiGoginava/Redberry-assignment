@@ -129,7 +129,7 @@ h1 {
 }
 
 .task-list {
-  max-height: 593px;
+  max-height: 530px;
   overflow-y: scroll;
 }
 
@@ -237,6 +237,12 @@ h1 {
 .task-name {
   font-size: 15px;
   font-weight: 500;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2; /* Maximum 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task-desc {

@@ -68,6 +68,12 @@ main {
 .task-body-title {
   font-weight: 600;
   font-size: 34px;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2; /* Maximum 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task-body-desc {
@@ -76,6 +82,8 @@ main {
   font-size: 18px;
   line-height: 1.5;
   color: #000000;
+  max-height: 320px;
+  overflow-y: scroll;
 }
 
 .task-body-details {
@@ -190,6 +198,7 @@ main {
   width: 100%;
   padding: 18px 20px 15px 20px;
   border-radius: 10px;
+  border: 1px solid transparent;
 }
 
 .comment-field {
@@ -198,6 +207,8 @@ main {
   border: none;
   outline: none;
   resize: none;
+  font-weight: 300;
+  font-size: 14px;
 }
 
 .comment-button {

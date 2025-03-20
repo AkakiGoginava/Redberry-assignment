@@ -95,15 +95,13 @@
 
 #name,
 #surname {
-  background: url("/Redberry-assignment/resources/SVG/Information.svg")
-    no-repeat right 10px center;
   padding: 10px;
 }
 
 .form-avatar {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 3px;
   width: 100%;
 }
 

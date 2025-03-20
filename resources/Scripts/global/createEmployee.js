@@ -73,6 +73,8 @@ const checkNameInput = function (val, id) {
   const maxLabel = document.querySelector(`.max-symbol-${id}`);
   const maxLabelCheck = maxLabel.querySelector("img");
 
+  const alphabetLabel = document.querySelector(`.alphabet-${id}`);
+  const alphabetLabelCheck = alphabetLabel.querySelector("img");
   // Regex For English and Georgian Alphabet
   const english = /^[A-Za-z\s]+$/;
   const georgian = /^[\u10A0-\u10FF\s]+$/;
@@ -108,8 +110,41 @@ const checkNameInput = function (val, id) {
 
   // Check for Valid Alphabet
   languageCheck = english.test(val) ^ georgian.test(val);
+
+  if (languageCheck) {
+    alphabetLabel.classList.remove(".invalid-label");
+    alphabetLabel.classList.add("valid-label");
+    alphabetLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
+  } else {
+    alphabetLabel.classList.remove("valid-label");
+    alphabetLabel.classList.add("invalid-label");
+    alphabetLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
+  }
+
   // Update Input State Respectively Based on id
   formCheck[id] = languageCheck && lengthCheck;
+
+  if (!formCheck[id]) {
+    document.getElementById(id).classList.add("invalid-input");
+  } else {
+    document.getElementById(id).classList.remove("invalid-input");
+  }
+
+  if (val === "") {
+    alphabetLabel.classList.remove("invalid-label");
+    alphabetLabel.classList.remove("valid-label");
+    alphabetLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+
+    maxLabel.classList.remove("invalid-label");
+    maxLabel.classList.remove("valid-label");
+    maxLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+
+    minLabel.classList.remove("invalid-label");
+    minLabel.classList.remove("valid-label");
+    minLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+
+    document.getElementById(id).classList.remove("invalid-input");
+  }
 };
 
 // Event Handler For Submit Button
@@ -195,11 +230,53 @@ document
     clearImgBtn.classList.remove("hidden");
     AvatarPlaceholderText.classList.add("hidden");
 
+    const avatarSizeLabel = document.querySelector(".avatar-size-requirement");
+    const avatarSizeLabelCheck = avatarSizeLabel.querySelector("img");
+    const sizeCheck = avatarFile && avatarFile.size / 1024 <= 600;
+
+    const avatarTypeLabel = document.querySelector(".avatar-type-requirement");
+    const avatarTypeLabelCheck = avatarTypeLabel.querySelector("img");
+    const typeCheck = avatarFile.type.startsWith("image/");
+
+    if (sizeCheck) {
+      avatarSizeLabel.classList.remove("invalid-label");
+      avatarSizeLabel.classList.add("valid-label");
+      avatarSizeLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
+    } else {
+      avatarSizeLabel.classList.add("invalid-label");
+      avatarSizeLabel.classList.remove("valid-label");
+      avatarSizeLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
+    }
+
+    if (typeCheck) {
+      avatarTypeLabel.classList.remove("invalid-label");
+      avatarTypeLabel.classList.add("valid-label");
+      avatarTypeLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
+    } else {
+      avatarTypeLabel.classList.add("invalid-label");
+      avatarTypeLabel.classList.remove("valid-label");
+      avatarTypeLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
+    }
+
     // Update Input State Based on Uploaded Image size
-    formCheck.avatar = avatarFile && avatarFile.size / 1024 <= 600;
+    formCheck.avatar = sizeCheck && typeCheck;
   });
 
 clearImgBtn.addEventListener("click", function () {
+  const avatarSizeLabel = document.querySelector(".avatar-size-requirement");
+  const avatarSizeLabelCheck = avatarSizeLabel.querySelector("img");
+
+  avatarSizeLabel.classList.remove("invalid-label");
+  avatarSizeLabel.classList.remove("valid-label");
+  avatarSizeLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+
+  const avatarTypeLabel = document.querySelector(".avatar-type-requirement");
+  const avatarTypeLabelCheck = avatarTypeLabel.querySelector("img");
+
+  avatarTypeLabel.classList.remove("invalid-label");
+  avatarTypeLabel.classList.remove("valid-label");
+  avatarTypeLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+
   clearImgInput();
 });
 

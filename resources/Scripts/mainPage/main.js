@@ -19,7 +19,7 @@ state.filter = sessionStorage.getItem("filterData")
 
 // Generate Markup For Specific Task
 const generateMarkup = function (task) {
-  let { description } = task;
+  let description = task.description ?? "";
 
   // Format Text if Longer Than 100 Chars
   if (description.length > 100) {

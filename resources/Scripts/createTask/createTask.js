@@ -42,7 +42,7 @@ let taskFormData = sessionStorage.getItem("taskFormData")
         dueDate: true,
       },
     };
-console.log(taskFormData);
+
 // Task Form Input State Object
 const { taskFormState } = taskFormData;
 
@@ -152,29 +152,8 @@ const validateDescInput = function () {
 // Validate Correct Format
 const isValidFormat = function (dateString) {
   const regex = /^(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[0-2])[-/.]\d{4}$/;
-  if (!regex.test(dateString)) {
-    return false;
-  }
 
-  let day, month, year;
-
-  if (dateString.includes("/")) {
-    [day, month, year] = dateString.split("/").map(Number);
-  } else if (dateString.includes("-")) {
-    [day, month, year] = dateString.split("-").map(Number);
-  } else if (dateString.includes(".")) {
-    [day, month, year] = dateString.split(".").map(Number);
-  } else {
-    return false;
-  }
-
-  const date = new Date(year, month - 1, day);
-
-  if (
-    date.getDate() === day &&
-    date.getMonth() === month - 1 &&
-    date.getFullYear() === year
-  ) {
+  if (regex.test(dateString)) {
     document
       .querySelector(".date-format-requirement")
       .classList.remove("invalid-label");
@@ -239,8 +218,6 @@ const validateDateInput = function (dateString) {
   const validFormat = isValidFormat(dateString);
   const validDate = isValidDate(dateString);
 
-  console.log(validDate);
-  console.log(validFormat);
   if (validDate && validFormat) {
     taskFormState.dueDate = true;
 
@@ -263,16 +240,41 @@ validateDescInput();
 
 // Load Date Value if Stored
 if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
-  const date = taskFormData.dueDate.split("-");
-  console.log(taskFormData);
-  if (isValidFormat(`${date[2]}-${date[1].padStart(2, "0")}-${date[0]}`)) {
+  let date = taskFormData.dueDate.split("-");
+
+  if (taskFormData.dueDate.includes("/")) {
+    date = taskFormData.dueDate.split("/").map(Number);
+  } else if (taskFormData.dueDate.includes("-")) {
+    date = taskFormData.dueDate.split("-").map(Number);
+  } else if (taskFormData.dueDate.includes(".")) {
+    date = taskFormData.dueDate.split(".").map(Number);
+  }
+
+  if (
+    date[1] !== undefined &&
+    date[2] !== undefined &&
+    isValidFormat(
+      `${String(date[2]).padStart(2, "0")}-${String(date[1]).padStart(
+        2,
+        "0"
+      )}-${date[0]}`
+    )
+  ) {
     taskDateInput.value = taskFormData.dueDate;
 
-    taskDateDisplay.value = `${date[2]}/${date[1].padStart(2, "0")}/${date[0]}`;
+    taskDateDisplay.value = `${String(date[2]).padStart(2, "0")}/${String(
+      date[1]
+    ).padStart(2, "0")}/${date[0]}`;
     validateDateInput(taskDateDisplay.value);
   } else {
     taskDateInput.value = `${year}-${month}-${day}`;
-    taskDateInput.value = `${year}-${month}-${day}`;
+    taskDateDisplay.value = `${day}/${month}/${year}`;
+
+    taskFormState.dueDate = true;
+
+    taskFormData.dueDate = `${year}-${month}-${day}`;
+    sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
+
     document
       .querySelector(".date-time-requirement")
       .classList.remove("valid-label");
@@ -423,7 +425,9 @@ document.getElementById("dateIcon").addEventListener("click", function () {
 // Event Listener For Custom Date Input Value Update
 taskDateInput.addEventListener("change", function () {
   let dateInput = this.value.split("-");
-  taskDateDisplay.value = `${dateInput[2]}/${dateInput[1]}/${dateInput[0]}`;
+  taskDateDisplay.value = `${String(dateInput[2]).padStart(2, "0")}/${String(
+    dateInput[1]
+  ).padStart(2, "0")}/${dateInput[0]}`;
   taskDateDisplay.dispatchEvent(new CustomEvent("dateChange", {}));
 
   // Store Date Input
@@ -442,14 +446,18 @@ taskDateDisplay.addEventListener("change", function () {
     [day, month, year] = this.value.split(".").map(Number);
   }
 
-  taskDateInput.value = `${year}/${month}/${day}`;
+  taskDateInput.value = `${year}-${String(month).padStart(2, "0")}-${String(
+    day
+  ).padStart(2, "0")}`;
   // Store Date Input
-  taskFormData.dueDate = `${year}/${month}/${day}`;
+  taskFormData.dueDate = `${year}/${String(month).padStart(2, "0")}/${String(
+    day
+  ).padStart(2, "0")}`;
   sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 });
 
 // Event Listener to Validate Date Input
-taskDateDisplay.addEventListener("change", function () {
+taskDateDisplay.addEventListener("input", function () {
   validateDateInput(this.value);
   let day, month, year;
 
@@ -461,8 +469,12 @@ taskDateDisplay.addEventListener("change", function () {
     [day, month, year] = this.value.split(".").map(Number);
   }
 
-  const formattedData = `${year}-${month}-${day}`;
+  const formattedData = `${year}-${String(month).padStart(2, "0")}-${String(
+    day
+  ).padStart(2, "0")}`;
+
   taskDateInput.value = formattedData;
+
   taskFormData.dueDate = formattedData;
   sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 });
@@ -503,8 +515,6 @@ const validateFormInputs = function () {
 
 // Event Listener For Form Submission
 taskSubmitBtn.addEventListener("click", async function () {
-  console.log(taskFormState);
-  console.log(taskFormData);
   if (validateFormInputs()) {
     const taskData = new FormData();
 
@@ -524,8 +534,6 @@ taskSubmitBtn.addEventListener("click", async function () {
       taskPriorityInput.querySelector(".selected-value").value
     );
 
-    console.log(taskData);
-
     await fetch("https://momentum.redberryinternship.ge/api/tasks", {
       method: "POST",
       body: taskData,
@@ -534,9 +542,7 @@ taskSubmitBtn.addEventListener("click", async function () {
       },
     })
       .then((response) => {
-        console.log(response);
         if (response.status === 201) {
-          console.log("a");
           fetch("https://momentum.redberryinternship.ge/api/tasks", {
             method: "GET",
             headers: {
@@ -548,7 +554,8 @@ taskSubmitBtn.addEventListener("click", async function () {
               state.taskArray = data;
             })
             .then(() => {
-              console.log("a");
+              taskNameInput.value = "";
+              taskDescInput.value = "";
               sessionStorage.removeItem("taskFormData");
               window.location.href = "index.html";
             });
