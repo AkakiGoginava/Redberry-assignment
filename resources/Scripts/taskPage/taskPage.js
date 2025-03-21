@@ -220,6 +220,8 @@ const renderComments = function (comments) {
 };
 
 const renderPage = function (task) {
+  document.querySelector("title").textContent = task.name;
+
   const priorityTag = document.querySelector(".task-tags-priority");
   const departmentTag = document.querySelector(".task-tags-department");
 

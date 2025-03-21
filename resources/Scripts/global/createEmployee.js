@@ -18,6 +18,10 @@ const nameInput = [
 // Create Dropdown Menu For Department Input
 const departmentInputMenu = initializeDropdownMenu("department-input");
 
+departmentInput.addEventListener("valueChange", () => {
+  document.getElementById("department-input").classList.remove("invalid-input");
+});
+
 // Form Input State Object
 const formCheck = {
   name: false,
@@ -153,9 +157,20 @@ const submitForm = async function () {
 
   if (departmentInput.value !== "") formCheck.department = true;
 
+  const formInputs = [
+    ...nameInput,
+    document.querySelector(".avatar-upload"),
+    document.getElementById("department-input"),
+  ];
+
   // Check Form State
-  Object.values(formCheck).forEach((val) => {
-    if (!val) validInput = false;
+  Object.values(formCheck).forEach((val, i) => {
+    if (!val) {
+      validInput = false;
+      formInputs[i].classList.add("invalid-input");
+    } else {
+      formInputs[i].classList.remove("invalid-input");
+    }
   });
 
   // Return if Any Input is Invalid
@@ -289,19 +304,19 @@ submitBtn.addEventListener("click", async function (e) {
 
   await submitForm();
 
+  await fetch("https://momentum.redberryinternship.ge/api/employees", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      state.employeeArray = data;
+    });
+
   // Check if Submission Comes From Create Task Page Employee Options
   if (document.querySelector(".custom-option")) {
-    await fetch("https://momentum.redberryinternship.ge/api/employees", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        state.employeeArray = data;
-      });
-
     // Find Latest Added Employee
     const newEmployee = state.employeeArray.reduce((max, current) => {
       return current.id > max.id ? current : max;
