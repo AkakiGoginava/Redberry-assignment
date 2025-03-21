@@ -1,4 +1,11 @@
-import { state, TOKEN } from "./global.js";
+import {
+  state,
+  TOKEN,
+  fetchData,
+  server,
+  resetLabel,
+  validateLabel,
+} from "./global.js";
 import { initializeDropdownMenu } from "./dropDownMenu.js";
 
 const openModalBtn = document.querySelector(".create-employee-btn");
@@ -6,7 +13,8 @@ const blur = document.querySelector(".background-blur");
 const createEmployeeModal = document.querySelector(".create-employee-modal");
 const exitBtns = document.querySelectorAll(".employee-modal-exit");
 const submitBtn = document.querySelector(".submit-btn");
-const departmentInput = document.querySelector(".department-input");
+const departmentInput = createEmployeeModal.querySelector(".department-input");
+const departmentInputContainer = document.getElementById("department-input");
 const previewImg = document.getElementById("preview-image");
 const clearImgBtn = document.querySelector(".clear-img-btn");
 const AvatarPlaceholderText = document.getElementById("img-input-label");
@@ -15,9 +23,16 @@ const nameInput = [
   document.getElementById("surname"),
 ];
 
+const avatarInputField = document.querySelector(".avatar-upload");
+const avatarBorderPropertyRed =
+  "url(\"data:image/svg+xml,%3csvg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%' height='100%' fill='none' rx='8' ry='8' stroke='%23FA4D4DFF' stroke-width='1' stroke-dasharray='5' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e\")";
+const avatarBorderPropertyDefault =
+  "url(\"data:image/svg+xml,%3csvg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%' height='100%' fill='none' rx='8' ry='8' stroke='%23CED4DAFF' stroke-width='1' stroke-dasharray='5' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e\")";
+
 // Create Dropdown Menu For Department Input
 const departmentInputMenu = initializeDropdownMenu("department-input");
 
+// Remove Department Red Outline if Input is Provided
 departmentInput.addEventListener("valueChange", () => {
   document.getElementById("department-input").classList.remove("invalid-input");
 });
@@ -37,6 +52,12 @@ const clearImgInput = function () {
   previewImg.classList.remove("preview-img");
   clearImgBtn.classList.add("hidden");
   AvatarPlaceholderText.classList.remove("hidden");
+
+  // Reset Border
+  avatarInputField.style.setProperty(
+    "background-image",
+    `${avatarBorderPropertyDefault}`
+  );
 
   // Update Input State
   formCheck.avatar = false;
@@ -63,6 +84,11 @@ export const closeModal = function () {
     el.querySelector("img").src = "./resources/SVG/CheckmarkGray.svg";
   });
 
+  // Remove Outlines
+  [...nameInput, departmentInputContainer].forEach((el) => {
+    el.classList.remove("invalid-input");
+  });
+
   // Clear Department Input and Reset Department Form State
   departmentInputMenu.clearInput();
   formCheck.department = false;
@@ -79,6 +105,7 @@ const checkNameInput = function (val, id) {
 
   const alphabetLabel = document.querySelector(`.alphabet-${id}`);
   const alphabetLabelCheck = alphabetLabel.querySelector("img");
+
   // Regex For English and Georgian Alphabet
   const english = /^[A-Za-z\s]+$/;
   const georgian = /^[\u10A0-\u10FF\s]+$/;
@@ -89,63 +116,37 @@ const checkNameInput = function (val, id) {
   // Check for Valid Length
   if (val.length < 2) {
     lengthCheck = false;
-
     // Update Label
-    minLabel.classList.add("invalid-label");
-    minLabel.classList.remove("valid-label");
-    minLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
+    validateLabel(false, minLabel, minLabelCheck);
+    validateLabel(true, maxLabel, maxLabelCheck);
   } else if (val.length > 255) {
     lengthCheck = false;
-
-    maxLabel.classList.add("invalid-label");
-    maxLabel.classList.remove("valid-label");
-    maxLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
+    validateLabel(false, maxLabel, maxLabelCheck);
   } else {
     lengthCheck = true;
-
-    maxLabel.classList.remove("invalid-label");
-    maxLabel.classList.add("valid-label");
-    maxLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
-
-    minLabel.classList.remove("invalid-label");
-    minLabel.classList.add("valid-label");
-    minLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
+    validateLabel(true, minLabel, minLabelCheck);
+    validateLabel(true, maxLabel, maxLabelCheck);
   }
 
   // Check for Valid Alphabet
   languageCheck = english.test(val) ^ georgian.test(val);
-
-  if (languageCheck) {
-    alphabetLabel.classList.remove(".invalid-label");
-    alphabetLabel.classList.add("valid-label");
-    alphabetLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
-  } else {
-    alphabetLabel.classList.remove("valid-label");
-    alphabetLabel.classList.add("invalid-label");
-    alphabetLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
-  }
+  validateLabel(languageCheck, alphabetLabel, alphabetLabelCheck);
 
   // Update Input State Respectively Based on id
   formCheck[id] = languageCheck && lengthCheck;
 
+  // Update Input Outline
   if (!formCheck[id]) {
     document.getElementById(id).classList.add("invalid-input");
   } else {
     document.getElementById(id).classList.remove("invalid-input");
   }
 
+  // Reset Input Outline and Labels if Empty
   if (val === "") {
-    alphabetLabel.classList.remove("invalid-label");
-    alphabetLabel.classList.remove("valid-label");
-    alphabetLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
-
-    maxLabel.classList.remove("invalid-label");
-    maxLabel.classList.remove("valid-label");
-    maxLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
-
-    minLabel.classList.remove("invalid-label");
-    minLabel.classList.remove("valid-label");
-    minLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+    resetLabel(alphabetLabel, alphabetLabelCheck);
+    resetLabel(maxLabel, maxLabelCheck);
+    resetLabel(minLabel, minLabelCheck);
 
     document.getElementById(id).classList.remove("invalid-input");
   }
@@ -173,8 +174,15 @@ const submitForm = async function () {
     }
   });
 
+  if (!formCheck.avatar) {
+    avatarInputField.style.setProperty(
+      "background-image",
+      `${avatarBorderPropertyRed}`
+    );
+  }
+
   // Return if Any Input is Invalid
-  if (!validInput) return;
+  if (!validInput) return false;
 
   const formData = new FormData();
   const avatarFile = document.querySelector('input[type="file"]').files[0];
@@ -185,7 +193,7 @@ const submitForm = async function () {
   formData.append("department_id", departmentInput.value);
 
   // Send Employee Data
-  await fetch("https://momentum.redberryinternship.ge/api/employees", {
+  await fetch(`${server}/employees`, {
     method: "POST",
     body: formData,
     headers: {
@@ -193,9 +201,9 @@ const submitForm = async function () {
     },
   })
     .then((response) => {
+      // Close Modal if Employee is Created Successfully
       if (response.status === 201) closeModal();
     })
-    .then((data) => console.log(data))
     .catch((error) => console.error("Error:", error));
 };
 
@@ -203,6 +211,7 @@ openModalBtn.addEventListener("click", function () {
   closeModal();
 });
 
+// Close if Clicked Outside of Modal
 window.addEventListener("click", function (e) {
   if (
     !createEmployeeModal.contains(e.target) &&
@@ -232,6 +241,7 @@ document
   .getElementById("img-input")
   .addEventListener("change", function (event) {
     const avatarFile = event.target.files[0];
+    // Render Preview Img
     if (avatarFile) {
       const reader = new FileReader();
       reader.onload = function (e) {
@@ -247,50 +257,45 @@ document
 
     const avatarSizeLabel = document.querySelector(".avatar-size-requirement");
     const avatarSizeLabelCheck = avatarSizeLabel.querySelector("img");
+
+    // Validate Size
     const sizeCheck = avatarFile && avatarFile.size / 1024 <= 600;
+    validateLabel(sizeCheck, avatarSizeLabel, avatarSizeLabelCheck);
 
     const avatarTypeLabel = document.querySelector(".avatar-type-requirement");
     const avatarTypeLabelCheck = avatarTypeLabel.querySelector("img");
+
+    // Validate File Type
     const typeCheck = avatarFile.type.startsWith("image/");
-
-    if (sizeCheck) {
-      avatarSizeLabel.classList.remove("invalid-label");
-      avatarSizeLabel.classList.add("valid-label");
-      avatarSizeLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
-    } else {
-      avatarSizeLabel.classList.add("invalid-label");
-      avatarSizeLabel.classList.remove("valid-label");
-      avatarSizeLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
-    }
-
-    if (typeCheck) {
-      avatarTypeLabel.classList.remove("invalid-label");
-      avatarTypeLabel.classList.add("valid-label");
-      avatarTypeLabelCheck.src = "./resources/SVG/CheckmarkGreen.svg";
-    } else {
-      avatarTypeLabel.classList.add("invalid-label");
-      avatarTypeLabel.classList.remove("valid-label");
-      avatarTypeLabelCheck.src = "./resources/SVG/CheckmarkRed.svg";
-    }
+    validateLabel(typeCheck, avatarTypeLabel, avatarTypeLabelCheck);
 
     // Update Input State Based on Uploaded Image size
     formCheck.avatar = sizeCheck && typeCheck;
+
+    if (!formCheck.avatar) {
+      avatarInputField.style.setProperty(
+        "background-image",
+        `${avatarBorderPropertyRed}`
+      );
+    } else {
+      avatarInputField.style.setProperty(
+        "background-image",
+        `${avatarBorderPropertyDefault}`
+      );
+    }
   });
 
+// Reset Labels After Clearing Avatar Input
 clearImgBtn.addEventListener("click", function () {
   const avatarSizeLabel = document.querySelector(".avatar-size-requirement");
   const avatarSizeLabelCheck = avatarSizeLabel.querySelector("img");
 
-  avatarSizeLabel.classList.remove("invalid-label");
-  avatarSizeLabel.classList.remove("valid-label");
-  avatarSizeLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+  resetLabel(avatarSizeLabel, avatarSizeLabelCheck);
 
   const avatarTypeLabel = document.querySelector(".avatar-type-requirement");
   const avatarTypeLabelCheck = avatarTypeLabel.querySelector("img");
 
-  avatarTypeLabel.classList.remove("invalid-label");
-  avatarTypeLabel.classList.remove("valid-label");
-  avatarTypeLabelCheck.src = "./resources/SVG/CheckmarkGray.svg";
+  resetLabel(avatarTypeLabel, avatarTypeLabelCheck);
 
   clearImgInput();
 });
@@ -302,20 +307,14 @@ departmentInputMenu.renderOptions(state.departmentArray);
 submitBtn.addEventListener("click", async function (e) {
   e.preventDefault();
 
-  await submitForm();
+  const valid = await submitForm();
 
-  await fetch("https://momentum.redberryinternship.ge/api/employees", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      state.employeeArray = data;
-    });
+  if (valid === false) return;
+  // Update Employee Data After Creating New Employee
+  state.employeeArray = await fetchData("employees");
 
   // Check if Submission Comes From Create Task Page Employee Options
+  // to Automatically Enter New Employee Details Into Task Form
   if (document.querySelector(".custom-option")) {
     // Find Latest Added Employee
     const newEmployee = state.employeeArray.reduce((max, current) => {
@@ -326,19 +325,20 @@ submitBtn.addEventListener("click", async function (e) {
     const departmentContainer = document.getElementById(
       "task-department-input"
     );
+
     departmentContainer.querySelector(".selected-option").textContent =
       newEmployee.department.name;
-
     departmentContainer.querySelector(".selected-value").value =
       newEmployee.department.id;
 
+    // Initiate Value Change Event For Department Input
     departmentContainer
       .querySelector(".selected-value")
       .dispatchEvent(new CustomEvent("valueChange", {}));
 
     // Render New Employee as a Seleceted Option
-    const container = document.getElementById("task-employee-input");
-    const selectedOption = container.querySelector(".selected-option");
+    const employeeContainer = document.getElementById("task-employee-input");
+    const selectedOption = employeeContainer.querySelector(".selected-option");
 
     const imgMarkup = `<img class='option-icon avatar-icon' src=${newEmployee.avatar}>`;
 
@@ -346,9 +346,10 @@ submitBtn.addEventListener("click", async function (e) {
 
     selectedOption.textContent = `${fullName}`;
     selectedOption.insertAdjacentHTML("afterbegin", imgMarkup);
-    container.querySelector(".selected-value").value = newEmployee.id;
+    employeeContainer.querySelector(".selected-value").value = newEmployee.id;
 
-    container
+    // Initiate Value Change Event For Employee Input
+    employeeContainer
       .querySelector(".selected-value")
       .dispatchEvent(new CustomEvent("valueChange", {}));
   }

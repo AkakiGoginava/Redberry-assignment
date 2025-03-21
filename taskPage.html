@@ -52,6 +52,10 @@
               ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
               სიმბოლო</label
             >
+            <label class="form-requirement alphabet-name" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მხოლოდ ინგლისური
+              ან ქართული სიმბოლოები</label
+            >
           </div>
 
           <div class="form-surname">
@@ -66,6 +70,10 @@
             <label class="form-requirement max-symbol-surname" for="surname"
               ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
               სიმბოლო</label
+            >
+            <label class="form-requirement alphabet-surname" for="name"
+              ><img src="./resources/SVG/CheckmarkGray.svg" />მხოლოდ ინგლისური
+              ან ქართული სიმბოლოები</label
             >
           </div>
         </div>
@@ -93,6 +101,15 @@
 
             <input type="file" id="img-input" accept="image/*" class="hidden" />
           </div>
+
+          <label class="form-requirement avatar-size-requirement"
+            ><img src="./resources/SVG/CheckmarkGray.svg" />ფაილის ზომა ნაკლები
+            600kb - ზე</label
+          >
+          <label class="form-requirement avatar-type-requirement"
+            ><img src="./resources/SVG/CheckmarkGray.svg" />ფაილის ტიპი
+            სურათი</label
+          >
         </div>
         <!------------------->
 
@@ -105,7 +122,7 @@
             <div class="dropdown-menu">
               <!-- Input Field -->
               <div class="dropdown-header">
-                <span></span>
+                <div class="selected-option"></div>
                 <img src="resources/SVG/DownArrowSmall.svg" />
               </div>
 
@@ -138,6 +155,7 @@
     <main>
       <!-- Main Task Body -->
       <section class="task-body">
+        <!-- Task Tags and Title -->
         <div class="task-body-header">
           <div class="task-body-tags">
             <div class="task-tags-priority"><img /><span></span></div>
@@ -146,6 +164,7 @@
 
           <h1 class="task-body-title"></h1>
         </div>
+        <!------------------------->
 
         <p class="task-body-desc"></p>
 
@@ -205,6 +224,7 @@
 
       <!-- Task Comments -->
       <secton class="comment-section">
+        <!-- Comment Input -->
         <div class="comment-input-block">
           <textarea
             class="comment-field"
@@ -213,6 +233,7 @@
 
           <button type="button" class="comment-button">დააკომენტარე</button>
         </div>
+        <!------------------->
 
         <div class="comment-display-block">
           <div class="comment-display-header">
@@ -220,7 +241,9 @@
             <div class="comment-num"></div>
           </div>
 
+          <!-- Posted Comments -->
           <div class="comment-container"></div>
+          <!--------------------->
         </div>
       </secton>
       <!------------------->

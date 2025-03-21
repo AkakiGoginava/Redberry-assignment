@@ -9,11 +9,27 @@ import * as createEmployee from "../global/createEmployee.js";
 const clearFilterBtn = document.querySelector(".clear-filter-btn");
 const activeFilterContainer = document.querySelector(".filter-div-container");
 
-if (document.referrer && !window.history.state) {
-  sessionStorage.removeItem("filterData");
-}
+// Detect if the page is being restored from the bfcache (back-forward cache)
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) {
+    return; // If true, the page was restored from cache, so don't clear storage
+  }
+});
 
-state.filter = sessionStorage.getItem("filterData")
+// Clear sessionStorage when navigating back
+window.addEventListener("popstate", () => {
+  sessionStorage.removeItem("filterData");
+});
+
+// Clear sessionStorage when navigating via a link (but NOT on refresh)
+window.addEventListener("beforeunload", (event) => {
+  if (!performance.getEntriesByType("navigation")[0].type.includes("reload")) {
+    sessionStorage.removeItem("filterData");
+  }
+});
+
+// Load Filter Data From Storage
+export const filterData = sessionStorage.getItem("filterData")
   ? JSON.parse(sessionStorage.getItem("filterData"))
   : {
       departments: [],
@@ -83,6 +99,7 @@ export const renderLists = function () {
     list.innerHTML = "";
   });
 
+  // Assign List Location Based on Status
   state.taskArray.forEach((task) => {
     let locationClassName;
     switch (task.status.id) {
@@ -101,15 +118,15 @@ export const renderLists = function () {
     }
 
     const taskCardHTML = generateMarkup(task);
-    const { filter } = state;
 
+    // Filter if Respective Filter Array is NOT Empty
     if (
-      (filter.departments.includes(task.department.id) ||
-        filter.departments.length === 0) &&
-      (filter.employees.includes(task.employee.id) ||
-        filter.employees.length === 0) &&
-      (filter.priorities.includes(task.priority.id) ||
-        filter.priorities.length === 0)
+      (filterData.departments.includes(task.department.id) ||
+        filterData.departments.length === 0) &&
+      (filterData.employees.includes(task.employee.id) ||
+        filterData.employees.length === 0) &&
+      (filterData.priorities.includes(task.priority.id) ||
+        filterData.priorities.length === 0)
     )
       document
         .querySelector(locationClassName)
@@ -118,9 +135,12 @@ export const renderLists = function () {
   });
 };
 
+// Render Active Filter Tab
 export const renderActiveFilters = function () {
   let markup = ``;
-  Object.values(state.filter).forEach((dataSet, i) => {
+
+  // Identify Filter Data Type And Id
+  Object.values(filterData).forEach((dataSet, i) => {
     if (!dataSet) return;
     dataSet.forEach((dataId) => {
       let dataContainerName;
@@ -140,15 +160,20 @@ export const renderActiveFilters = function () {
           break;
       }
 
+      // Find Relevant Data to Access Its Name
       const data = state[dataContainerName].find((data) => data.id === dataId);
-      let name = data.name;
+
+      // Generate Markup
+      let { name } = data;
       if (data.surname) name = data.name + " " + data.surname;
+
       markup += `<div class="active-filter" data-type="${dataType}" data-id="${dataId}">
                   ${name}<img class="filter-x-btn" src="resources/SVG/x.svg" />
                 </div>`;
     });
   });
 
+  // Hide/Unhide Clear Filter Button
   if (markup) clearFilterBtn.classList.remove("hidden");
   else clearFilterBtn.classList.add("hidden");
 
@@ -156,6 +181,7 @@ export const renderActiveFilters = function () {
   activeFilterContainer.insertAdjacentHTML("afterbegin", markup);
 };
 
+// Event Listener For Individual Filter Option Removal
 document.querySelector(".active-filter-tab").addEventListener("click", (e) => {
   const targetBtn = e.target.closest(".filter-x-btn");
 
@@ -164,24 +190,25 @@ document.querySelector(".active-filter-tab").addEventListener("click", (e) => {
   const dataType = targetBtn.closest(".active-filter").dataset.type;
   const dataId = targetBtn.closest(".active-filter").dataset.id;
 
-  const index = state.filter[dataType].findIndex((data) => data.id === dataId);
-  state.filter[dataType].splice(index, 1);
+  const index = filterData[dataType].findIndex((data) => data.id === dataId);
+  filterData[dataType].splice(index, 1);
 
-  sessionStorage.setItem("filterData", JSON.stringify(state.filter));
+  sessionStorage.setItem("filterData", JSON.stringify(filterData));
   renderLists();
   renderActiveFilters();
 });
 
+// Event Listener For Clear Filter Button
 clearFilterBtn.addEventListener("click", () => {
-  Object.keys(state.filter).forEach((item) => {
-    state.filter[item] = "";
+  Object.keys(filterData).forEach((item) => {
+    filterData[item] = "";
   });
 
-  sessionStorage.setItem("filterData", JSON.stringify(state.filter));
+  sessionStorage.setItem("filterData", JSON.stringify(filterData));
   renderActiveFilters();
   renderLists();
 });
 
-// Render Lists After Loading Main Page
+// Render Lists and Active Filters
 renderLists();
 renderActiveFilters();

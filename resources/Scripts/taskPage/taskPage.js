@@ -4,12 +4,16 @@ import {
   priorities,
   days,
   departmentColors,
+  fetchData,
+  server,
 } from "../global/global.js";
 import * as createEmployee from "../global/createEmployee.js";
 import { initializeDropdownMenu } from "../global/dropDownMenu.js";
 
+// Retrieve Opened Task Id
 const urlParams = new URLSearchParams(window.location.search);
 const taskId = urlParams.get("id");
+
 const taskInput = document.querySelector(".status-input");
 
 const countComments = function (comments) {
@@ -20,30 +24,6 @@ const countComments = function (comments) {
 
   return size;
 };
-
-async function fetchTask(taskId) {
-  try {
-    const response = await fetch(
-      `https://momentum.redberryinternship.ge/api/tasks/${taskId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-          Accept: "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching task:", error);
-  }
-}
 
 async function fetchComments(taskId) {
   try {
@@ -69,17 +49,29 @@ async function fetchComments(taskId) {
   }
 }
 
-const task = await fetchTask(taskId);
-let comments = await fetchComments(taskId);
+const task = await fetchData(`tasks/${taskId}`); // Fetch Task Data by Id
+let comments = await fetchData(`tasks/${taskId}/comments`); // Fetch Comment Data by Task Id
 
 // Create Dropdown Menu For Status Input
 const statusDropdownMenu = initializeDropdownMenu("status-input");
-
 statusDropdownMenu.renderOptions(state.statusArray);
+
+// Validation For Comment Input
+const validateCommentText = function (text, target) {
+  const commentField = target.closest(".comment-input-block");
+
+  if (text.trim()) {
+    commentField.classList.remove("invalid-input");
+    return true;
+  } else {
+    commentField.classList.add("invalid-input");
+  }
+};
 
 const genrateCommentsMarkup = function (data) {
   let markup = ``;
   data.forEach((comment) => {
+    // Create Markup For Parent Comment
     markup += ` <div class="comment" id="comment-${comment.id}">
                 <div class="comment-body">
                   <img
@@ -107,7 +99,7 @@ const genrateCommentsMarkup = function (data) {
                     დააკომენტარე
                   </button>
                 </div>`;
-
+    // Attach Markup For Replies if There are Any
     if (comment.sub_comments.length !== 0) {
       markup += `<div class="comment-replies">`;
       comment.sub_comments.forEach((subComment) => {
@@ -136,7 +128,9 @@ const genrateCommentsMarkup = function (data) {
 };
 
 const renderComments = function (comments) {
+  // Clear Container Before Rendering
   document.querySelector(".comment-container").innerHTML = "";
+
   const markup = genrateCommentsMarkup(comments);
   document
     .querySelector(".comment-container")
@@ -144,8 +138,10 @@ const renderComments = function (comments) {
 
   const replyBtn = document.querySelectorAll(".comment-reply-button");
 
+  // Event Listener For Reply Input Field Display
   replyBtn.forEach((btn) => {
     btn.addEventListener("click", function () {
+      // Display Input Field Based on Target Button Id
       const id = btn.closest(".comment").id.split("-")[1];
       const replyInputField = document.getElementById(`reply-input-${id}`);
 
@@ -153,28 +149,32 @@ const renderComments = function (comments) {
       replyInputField.classList.remove("invalid-input");
     });
 
+    // Event Listeners For Reply Button Hover Effect
     btn.addEventListener("mouseenter", function () {
       this.style.setProperty("color", "#B588F4");
       this.querySelector("img").src = "./resources/SVG/ReplyIconFaded.svg";
     });
-
     btn.addEventListener("mouseleave", function () {
       this.style.setProperty("color", "#8338ec");
       this.querySelector("img").src = "./resources/SVG/ReplyIcon.svg";
     });
   });
 
+  // Event Listener For Comment/Reply Submit Buttons
   document.querySelectorAll(".comment-button").forEach((btn) => {
     btn.addEventListener("click", async function (e) {
+      // Find Related Comment Field
       const commentInput = e.target
         .closest(".comment-input-block")
         .querySelector(".comment-field");
+
       const commentText = commentInput.value;
 
       if (!validateCommentText(commentText, e.target)) return;
-      commentInput.value = "";
+      commentInput.value = ""; // Empty Comment Input Field on Submission
 
       let parentId = null;
+      // If Parent Comment Exists Overwrite Default ParentId=null
       const parentComment = e.target.closest(".comment");
       if (parentComment) {
         parentId = parentComment.id.split("-")[1];
@@ -185,40 +185,33 @@ const renderComments = function (comments) {
         parent_id: parentId,
       };
 
-      await fetch(
-        `https://momentum.redberryinternship.ge/api/tasks/${taskId}/comments`,
-        {
-          method: "POST",
-          body: JSON.stringify(commentData),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${TOKEN}`,
-            Accept: "application/json",
-          },
-        }
-      )
+      // Send Comment Data
+      await fetch(`${server}/tasks/${taskId}/comments`, {
+        method: "POST",
+        body: JSON.stringify(commentData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+          Accept: "application/json",
+        },
+      })
         .then(async function () {
-          comments = await fetchComments(taskId);
+          // Update and Re-render Comments
+          comments = await fetchData(`tasks/${taskId}/comments`);
+
           renderComments(comments);
           document.querySelector(".comment-num").textContent =
             countComments(comments);
         })
         .then(async function () {
-          await fetch("https://momentum.redberryinternship.ge/api/tasks", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${TOKEN}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              state.taskArray = data;
-            });
+          // Update Tasks For Correct Comment Count
+          state.taskArray = await fetchData("tasks");
         });
     });
   });
 };
 
+// Render Task Details
 const renderPage = function (task) {
   document.querySelector("title").textContent = task.name;
 
@@ -266,44 +259,26 @@ const renderPage = function (task) {
 renderPage(task);
 renderComments(comments);
 
+// Event Listenr For Task Status Change
 taskInput.addEventListener("valueChange", async function () {
-  if (this.value != task.status.id) {
-    const newId = this.value;
+  if (this.value === task.status.id) return;
 
-    const data = { status_id: parseInt(newId) };
+  const newId = this.value;
+  const data = { status_id: parseInt(newId) };
 
-    await fetch(`https://momentum.redberryinternship.ge/api/tasks/${taskId}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
-        Accept: "application/json",
-      },
-    }).then(async function (response) {
-      if (response.status === 200) {
-        await fetch("https://momentum.redberryinternship.ge/api/tasks", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            state.taskArray = data;
-          });
-      }
-    });
-  }
+  // Update Task Status
+  await fetch(`${server}/tasks/${taskId}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TOKEN}`,
+      Accept: "application/json",
+    },
+  }).then(async function (response) {
+    if (response.status === 200) {
+      // Update Tasks
+      state.taskArray = fetchData("tasks");
+    }
+  });
 });
-
-const validateCommentText = function (text, target) {
-  const commentField = target.closest(".comment-input-block");
-
-  if (text.trim()) {
-    commentField.classList.remove("invalid-input");
-    return true;
-  } else {
-    commentField.classList.add("invalid-input");
-  }
-};

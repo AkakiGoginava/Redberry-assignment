@@ -1,5 +1,5 @@
 import { state } from "../global/global.js";
-import { renderActiveFilters, renderLists } from "./main.js";
+import { renderActiveFilters, renderLists, filterData } from "./main.js";
 
 const filterTab = document.querySelector(".filter-tab");
 const dropDownMenu = document.querySelector(".filter-drop-down");
@@ -49,12 +49,15 @@ const generateFilterMarkup = function (type) {
     if (type !== "employee")
       markup += `<div class="filter">
                   <label>
-                  <input class="filter-checkbox" type="checkbox" data-type="${type}" data-id="${
-        item.id
-      }" />
-                  <span class="checkbox" style='${
-                    type === "department" ? "border-color:#212529 " : ""
-                  }'></span>
+                  <input class="filter-checkbox" type="checkbox" 
+                    data-type="${type}" 
+                    data-id="${item.id}" 
+                  />
+                  <span class="checkbox" 
+                    style='${
+                      type === "department" ? "border-color:#212529 " : ""
+                    }'>
+                  </span>
                   </label>
                   <div class="option-name">
                   <label for="${item.id}">${item.name}</label>
@@ -102,9 +105,11 @@ filterTab.addEventListener("click", function (e) {
     .querySelector(".filter-input")
     .insertAdjacentHTML("beforeend", markup);
 
+  // Single Select if Filtering Employees
   if (filterBtn.dataset.type === "employee") {
     const checkBoxes = filterTab.querySelectorAll(".filter-checkbox");
 
+    // Uncheck Every Other Employee Option
     checkBoxes.forEach((checkBox) => {
       checkBox.addEventListener("change", () => {
         checkBoxes.forEach((check) => {
@@ -120,15 +125,15 @@ filterTab.addEventListener("click", function (e) {
   document.querySelectorAll(".filter-checkbox").forEach((el) => {
     switch (el.dataset.type) {
       case "department":
-        if (state.filter.departments.includes(parseInt(el.dataset.id)))
+        if (filterData.departments.includes(parseInt(el.dataset.id)))
           el.checked = true;
         break;
       case "priority":
-        if (state.filter.priorities.includes(parseInt(el.dataset.id)))
+        if (filterData.priorities.includes(parseInt(el.dataset.id)))
           el.checked = true;
         break;
       case "employee":
-        if (state.filter.employees.includes(parseInt(el.dataset.id)))
+        if (filterData.employees.includes(parseInt(el.dataset.id)))
           el.checked = true;
         break;
     }
@@ -159,13 +164,13 @@ confirmFilterBtn.addEventListener("click", function () {
   // Check Which Data Type to Filter
   switch (dataType) {
     case "department":
-      state.filter.departments = [];
+      filterData.departments = [];
       break;
     case "employee":
-      state.filter.employees = [];
+      filterData.employees = [];
       break;
     case "priority":
-      state.filter.priorities = [];
+      filterData.priorities = [];
       break;
   }
 
@@ -175,20 +180,20 @@ confirmFilterBtn.addEventListener("click", function () {
     if (el.checked) {
       switch (el.dataset.type) {
         case "department":
-          state.filter.departments.push(parseInt(el.dataset.id));
+          filterData.departments.push(parseInt(el.dataset.id));
           break;
         case "employee":
-          state.filter.employees.push(parseInt(el.dataset.id));
+          filterData.employees.push(parseInt(el.dataset.id));
           break;
         case "priority":
-          state.filter.priorities.push(parseInt(el.dataset.id));
+          filterData.priorities.push(parseInt(el.dataset.id));
           break;
       }
     }
   });
 
+  sessionStorage.setItem("filterData", JSON.stringify(filterData));
   // Close Filter Menu and Re-render Lists
-  sessionStorage.setItem("filterData", JSON.stringify(state.filter));
   resetFilterBtns();
   renderLists();
   renderActiveFilters();

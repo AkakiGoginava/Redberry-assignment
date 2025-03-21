@@ -46,6 +46,10 @@
                   ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
                   სიმბოლო</label
                 >
+                <label class="form-requirement alphabet-name" for="name"
+                  ><img src="./resources/SVG/CheckmarkGray.svg" />მხოლოდ ინგლისური
+                  ან ქართული სიმბოლოები</label
+                >
               </div>
     
               <div class="form-surname">
@@ -60,6 +64,10 @@
                 <label class="form-requirement max-symbol-surname" for="surname"
                   ><img src="./resources/SVG/CheckmarkGray.svg" />მაქსიმუმ 255
                   სიმბოლო</label
+                >
+                <label class="form-requirement alphabet-surname" for="name"
+                  ><img src="./resources/SVG/CheckmarkGray.svg" />მხოლოდ ინგლისური
+                  ან ქართული სიმბოლოები</label
                 >
               </div>
             </div>
@@ -87,6 +95,15 @@
     
                 <input type="file" id="img-input" accept="image/*" class="hidden" />
               </div>
+    
+              <label class="form-requirement avatar-size-requirement"
+                ><img src="./resources/SVG/CheckmarkGray.svg" />ფაილის ზომა ნაკლები
+                600kb - ზე</label
+              >
+              <label class="form-requirement avatar-type-requirement"
+                ><img src="./resources/SVG/CheckmarkGray.svg" />ფაილის ტიპი
+                სურათი</label
+              >
             </div>
             <!------------------->
     
@@ -134,6 +151,8 @@
         <div class="create-task-block">
           <div class="create-task-body">
             <div class="create-task-body-1">
+
+              <!-- Form Name Input Block -->
               <div class="task-name-input-block task-input-block">
                 <label class="task-input-label">სათაური*</label>
                 <input type="text" class="task-name-input task-input-field">
@@ -142,7 +161,8 @@
                   <label class="task-form-requirement form-requirement task-name-max">მაქსიმუმ 255 სიმბოლო<label>
                 </div>
               </div>
-
+              <!--------------------------->
+              <!-- Form Description Input Block -->
               <div class="task-desc-input-block task-input-block">
                 <label class="task-input-label">აღწერა</label>
                 <textarea class="task-desc-input task-input-field"></textarea>
@@ -152,7 +172,9 @@
                   <label class="task-form-requirement form-requirement task-desc-max">მაქსიმყმ 255 სიმბოლო</label>
                 </div>
               </div>
+              <!---------------------------------->
 
+              <!-- Form Priority and Status Input Fields -->
               <div class="task-priority-status-input">
                 <div class="task-priority-input-block task-input-block">
                   <label class="task-input-label">პრიორიტეტი*</label>
@@ -201,9 +223,11 @@
                   </div>
                 </div>
               </div>
+              <!------------------------------------------->
             </div>
 
             <div class="create-task-body-2">
+              <!-- Form Department Input Block -->
               <div class="task-department-input-block task-input-block">
                 <label class="task-input-label">დეპარტამენტი*</label>
                 <div class="task-department-input task-input-field" id="task-department-input">
@@ -226,7 +250,9 @@
 
                 </div>
               </div>
-
+              <!--------------------------------->
+              <!-- Form Employee Input Block -->
+              <!-- Hidden Until Department is Chosen -->
               <div class="task-employee-input-block task-input-block hidden">
                 <label class="task-input-label">პასუხისმგებელი თანამშრომელი*</label>
                 <div class="task-employee-input task-input-field" id="task-employee-input">
@@ -251,7 +277,8 @@
 
                 </div>
               </div>
-
+              <!------------------------------->
+              <!-- Form Date Input Block -->
               <div class="task-date-input-block task-input-block">
                 <label class="task-input-label">დედლაინი</label>
                 <div id="dateIcon"><img class="date-icon" src="resources/SVG/CalendarGray.svg"></div> 
@@ -264,6 +291,7 @@
                   <label class="form-requirement date-time-requirement">თარიღი არ უნდა იყოს წარსულში</label>
                 </div>
               </div>
+              <!--------------------------->
             </div>
           </div>
 

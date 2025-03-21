@@ -1,4 +1,11 @@
-import { state, TOKEN } from "../global/global.js";
+import {
+  state,
+  TOKEN,
+  server,
+  resetLabel,
+  validateLabel,
+  fetchData,
+} from "../global/global.js";
 import * as createEmployee from "../global/createEmployee.js";
 import { initializeDropdownMenu } from "../global/dropDownMenu.js";
 
@@ -11,6 +18,7 @@ const taskDepartmentInput = document.querySelector(".task-department-input");
 const taskEmployeeInput = document.querySelector(".task-employee-input");
 const taskDateInput = document.getElementById("realDateInput");
 const taskDateDisplay = document.getElementById("customDateInput");
+
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -19,10 +27,9 @@ const year = tomorrow.getFullYear();
 const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
 const day = String(tomorrow.getDate()).padStart(2, "0");
 
-// Insert Default Date Value
 const formattedDate = `${year}-${month}-${day}`;
-taskDateDisplay.value = `${day}/${month}/${year}`;
 taskDateInput.value = formattedDate;
+taskDateDisplay.value = `${day}/${month}/${year}`;
 
 let taskFormData = sessionStorage.getItem("taskFormData")
   ? JSON.parse(sessionStorage.getItem("taskFormData"))
@@ -50,36 +57,16 @@ const validateNameInput = function () {
   const minLabel = document.querySelector(".task-name-min");
   const maxLabel = document.querySelector(".task-name-max");
 
-  let minLengthCheck = false;
-  let maxLengthCheck = true;
+  let minLengthCheck = taskNameInput.value.length > 3;
+  let maxLengthCheck = taskNameInput.value.length < 255;
 
-  // Check for Valid Length
-  if (taskNameInput.value.length < 3) {
-    minLengthCheck = false;
-
-    // Update Label
-    minLabel.classList.add("invalid-label");
-    minLabel.classList.remove("valid-label");
-  } else {
-    minLengthCheck = true;
-
-    minLabel.classList.remove("invalid-label");
-    minLabel.classList.add("valid-label");
-  }
-
-  if (taskNameInput.value.length > 255) {
-    maxLengthCheck = false;
-
-    maxLabel.classList.add("invalid-label");
-    maxLabel.classList.remove("valid-label");
-  } else {
-    maxLabel.classList.remove("invalid-label");
-    maxLabel.classList.add("valid-label");
-  }
+  validateLabel(minLengthCheck, minLabel);
+  validateLabel(maxLengthCheck, maxLabel);
 
   // Update Input State
   taskFormState.name = minLengthCheck && maxLengthCheck;
 
+  // Update Input Field Outline
   if (taskFormState.name) {
     taskNameInput.classList.remove("invalid-input");
   } else {
@@ -89,11 +76,8 @@ const validateNameInput = function () {
   if (taskNameInput.value === "") {
     taskNameInput.classList.remove("invalid-input");
 
-    maxLabel.classList.remove("invalid-label");
-    maxLabel.classList.remove("valid-label");
-
-    minLabel.classList.remove("valid-label");
-    minLabel.classList.remove("invalid-label");
+    resetLabel(minLabel);
+    resetLabel(maxLabel);
   }
 };
 
@@ -101,47 +85,25 @@ const validateDescInput = function () {
   const minLabel = document.querySelector(".task-desc-min");
   const maxLabel = document.querySelector(".task-desc-max");
 
-  let minLengthCheck = false;
-  let maxLengthCheck = true;
+  let minLengthCheck =
+    taskDescInput.value.split(/\s+/).filter((word) => word.length > 0).length >
+    4;
+  let maxLengthCheck = taskDescInput.value.length < 255;
 
-  // Check for Valid Length
-  if (
-    taskDescInput.value.split(/\s+/).filter((word) => word.length > 0).length <
-    4
-  ) {
-    minLengthCheck = false;
-
-    // Update Label
-    minLabel.classList.add("invalid-label");
-    minLabel.classList.remove("valid-label");
-  } else {
-    minLengthCheck = true;
-
-    minLabel.classList.remove("invalid-label");
-    minLabel.classList.add("valid-label");
-  }
-
-  if (taskDescInput.value.length > 255) {
-    maxLengthCheck = false;
-
-    maxLabel.classList.add("invalid-label");
-    maxLabel.classList.remove("valid-label");
-  } else {
-    maxLabel.classList.remove("invalid-label");
-    maxLabel.classList.add("valid-label");
-  }
+  validateLabel(minLengthCheck, minLabel);
+  validateLabel(maxLengthCheck, maxLabel);
 
   // Update Input State
   taskFormState.desc = minLengthCheck && maxLengthCheck;
-  if (taskDescInput.value === "") {
-    maxLabel.classList.remove("invalid-label");
-    maxLabel.classList.remove("valid-label");
 
-    minLabel.classList.remove("invalid-label");
-    minLabel.classList.remove("valid-label");
+  if (taskDescInput.value === "") {
+    resetLabel(minLabel);
+    resetLabel(maxLabel);
+
     taskFormState.desc = true;
   }
 
+  // Update Input Outline
   if (taskFormState.desc) {
     taskDescInput.classList.remove("invalid-input");
   } else {
@@ -152,26 +114,12 @@ const validateDescInput = function () {
 // Validate Correct Format
 const isValidFormat = function (dateString) {
   const regex = /^(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[0-2])[-/.]\d{4}$/;
+  const label = document.querySelector(".date-format-requirement");
+  const formatCheck = regex.test(dateString);
 
-  if (regex.test(dateString)) {
-    document
-      .querySelector(".date-format-requirement")
-      .classList.remove("invalid-label");
-    document
-      .querySelector(".date-format-requirement")
-      .classList.add("valid-label");
+  validateLabel(formatCheck, label);
 
-    return true;
-  } else {
-    document
-      .querySelector(".date-format-requirement")
-      .classList.remove("valid-label");
-    document
-      .querySelector(".date-format-requirement")
-      .classList.add("invalid-label");
-
-    return false;
-  }
+  return formatCheck;
 };
 
 // Validate Correct Date
@@ -189,27 +137,15 @@ const isValidDate = function (dateString) {
   }
 
   const inputDate = new Date(year, month - 1, day);
-
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
-  if (inputDate >= currentDate) {
-    document
-      .querySelector(".date-time-requirement")
-      .classList.remove("invalid-label");
-    document
-      .querySelector(".date-time-requirement")
-      .classList.add("valid-label");
-    return true;
-  } else {
-    document
-      .querySelector(".date-time-requirement")
-      .classList.remove("valid-label");
-    document
-      .querySelector(".date-time-requirement")
-      .classList.add("invalid-label");
-    return false;
-  }
+  const label = document.querySelector(".date-time-requirement");
+  const dateCheck = inputDate >= currentDate;
+
+  validateLabel(dateCheck, label);
+
+  return dateCheck;
 };
 
 // Validate Date Input
@@ -235,10 +171,7 @@ const validateDateInput = function (dateString) {
   }
 };
 
-validateNameInput();
-validateDescInput();
-
-// Load Date Value if Stored
+// Load Date Value if it isn't Default Date
 if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
   let date = taskFormData.dueDate.split("-");
 
@@ -250,6 +183,7 @@ if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
     date = taskFormData.dueDate.split(".").map(Number);
   }
 
+  // Load if Valid Date Format is Stored
   if (
     date[1] !== undefined &&
     date[2] !== undefined &&
@@ -267,6 +201,7 @@ if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
     ).padStart(2, "0")}/${date[0]}`;
     validateDateInput(taskDateDisplay.value);
   } else {
+    // Load Default Date
     taskDateInput.value = `${year}-${month}-${day}`;
     taskDateDisplay.value = `${day}/${month}/${year}`;
 
@@ -275,21 +210,16 @@ if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
     taskFormData.dueDate = `${year}-${month}-${day}`;
     sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 
-    document
-      .querySelector(".date-time-requirement")
-      .classList.remove("valid-label");
-    document
-      .querySelector(".date-time-requirement")
-      .classList.remove("invalid-label");
+    const timeLabel = document.querySelector(".date-time-requirement");
+    const dateLabel = document.querySelector(".date-format-requirement");
 
-    document
-      .querySelector(".date-format-requirement")
-      .classList.remove("invalid-label");
-    document
-      .querySelector(".date-format-requirement")
-      .classList.remove("valid-label");
+    resetLabel(timeLabel);
+    resetLabel(dateLabel);
   }
 }
+
+validateNameInput();
+validateDescInput();
 
 // Initialize and Render Priority Dropdown Menu
 const priorityDropdownMenu = initializeDropdownMenu("task-priority-input");
@@ -313,6 +243,7 @@ statusDropdownMenu.initializeDefaultValue(
 const departmentDropdownMenu = initializeDropdownMenu("task-department-input");
 departmentDropdownMenu.renderOptions(state.departmentArray);
 
+// Load Department Value From Storage if Present
 if (taskFormData.department) {
   departmentDropdownMenu.initializeDefaultValue(
     state.departmentArray,
@@ -338,7 +269,7 @@ taskEmployeeInput
     sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
   });
 
-// Unhide Employee Input if Department is Stored in SessionStorage
+// Unhide Employee Input if Department is Stored in Storage
 if (taskFormData.department) {
   // Reveal Employee Input Block
   document
@@ -389,6 +320,7 @@ taskDepartmentInput
     );
   });
 
+// Event Listener For Status Input Change
 taskStatusInput
   .querySelector(".selected-value")
   .addEventListener("valueChange", () => {
@@ -398,6 +330,7 @@ taskStatusInput
     sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
   });
 
+// Event Listener For Priority Input Change
 taskPriorityInput
   .querySelector(".selected-value")
   .addEventListener("valueChange", () => {
@@ -422,7 +355,7 @@ document.getElementById("dateIcon").addEventListener("click", function () {
   taskDateInput.showPicker();
 });
 
-// Event Listener For Custom Date Input Value Update
+// Event Listener For Custom Date Input Value Update From Date Picker
 taskDateInput.addEventListener("change", function () {
   let dateInput = this.value.split("-");
   taskDateDisplay.value = `${String(dateInput[2]).padStart(2, "0")}/${String(
@@ -435,6 +368,7 @@ taskDateInput.addEventListener("change", function () {
   sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 });
 
+// Event Listener For Custom Date Input Value Update From Input Field
 taskDateDisplay.addEventListener("change", function () {
   let day, month, year;
 
@@ -503,6 +437,7 @@ const validateFormInputs = function () {
 
   let isValid = true;
 
+  // Add Red Outline For Invalid/Missing Inputs
   Object.values(taskFormState).forEach((state, i) => {
     if (!state) {
       inputs[i].classList.add("invalid-input");
@@ -534,34 +469,29 @@ taskSubmitBtn.addEventListener("click", async function () {
       taskPriorityInput.querySelector(".selected-value").value
     );
 
-    await fetch("https://momentum.redberryinternship.ge/api/tasks", {
-      method: "POST",
-      body: taskData,
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          fetch("https://momentum.redberryinternship.ge/api/tasks", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${TOKEN}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              state.taskArray = data;
-            })
-            .then(() => {
-              taskNameInput.value = "";
-              taskDescInput.value = "";
-              sessionStorage.removeItem("taskFormData");
-              window.location.href = "index.html";
-            });
-        }
-      })
-      .then((data) => {})
-      .catch((error) => console.error("Error:", error));
+    // Send Task Data
+    try {
+      const response = await fetch(`${server}/tasks`, {
+        method: "POST",
+        body: taskData,
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+
+      if (response.status === 201) {
+        // Update Tasks
+        state.taskArray = await fetchData("tasks");
+
+        // Empty Inputs and redirect
+        taskNameInput.value = "";
+        taskDescInput.value = "";
+        sessionStorage.removeItem("taskFormData");
+
+        window.location.href = "index.html";
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 });

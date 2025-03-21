@@ -16,6 +16,7 @@ export const initializeDropdownMenu = function (id) {
 
   // Clear Input Value and Display
   const clearInput = function () {
+    // Clear Img if Present
     if (selectedOption.querySelector("img"))
       selectedOption.querySelector("img").remove();
 
@@ -52,6 +53,7 @@ export const initializeDropdownMenu = function (id) {
 
     const name = data.surname ? data.name + " " + data.surname : data.name;
 
+    // Create Temporary Markup
     if (data.icon || data.avatar)
       markup += `<div class="dropdown-option dropdown-optional-style" data-value="${
         data.id
@@ -61,6 +63,7 @@ export const initializeDropdownMenu = function (id) {
     else
       markup += `<div class="dropdown-option dropdown-optional-style" data-value="${data.id}">${name}</div>`;
 
+    // Create Temporary Node
     const tempEl = document
       .createRange()
       .createContextualFragment(markup).firstElementChild;
@@ -68,6 +71,7 @@ export const initializeDropdownMenu = function (id) {
     const selectedValue = tempEl.dataset.value;
     const optionIcon = tempEl.querySelector(".option-icon");
 
+    // Insert New Default Value
     selectedOption.textContent = tempEl.textContent;
 
     // Check if Option Comes With Icon
@@ -82,10 +86,11 @@ export const initializeDropdownMenu = function (id) {
 
   // Render Options
   const renderOptions = function (dataset) {
+    // Reset All Non-Custom Options
     options.querySelectorAll(".dropdown-option").forEach((option) => {
       if (!option.classList.contains("custom-option")) option.remove();
     });
-    // options.innerHTML = "";
+
     options.insertAdjacentHTML("beforeend", generateDepartmentsMarkup(dataset));
   };
 
@@ -136,7 +141,7 @@ export const initializeDropdownMenu = function (id) {
     // Update Value
     container.querySelector(".selected-value").value = selectedValue;
 
-    // Add Custom Event For Value Change
+    // Add Custom Event For Programmatic Value Change
     container
       .querySelector(".selected-value")
       .dispatchEvent(new CustomEvent("valueChange", {}));
