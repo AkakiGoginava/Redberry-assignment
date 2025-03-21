@@ -34,6 +34,8 @@ taskDateDisplay.value = `${day}/${month}/${year}`;
 let taskFormData = sessionStorage.getItem("taskFormData")
   ? JSON.parse(sessionStorage.getItem("taskFormData"))
   : {
+      name: "",
+      desc: "",
       status: 1,
       priority: 2,
       department: "",
@@ -218,6 +220,9 @@ if (taskFormData.dueDate !== `${year}-${month}-${day}`) {
   }
 }
 
+taskNameInput.value = taskFormData.name;
+taskDescInput.value = taskFormData.desc;
+
 validateNameInput();
 validateDescInput();
 
@@ -343,11 +348,17 @@ taskPriorityInput
 // Event Listener For Name Input Checking
 taskNameInput.addEventListener("input", function () {
   validateNameInput();
+
+  taskFormData.name = taskNameInput.value;
+  sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 });
 
 // Event Listener For Description Input Checking
 taskDescInput.addEventListener("input", function () {
   validateDescInput();
+
+  taskFormData.desc = taskDescInput.value;
+  sessionStorage.setItem("taskFormData", JSON.stringify(taskFormData));
 });
 
 // Event Listener For Custom Date Input Date Picker Display

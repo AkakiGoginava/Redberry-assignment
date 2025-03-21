@@ -9,24 +9,9 @@ import * as createEmployee from "../global/createEmployee.js";
 const clearFilterBtn = document.querySelector(".clear-filter-btn");
 const activeFilterContainer = document.querySelector(".filter-div-container");
 
-// Detect if the page is being restored from the bfcache (back-forward cache)
-window.addEventListener("pageshow", (event) => {
-  if (event.persisted) {
-    return; // If true, the page was restored from cache, so don't clear storage
-  }
-});
-
-// Clear sessionStorage when navigating back
-window.addEventListener("popstate", () => {
+if (!(performance.navigation.type === 1)) {
   sessionStorage.removeItem("filterData");
-});
-
-// Clear sessionStorage when navigating via a link (but NOT on refresh)
-window.addEventListener("beforeunload", (event) => {
-  if (!performance.getEntriesByType("navigation")[0].type.includes("reload")) {
-    sessionStorage.removeItem("filterData");
-  }
-});
+}
 
 // Load Filter Data From Storage
 export const filterData = sessionStorage.getItem("filterData")
